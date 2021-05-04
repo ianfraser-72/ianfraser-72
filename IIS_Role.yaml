@@ -1,6 +1,6 @@
  hosts: windows
  
-  tasks:
+ tasks:
     - name: Install IIS Server 10
       win_feature:
         name: Web-Server
