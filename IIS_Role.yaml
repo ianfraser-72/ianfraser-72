@@ -1,5 +1,5 @@
 - name: Windows Test
-  hosts: windows
+  hosts: all
   tasks:
     - name: Install IIS Server 10
       win_feature:
