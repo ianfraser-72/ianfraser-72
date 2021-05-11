@@ -1,0 +1,15 @@
+---
+- hosts: win
+  gather_facts: no
+  tasks:
+  - name: Install the Storage Replica
+    win_feature:
+      name: Storage-Replica
+      state: present
+  - name: Install the Telnet Client
+    win_feature:
+      name: Telnet-Client
+      state: present
+  - name: Reboot if necessary
+    win_reboot:
+    when: win_feature.reboot_required
