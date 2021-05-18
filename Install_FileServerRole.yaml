@@ -9,10 +9,6 @@
       state: present
       include_sub_features: yes
       register: ReplicaInstall
-      
-  - name: Reboot when Replica Server feature requires it
-    ansible.windows.win_reboot:
-    when: ReplicaInstall.reboot_required
  
   - name: Install the Telnet Client
     win_feature:
