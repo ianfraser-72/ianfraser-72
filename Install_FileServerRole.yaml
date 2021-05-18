@@ -3,13 +3,6 @@
   gather_facts: no
   tasks:
   
-  win_firewall:
-    state:disabled
-    profiles:
-    - Domain
-    - Private
-    - Public
-  
   - name: Install the Storage Replica
     win_feature:
       name: Storage-Replica
