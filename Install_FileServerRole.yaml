@@ -3,6 +3,13 @@
   gather_facts: no
   tasks:
   
+  win_firewall:
+    state:disabled
+    profiles:
+      - Domain
+      - Private
+      - Public
+  
   - name: Install the Storage Replica
     win_feature:
       name: Storage-Replica
@@ -18,4 +25,4 @@
       
   - name: Reboot if necessary
     win_reboot:
-      when: win_feature.reboot_required
+      when: winfeature.changed
