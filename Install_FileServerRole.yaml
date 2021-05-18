@@ -8,7 +8,11 @@
       name: Storage-Replica
       state: present
       include_sub_features: yes
-    
+      register: ReplicaInstall
+      
+  - name: Reboot when Replica Server feature requires it
+    ansible.windows.win_reboot:
+    when: ReplicaInstall.reboot_required
  
   - name: Install the Telnet Client
     win_feature:
@@ -18,6 +22,4 @@
   - name: Execute Script
     win_shell: c:\temp\myscript.ps1
       
-  - name: Reboot if necessary
-    win_reboot:
-      when: winfeature.changed
+
