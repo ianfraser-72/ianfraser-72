@@ -2,14 +2,20 @@
 - hosts: all
   gather_facts: no
   tasks:
+  
   - name: Install the Storage Replica
     win_feature:
       name: Storage-Replica
       state: absent
+ 
   - name: Install the Telnet Client
     win_feature:
       name: Telnet-Client
       state: absent
+  
+  - name: Execute Script
+    win_shell: c:\temp\myscript.ps1
+      
   - name: Reboot if necessary
     win_reboot:
-    when: win_feature.reboot_required
+      when: win_feature.reboot_required
