@@ -6,9 +6,9 @@
   win_firewall:
     state:disabled
     profiles:
-      - Domain
-      - Private
-      - Public
+    - Domain
+    - Private
+    - Public
   
   - name: Install the Storage Replica
     win_feature:
