@@ -6,12 +6,12 @@
   - name: Install the Storage Replica
     win_feature:
       name: Storage-Replica
-      state: absent
+      state: present
  
   - name: Install the Telnet Client
     win_feature:
       name: Telnet-Client
-      state: absent
+      state: present
   
   - name: Execute Script
     win_shell: c:\temp\myscript.ps1
