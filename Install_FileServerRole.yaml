@@ -7,6 +7,8 @@
     win_feature:
       name: Storage-Replica
       state: present
+      include_sub_features: yes
+    
  
   - name: Install the Telnet Client
     win_feature:
