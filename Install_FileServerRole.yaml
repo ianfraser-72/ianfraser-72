@@ -8,6 +8,7 @@
       name: Storage-Replica
       state: present
       include_sub_features: yes
+      include_management_tools: yes
       register: ReplicaInstall
  
   - name: Install the Telnet Client
