@@ -5,7 +5,7 @@
   - name: Install the Storage Replica
     win_feature:
       name: Storage-Replica
-      state: present
+      state: absent
       include_sub_features: yes
       include_management_tools: yes
     register: ReplicaInstall
