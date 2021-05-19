@@ -11,10 +11,10 @@
     register: ReplicaInstall
       
   - name: Reboot
-  win_reboot:
-  when: ReplicaInstall.reboot_required
+    win_reboot:
+    when: ReplicaInstall.reboot_required
       
- # - name: Execute Script
- # win_shell: c:\temp\myscript.ps1
+  - name: Execute Script
+    win_shell: c:\temp\myscript.ps1
       
 
