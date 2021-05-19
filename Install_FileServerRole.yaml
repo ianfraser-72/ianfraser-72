@@ -8,7 +8,11 @@
       state: absent
       include_sub_features: yes
       include_management_tools: yes
-      register: ReplicaInstall
+    register: ReplicaInstall
+      
+  - name:Reboot
+  win_reboot
+  when: ReplicaInstall.reboot_required
       
   - name: Execute Script
     win_shell: c:\temp\myscript.ps1
