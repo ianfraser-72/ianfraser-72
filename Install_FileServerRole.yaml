@@ -3,18 +3,18 @@
   gather_facts: no
   tasks:
   
-  - name: Install the Storage Replica
-    win_feature:
+    - name: Install the Storage Replica
+      win_feature:
       name: Storage-Replica
       state: absent
       include_sub_features: yes
       include_management_tools: yes
       register: ReplicaInstall
       
-- win_reboot:
-    reboot_timeout: 3600
+  - win_reboot:
+      reboot_timeout: 3600
       
-- name: Execute Script
-    win_shell: c:\temp\myscript.ps1
+  - name: Execute Script
+      win_shell: c:\temp\myscript.ps1
       
 
