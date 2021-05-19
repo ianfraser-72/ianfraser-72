@@ -11,7 +11,7 @@
       register: ReplicaInstall
       
   - win_reboot:
-    reboot_timeout: 3600
+      reboot_timeout: 3600
       
   - name: Execute Script
     win_shell: c:\temp\myscript.ps1
