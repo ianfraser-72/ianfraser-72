@@ -11,8 +11,7 @@
       include_management_tools: yes
       register: ReplicaInstall
       
- - name: Install the Telnet Client
-      win_reboot:
+ - win_reboot:
       
   - name: Execute Script
     win_shell: c:\temp\myscript.ps1
