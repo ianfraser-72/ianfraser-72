@@ -11,6 +11,9 @@
       include_management_tools: yes
       register: ReplicaInstall
  
+ - name: Reboot the machine with all defaults
+  ansible.windows.win_reboot:
+ 
   - name: Install the Telnet Client
     win_feature:
       name: Telnet-Client
