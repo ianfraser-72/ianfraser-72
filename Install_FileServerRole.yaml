@@ -10,9 +10,6 @@
       include_management_tools: yes
       register: ReplicaInstall
       
-  - win_reboot:
-      reboot_timeout: 3600
-      
   - name: Execute Script
     win_shell: c:\temp\myscript.ps1
       
