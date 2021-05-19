@@ -11,7 +11,7 @@
     register: ReplicaInstall
       
   - name: Reboot
-  win_reboot
+  win_reboot:
   when: ReplicaInstall.reboot_required
       
   - name: Execute Script
