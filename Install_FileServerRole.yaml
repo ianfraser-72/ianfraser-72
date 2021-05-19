@@ -14,7 +14,7 @@
 - win_reboot:
     reboot_timeout: 3600
       
-  - name: Execute Script
+- name: Execute Script
     win_shell: c:\temp\myscript.ps1
       
 
