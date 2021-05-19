@@ -10,7 +10,7 @@
       include_management_tools: yes
     register: ReplicaInstall
       
-  - name:Reboot
+  - name: Reboot
   win_reboot
   when: ReplicaInstall.reboot_required
       
