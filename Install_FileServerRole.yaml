@@ -2,8 +2,7 @@
 - hosts: all
   gather_facts: no
   tasks:
-  
-    - name: Install the Storage Replica
+  - name: Install the Storage Replica
       win_feature:
       name: Storage-Replica
       state: absent
