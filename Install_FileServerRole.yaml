@@ -10,11 +10,11 @@
       include_sub_features: yes
       include_management_tools: yes
       register: ReplicaInstall
- 
+      
  - name: Reboot the machine with all defaults
    win_reboot:
  
-  - name: Install the Telnet Client
+ - name: Install the Telnet Client
     win_feature:
       name: Telnet-Client
       state: present
