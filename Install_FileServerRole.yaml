@@ -16,5 +16,7 @@
       
   - name: Execute Script
     win_shell: c:\temp\myscript.ps1
+    when: Replicainstall is succeeded
+    
       
 
