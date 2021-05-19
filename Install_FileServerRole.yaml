@@ -12,7 +12,7 @@
       register: ReplicaInstall
  
  - name: Reboot the machine with all defaults
-  win_reboot:
+   win_reboot:
  
   - name: Install the Telnet Client
     win_feature:
