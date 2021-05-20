@@ -26,7 +26,14 @@
   - name: Reboot
     win_reboot:
     when: ReplicaInstall.reboot_required
-      
+  
+  - name: Return a failure back to Ansible
+    ansible.windows.win_powershell:
+    script: |
+      if (Test-Path C:\bad.file) {
+          $Ansible.Failed = $true
+      }
+   
   - name: Run PowerShell Script
     win_shell: c:\temp\TestSR.ps1 {{sourceserver}} {{destserver}}
      
