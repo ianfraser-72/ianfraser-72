@@ -1,4 +1,4 @@
-state = get-windowsfeature storage*
+$state = get-windowsfeature stor*
 $state.name
 if ($state.name -match "Storage-Replica")
 {
