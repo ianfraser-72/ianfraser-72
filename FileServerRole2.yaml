@@ -28,5 +28,5 @@
     when: ReplicaInstall.reboot_required
  
   - name: Run PowerShell Script
-    ansible.windows.win_powershell: Test-SRTopology "-SourceComputerName {{sourceserver}}" "-SourceVolumeName E:" "-SourceLogVolumeName G:" "-DestinationComputerName {{destserver}}" "-DestinationVolumeName E:" "-DestinationLogVolumeName G:" "-DurationInMinutes 5" "-ResultPath c:\temp"
+    win_shell: Test-SRTopology "-SourceComputerName {{sourceserver}} -SourceVolumeName E: -SourceLogVolumeName G: -DestinationComputerName {{destserver}} -DestinationVolumeName E: -DestinationLogVolumeName G: -DurationInMinutes 5 -ResultPath c:\temp"
     
