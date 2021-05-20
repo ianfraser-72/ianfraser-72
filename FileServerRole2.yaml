@@ -28,5 +28,5 @@
     when: ReplicaInstall.reboot_required
  
   - name: Run PowerShell Script
-    win_shell: | Test-SRTopology -SourceComputerName {{sourceserver}} -SourceVolumeName E: -SourceLogVolumeName G: -DestinationComputerName {{destserver}} -DestinationVolumeName E: -DestinationLogVolumeName G: -DurationInMinutes 5 -ResultPath c:\temp
+    win_command: Test-SRTopology -SourceComputerName {{sourceserver}} -SourceVolumeName E: -SourceLogVolumeName G: -DestinationComputerName {{destserver}} -DestinationVolumeName E: -DestinationLogVolumeName G: -DurationInMinutes 5 -ResultPath c:\temp
     
