@@ -3,10 +3,16 @@
   gather_facts: no
   tasks:
  
-  - name: Copy a single file
+  - name: Copy StateCheck Script
     win_copy:
       src: "{{ playbook_dir }}/SRStateCheck.ps1"
       dest: C:\Temp\SRStateCheck.ps1
+      force: yes
+      
+   - name: Copy TestSR Script
+    win_copy:
+      src: "{{ playbook_dir }}/TestSR.ps1"
+      dest: C:\Temp\TestSR.ps1
       force: yes
   
   - name: Install the Storage Replica
@@ -22,7 +28,7 @@
     when: ReplicaInstall.reboot_required
       
   - name: Execute Script
-    win_shell: c:\temp\SRStateCheck.ps1
+    win_shell: c:\temp\TestSR.ps1
     ignore_errors: yes
     register: StateOut
   - debug: msg="{{StateOut.rc}}"
