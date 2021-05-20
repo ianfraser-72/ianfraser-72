@@ -29,4 +29,7 @@
  
   - name: Run PowerShell Script
     win_shell: get-process
-    
+      become: yes
+      become_user: automation.int\Administrator
+      become_password: "{{1FyvHWAPOnvdhp)uxg(5O$crwtyi-HFYi}}"
+      become_method: runas
