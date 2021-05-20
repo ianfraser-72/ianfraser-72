@@ -29,8 +29,4 @@
  
   - name: Run PowerShell Script
     win_shell: "Test-SRTopology -SourceComputerName {{sourceserver}} -SourceVolumeName E: -SourceLogVolumeName G: -DestinationComputerName {{destserver}} -DestinationVolumeName E: -DestinationLogVolumeName G: -DurationInMinutes 5 -ResultPath c:\temp"
-      become: yes
-      become_user: automation.int\Administrator
-      become_password: "{{1FyvHWAPOnvdhp)uxg(5O$crwtyi-HFYi}}"
-      become_method: runas
     
