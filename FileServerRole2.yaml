@@ -28,10 +28,11 @@
     when: ReplicaInstall.reboot_required
  
   - name: Run PowerShell Script
-    hosts: "{{sourceserver}}"
+    hosts: {{sourceserver}}
     
-    win_shell: Test-SRTopology -SourceComputerName ansclient01 -SourceVolumeName 12 -SourceLogVolumeName 12 -DestinationComputerName ansclient02 -DestinationVolumeName E: -DestinationLogVolumeName 12 -DurationInMinutes 5
+    win_shell: C:\Temp\TestSR.ps1 {{sourceserver}} {{destserver}}
     register: SRTest
+    
     vars:
       ansible_become: true
       ansible_become_user: automation\kerbadm
