@@ -38,6 +38,6 @@
       ansible_become_user: automation\kerbadm
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
-      ansible.builtin.debug: 
-      var: SRTest
+   - debug:
+      var: SRTest.stdout_lines
       verbosity: 4
