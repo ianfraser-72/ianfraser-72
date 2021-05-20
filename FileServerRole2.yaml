@@ -1,0 +1,41 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+ 
+  - name: Copy StateCheck Script
+    win_copy:
+      src: "{{ playbook_dir }}/SRStateCheck.ps1"
+      dest: C:\Temp\SRStateCheck.ps1
+      force: yes
+      
+  - name: Copy TestSR Script
+    win_copy:
+      src: "{{ playbook_dir }}/TestSR.ps1"
+      dest: C:\Temp\TestSR.ps1
+      force: yes
+  
+  - name: Install the Storage Replica
+    win_feature:
+      name: Storage-Replica
+      state: present
+      include_sub_features: yes
+      include_management_tools: yes
+    register: ReplicaInstall
+      
+  - name: Reboot
+    win_reboot:
+    when: ReplicaInstall.reboot_required
+      
+  - name: Run PowerShell Script
+    become_method: runas
+    vars:
+    ansible_become_password: "{{ FyvHWAPOnvdhp)uxg(5O$crwtyi-HFYi }}"
+    
+    win_shell: c:\temp\TestSR.ps1 {{sourceserver}} {{destserver}}
+    ignore_errors: yes
+    become: yes
+    become_user: global\Administrator
+  
+    
+    
