@@ -9,3 +9,4 @@
 
   - name: Run a script
     win_shell: C:\Temp\Example-ErrorHandling.ps1
+    register: output
