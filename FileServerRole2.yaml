@@ -28,14 +28,13 @@
     when: ReplicaInstall.reboot_required
       
   - name: Run PowerShell Script
-    become_method: runas
-    vars:
-      ansible_become_password: "{{ FyvHWAPOnvdhp)uxg(5O$crwtyi-HFYi }}"
-   
     win_shell: c:\temp\TestSR.ps1 {{sourceserver}} {{destserver}}
-    ignore_errors: yes
-    become: yes
-    become_user: global\Administrator
+    vars:
+      become: yes
+      become_user: global\Administrator
+      become_password: "{{FyvHWAPOnvdhp)uxg(5O$crwtyi-HFYi}}"
+      become_method: runas
+    
   
     
     
