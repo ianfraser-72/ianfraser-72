@@ -21,8 +21,15 @@
     when: ReplicaInstall.reboot_required
       
   - name: Execute Script
-    win_shell: c:\temp\myscript.ps1
-    when: Replicainstall is succeeded
+    win_shell: c:\temp\SRStateCheck.ps1
+    ignore_errors: yes
+    register: StateOut
+    
+  -debug:
+    var: result
+    verbosity: 2
+    
+    
     
       
 
