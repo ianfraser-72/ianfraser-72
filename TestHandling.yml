@@ -4,7 +4,7 @@
 
   - name: Copy a single file
     win_copy:
-      src: "{{ playbook_dir }}/Example-ErrorHandling.ps1"
+      src: "{{ playbook_dir }}/ErrorHandling.ps1"
       dest: C:\Temp\Example-ErrorHandling.ps1
 
   - name: Run a script
