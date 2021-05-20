@@ -24,10 +24,8 @@
     win_shell: c:\temp\SRStateCheck.ps1
     ignore_errors: yes
     register: StateOut
-    
-  - debug:
-    var: result
-    verbosity: 2
+  - debug: msg="{{StateOut.rc}}"
+  
     
     
     
