@@ -29,8 +29,11 @@
  
   - name: Run PowerShell Script
     win_shell: C:\Temp\TestSR.ps1 {{sourceserver}} {{destserver}}
+    register: SRTest
     vars:
       ansible_become: true
       ansible_become_user: automation\kerbadm
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
+  - debug: var=SRTest.stdout.lines
+      
