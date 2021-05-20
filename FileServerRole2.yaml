@@ -28,8 +28,7 @@
     when: ReplicaInstall.reboot_required
       
   - name: Run PowerShell Script
-    win_shell: c:\temp\TestSR.ps1 {{sourceserver}} {{destserver}}
-    vars:
+      win_shell: c:\temp\TestSR.ps1 {{sourceserver}} {{destserver}}
       become: yes
       become_user: global\Administrator
       become_password: "{{FyvHWAPOnvdhp)uxg(5O$crwtyi-HFYi}}"
