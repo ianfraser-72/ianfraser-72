@@ -2,6 +2,12 @@
 - hosts: all
   gather_facts: no
   tasks:
+ 
+ - name: Copy a single file
+    win_copy:
+      src: "{{ playbook_dir }}/SRStateCheck.ps1"
+      dest: C:\Temp\SRStateCheck.ps1
+  
   - name: Install the Storage Replica
     win_feature:
       name: Storage-Replica
