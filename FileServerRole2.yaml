@@ -29,7 +29,8 @@
  
   - name: Run PowerShell Script
     hosts: "{{sourceserver}}"
-    win_shell: C:\Temp\TestSR.ps1 {{sourceserver}} {{destserver}}
+    
+    win_shell: Test-SRTopology -SourceComputerName ansclient01 -SourceVolumeName 12 -SourceLogVolumeName 12 -DestinationComputerName ansclient02 -DestinationVolumeName E: -DestinationLogVolumeName 12 -DurationInMinutes 5 -ResultPath c:\temp
     register: SRTest
     vars:
       ansible_become: true
