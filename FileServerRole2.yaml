@@ -30,9 +30,8 @@
   - name: Run PowerShell Script
     become_method: runas
     vars:
-    ansible_become_password: "{{ FyvHWAPOnvdhp)uxg(5O$crwtyi-HFYi }}"
-    
-    tasks:
+      ansible_become_password: "{{ FyvHWAPOnvdhp)uxg(5O$crwtyi-HFYi }}"
+   
     win_shell: c:\temp\TestSR.ps1 {{sourceserver}} {{destserver}}
     ignore_errors: yes
     become: yes
