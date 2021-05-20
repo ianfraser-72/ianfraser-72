@@ -32,6 +32,7 @@
     vars:
     ansible_become_password: "{{ FyvHWAPOnvdhp)uxg(5O$crwtyi-HFYi }}"
     
+    tasks:
     win_shell: c:\temp\TestSR.ps1 {{sourceserver}} {{destserver}}
     ignore_errors: yes
     become: yes
