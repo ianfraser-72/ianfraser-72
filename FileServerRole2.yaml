@@ -32,5 +32,5 @@
     vars:
       ansible_become: true
       ansible_become_user: automation.int\Administrator
-      ansible_become_password: {{password}}
+      ansible_become_password: "{{password}}"
       ansible_become_method: runas
