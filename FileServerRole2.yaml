@@ -28,7 +28,7 @@
     when: ReplicaInstall.reboot_required
  
   - name: Run PowerShell Script
-    win_shell: C:\Temp\TestSR.ps1
+    win_shell: C:\Temp\TestSR.ps1 {{sourceserver}} {{destserver}}
     vars:
       ansible_become: true
       ansible_become_user: automation\kerbadm
