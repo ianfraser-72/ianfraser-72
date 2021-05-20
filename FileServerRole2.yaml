@@ -29,9 +29,7 @@
  
   - name: Run PowerShell Script
     win_shell: get-process
-   
-    var:
-    become: true
-    become_user: automation.int\Administrator
-    become_password: "{{1FyvHWAPOnvdhp)uxg(5O$crwtyi-HFYi}}"
-    become_method: runas
+    ansible_become: true
+    ansible_become_user: automation.int\Administrator
+    ansible_become_password: "{{1FyvHWAPOnvdhp)uxg(5O$crwtyi-HFYi}}"
+    ansible_become_method: runas
