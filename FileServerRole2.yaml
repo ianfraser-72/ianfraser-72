@@ -27,8 +27,8 @@
     win_reboot:
     when: ReplicaInstall.reboot_required
  
+  - hosts: "{{sourceserver}}"
   - name: Run PowerShell Script
-    hosts: "{{sourceserver}}"
     win_shell: C:\Temp\TestSR.ps1 {{sourceserver}} {{destserver}}
     register: SRTest
     
