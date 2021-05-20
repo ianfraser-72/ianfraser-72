@@ -28,7 +28,7 @@
     when: ReplicaInstall.reboot_required
       
   - name: Execute Script
-    win_shell: c:\temp\TestSR.ps1
+    win_shell: c:\temp\TestSR.ps1 ansclient01.automation.int ansclient02.automation.int
     ignore_errors: yes
     register: StateOut
   - debug: msg="{{StateOut.rc}}"
