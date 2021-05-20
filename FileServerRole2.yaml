@@ -28,7 +28,7 @@
     when: ReplicaInstall.reboot_required
       
   - name: Run PowerShell Script
-      win_shell: c:\temp\TestSR.ps1 {{sourceserver}} {{destserver}}
+    win_shell: c:\temp\TestSR.ps1 {{sourceserver}} {{destserver}}
      
     vars:
       become: yes
