@@ -25,7 +25,7 @@
     ignore_errors: yes
     register: StateOut
     
-  -debug:
+  - debug:
     var: result
     verbosity: 2
     
