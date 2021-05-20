@@ -39,6 +39,6 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
       
-    - debug:
+  - debug:
       var: SRTest.stdout_lines
     
