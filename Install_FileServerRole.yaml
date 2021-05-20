@@ -9,7 +9,7 @@
       dest: C:\Temp\SRStateCheck.ps1
       force: yes
       
-   - name: Copy TestSR Script
+  - name: Copy TestSR Script
     win_copy:
       src: "{{ playbook_dir }}/TestSR.ps1"
       dest: C:\Temp\TestSR.ps1
