@@ -2,7 +2,7 @@ $state = get-windowsfeature stor*
 $state.name
 if ($state.name -match "Storage-Replica")
 {
-write-host "Replica Installed"
+write-host "Replica Installed1"
 Exit 0
 }
 else
