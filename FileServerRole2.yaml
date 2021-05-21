@@ -80,7 +80,7 @@
     register: result
     when: 
        - tasktype == "Build"
-       - stateresult.rc == 0
+       - stateresult.stderr.find('error') =-1
     
     vars:
       ansible_become: true
