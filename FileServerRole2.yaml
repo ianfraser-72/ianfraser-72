@@ -49,7 +49,7 @@
     win_shell: C:\Temp\SRStateCheck.ps1
     register: stateresult
     
-- hosts: "{{destserver}}"
+- hosts: "ansclient02"
   gather_facts: yes
   tasks:
     
