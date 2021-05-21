@@ -1,2 +1,2 @@
 $serverdatavol = $args[0]
-copy-item "c:\temp\checkflag.txt" -destination $serverdatavol":\checkflag.txt"
+copy-item "c:\temp\checkflag.txt" -destination $serverdatavol":\checkflag.txt" -force
