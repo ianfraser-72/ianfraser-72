@@ -50,7 +50,7 @@
     register: stateresult
     
 - hosts: "{{sourceserver}}"
-  gather_facts: yes
+  gather_facts: no
   tasks:
   
   - name: RunDiskCheckPreTest
