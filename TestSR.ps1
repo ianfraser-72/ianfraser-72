@@ -1,4 +1,10 @@
-# Test Storage Replicate connectivity
-$source = $args[0]
-$destination = $args[1]
-Test-SRTopology -SourceComputerName $source -SourceVolumeName E: -SourceLogVolumeName G: -DestinationComputerName $destination -DestinationVolumeName E: -DestinationLogVolumeName G: -DurationInMinutes 5 -ResultPath c:\temp
+# Test Storage-Replica connectivity
+
+$sourceserver = $args[0]
+$sourcedatavol = $args[1]
+$sourcelogvol = $args[2]
+$destserver = $args[3]
+$destdatavol = $args[4]
+$destlogvol = $args[5]
+
+Test-SRTopology -SourceComputerName $sourceserver -SourceVolumeName $sourcedatavol":" -SourceLogVolumeName $sourcelogvol":" -DestinationComputerName $destserver -DestinationVolumeName $destdatavol":" -DestinationLogVolumeName $destlogvol":" -DurationInMinutes 5 -ResultPath c:\temp
