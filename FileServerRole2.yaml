@@ -64,7 +64,7 @@
     when: 
        - tasktype == "Test"
        - stateresult.rc == 0
-       - resultdisk.rc == 0
+       - resultdisk.stderr == ""
     
     vars:
       ansible_become: true
@@ -80,7 +80,7 @@
     register: result
     when: 
        - tasktype == "Build"
-       - stateresult.stderr == ""
+       - stateresult.rc == 0
     
     vars:
       ansible_become: true
