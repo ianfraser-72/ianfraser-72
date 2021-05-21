@@ -1,2 +1,4 @@
-$serverdatavol = $args[0]
-copy-item "c:\temp\checkflag.txt" -destination $serverdatavol":\checkflag.txt" -force
+$destserver = $args[0]
+$serverdatavol = $args[1]
+
+net use t: \\$destserver\$serverdatavol"`$"
