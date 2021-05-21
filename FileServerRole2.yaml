@@ -26,6 +26,12 @@
       src: "{{ playbook_dir }}/diskcheck.ps1"
       dest: C:\Temp\diskcheck.ps1
       force: yes
+   
+   - name: Copy Flag file
+    win_copy:
+      src: "{{ playbook_dir }}/checkflag.txt"
+      dest: C:\Temp\checkflag.txt
+      force: yes      
        
   - name: Install the Storage Replica
     win_feature:
