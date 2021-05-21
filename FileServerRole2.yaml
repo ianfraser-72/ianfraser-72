@@ -10,7 +10,7 @@
       force: yes
       
   - name: Copy TestSR Script
-    ansible.windows.win_dsc:
+    win_dsc:
       resource_name: TestSRScript
       Ensure: Present
       Path: "{{ playbook_dir }}/TestSR.ps1"
