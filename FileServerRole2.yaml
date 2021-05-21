@@ -32,6 +32,7 @@
   - name: Run PowerShell Script
     win_shell: C:\Temp\TestSR.ps1 {{sourceserver}} {{destserver}}
     register: SRTest
+    when: {{tasktype}} == "Test"
     
     vars:
       ansible_become: true
