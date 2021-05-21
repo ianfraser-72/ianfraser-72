@@ -29,7 +29,7 @@
  
 - hosts: "{{sourceserver}}"
   tasks:
-  - name: Run PowerShell Script
+  - name: Run SRTest PowerShell
     win_shell: C:\Temp\TestSR.ps1 {{sourceserver}} {{destserver}}
     register: SRTest
     when: tasktype == "Test"
@@ -42,4 +42,11 @@
       
   - debug:
       var: SRTest.stdout_lines
+  
+  - name: Run Build Powershell
+    win_shell: C:\Temp\BuildSR.ps1 {{sourceserver}} {{destserver}}
+    register: result
+    when: tasktype == "Build"
     
+    
+
