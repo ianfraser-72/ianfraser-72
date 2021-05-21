@@ -20,7 +20,13 @@
       src: "{{ playbook_dir }}/BuildSR.ps1"
       dest: C:\Temp\BuildSR.ps1
       force: yes
-  
+      
+  - name: Copy Diskcheck Script
+    win_copy:
+      src: "{{ playbook_dir }}/diskcheck.ps1"
+      dest: C:\Temp\diskcheck.ps1
+      force: yes
+       
   - name: Install the Storage Replica
     win_feature:
       name: Storage-Replica
@@ -34,9 +40,13 @@
     when: ReplicaInstall.reboot_required
  
   - name: Run Replica Check
-    win_shell: C:\Temp\SRStateCheck 
-    register: result
+    win_disk_facts:
     
+  - name: RunDiskCheckPreTest
+    win_shell: C:\Temp\Diskcheck.ps1 {{destdatavol}}
+    register: resultdisk
+    ignore_errors: yes
+   
 - hosts: "{{sourceserver}}"
   tasks:
   - name: Run SRTest PowerShell
@@ -45,6 +55,7 @@
     when: 
        - tasktype == "Test"
        - result.rc == 0
+       - resultdisk.rc == 0
     
     vars:
       ansible_become: true
