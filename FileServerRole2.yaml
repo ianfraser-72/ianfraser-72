@@ -53,6 +53,11 @@
   gather_facts: yes
   tasks:
   
+  - name: RunDiskCheckPreTest
+    win_shell: C:\Temp\Diskcheck.ps1 {{destserver}} {{destdatavol}}
+    register: resultdisk
+    ignore_errors: yes 
+
   - name: Run SRTest PowerShell
     win_shell: C:\Temp\TestSR.ps1 {{sourceserver}} {{sourcedatavol}} {{sourcelogvol}} {{destserver}} {{destdatavol}} {{destlogvol}}
     register: SRTest
