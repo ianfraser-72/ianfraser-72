@@ -50,6 +50,7 @@
     register: stateresult
     
 - hosts: "{{destserver}}"
+  gather_facts: no
   tasks:
     
   - name: RunDiskCheckPreTest
@@ -57,8 +58,8 @@
     register: resultdisk
     ignore_errors: yes  
     
-    
 - hosts: "{{sourceserver}}"
+  gather_facts: no
   tasks:
   
   - name: Run SRTest PowerShell
