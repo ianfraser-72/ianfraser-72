@@ -52,7 +52,7 @@
 - hosts: "{{sourceserver}}"
   tasks:
   
-   - name: RunDiskCheckPreTest
+  - name: RunDiskCheckPreTest
     win_shell: C:\Temp\Diskcheck.ps1 {{destdatavol}}
     register: resultdisk
     ignore_errors: yes
