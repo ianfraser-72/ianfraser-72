@@ -40,7 +40,7 @@
 - hosts: "{{sourceserver}}"
   tasks:
   - name: Run SRTest PowerShell
-    win_shell: C:\Temp\TestSR.ps1 {{sourceserver}} {{sourcedatavol}} {{sourcelogvol}} {{sourcerg}} {{destserver}} {{destdatavol}} {{destlogvol}} {{destrg}}
+    win_shell: C:\Temp\TestSR.ps1 {{sourceserver}} {{sourcedatavol}} {{sourcelogvol}} {{destserver}} {{destdatavol}} {{destlogvol}}
     register: SRTest
     when: 
        - tasktype == "Test"
