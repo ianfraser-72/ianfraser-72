@@ -14,6 +14,12 @@
       src: "{{ playbook_dir }}/TestSR.ps1"
       dest: C:\Temp\TestSR.ps1
       force: yes
+      
+  - name: Copy BuildSR Script
+    win_copy:
+      src: "{{ playbook_dir }}/BuildSR.ps1"
+      dest: C:\Temp\BuildSR.ps1
+      force: yes
   
   - name: Install the Storage Replica
     win_feature:
