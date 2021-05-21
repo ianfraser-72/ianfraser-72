@@ -27,12 +27,18 @@
     win_reboot:
     when: ReplicaInstall.reboot_required
  
+  - name: Run Replica Check
+    win_shell: C:\Temp\SRStateCheck 
+    register: result
+    
 - hosts: "{{sourceserver}}"
   tasks:
   - name: Run SRTest PowerShell
     win_shell: C:\Temp\TestSR.ps1 {{sourceserver}} {{sourcedatavol}} {{sourcelogvol}} {{sourcerg}} {{destserver}} {{destdatavol}} {{destlogvol}} {{destrg}}
     register: SRTest
-    when: tasktype == "Test"
+    when: 
+       - tasktype == "Test"
+       - result.rc == 0
     
     vars:
       ansible_become: true
@@ -46,7 +52,10 @@
   - name: Run Build Powershell
     win_shell: C:\Temp\BuildSR.ps1 {{sourceserver}} {{sourcedatavol}} {{sourcelogvol}} {{sourcerg}} {{destserver}} {{destdatavol}} {{destlogvol}} {{destrg}}
     register: result
-    when: tasktype == "Build"
+    when: 
+       -  tasktype == "Build"
+       -  result.rc == 0
+    
     
     
 
