@@ -10,11 +10,10 @@
       force: yes
       
   - name: Copy TestSR Script
-    win_dsc:
-      resource_name: TestSRScript
-      Ensure: Present
-      Path: "{{ playbook_dir }}/TestSR.ps1"
-      Destination: C:\Temp\TestSR.ps1
+    win_copy:
+      src: "{{ playbook_dir }}/TestSR.ps1"
+      dest: C:\Temp\TestSR.ps1
+      force: yes
   
   - name: Install the Storage Replica
     win_feature:
