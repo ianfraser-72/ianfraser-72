@@ -49,15 +49,6 @@
     win_shell: C:\Temp\SRStateCheck.ps1
     register: stateresult
     
-- hosts: "ansclient02"
-  gather_facts: yes
-  tasks:
-    
-  - name: RunDiskCheckPreTest
-    win_shell: C:\Temp\Diskcheck.ps1 {{destdatavol}}
-    register: resultdisk
-    ignore_errors: yes  
-    
 - hosts: "{{sourceserver}}"
   gather_facts: yes
   tasks:
