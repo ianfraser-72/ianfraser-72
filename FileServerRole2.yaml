@@ -49,13 +49,14 @@
     win_shell: C:\Temp\SRStateCheck.ps1
     register: stateresult
     
-  - name: RunDiskCheckPreTest
+- hosts: "{{sourceserver}}"
+  tasks:
+  
+   - name: RunDiskCheckPreTest
     win_shell: C:\Temp\Diskcheck.ps1 {{destdatavol}}
     register: resultdisk
     ignore_errors: yes
-   
-- hosts: "{{sourceserver}}"
-  tasks:
+  
   - name: Run SRTest PowerShell
     win_shell: C:\Temp\TestSR.ps1 {{sourceserver}} {{sourcedatavol}} {{sourcelogvol}} {{destserver}} {{destdatavol}} {{destlogvol}}
     register: SRTest
