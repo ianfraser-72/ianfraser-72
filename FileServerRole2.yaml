@@ -59,7 +59,7 @@
     ignore_errors: yes 
 
   - name: Run SRTest PowerShell
-    win_shell: C:\Temp\TestSR.ps1 {{sourceserver}} {{sourcedatavol}} {{sourcelogvol}} {{destserver}} {{destdatavol}} {{destlogvol}}
+    win_shell: C:\Temp\TestSR.ps1 {{sourceserver}} {{sourcedatavol}} {{sourcelogvol}} "" {{destserver}} {{destdatavol}} {{destlogvol}} ""
     register: SRTest
     when: 
        - tasktype == "Test"
@@ -81,6 +81,7 @@
     when: 
        - tasktype == "Build"
        - stateresult.rc == 0
+       - resultdisk.stderr == ""
     
     vars:
       ansible_become: true
@@ -88,5 +89,16 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
     
+  - name: Run Remove Powershell
+    win_shell: C:\Temp\RemoveSR.ps1 {{sourceserver}} {{sourcedatavol}} {{sourcelogvol}} {{sourcerg}} {{destserver}} {{destdatavol}} {{destlogvol}} {{destrg}}
+    register: result
+    when: 
+       - tasktype == "Remove"
+       - stateresult.rc == 0
     
+    vars:
+      ansible_become: true
+      ansible_become_user: automation\kerbadm
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas
 
