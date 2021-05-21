@@ -45,6 +45,10 @@
     win_reboot:
     when: ReplicaInstall.reboot_required
     
+  - name: run state check 
+    win_shell: C:\Temp\SRStateCheck.ps1
+    register: stateresult
+    
   - name: RunDiskCheckPreTest
     win_shell: C:\Temp\Diskcheck.ps1 {{destdatavol}}
     register: resultdisk
@@ -57,7 +61,7 @@
     register: SRTest
     when: 
        - tasktype == "Test"
-       - result.rc == 0
+       - stateresult.rc == 0
        - resultdisk.rc == 0
     
     vars:
@@ -73,8 +77,8 @@
     win_shell: C:\Temp\BuildSR.ps1 {{sourceserver}} {{sourcedatavol}} {{sourcelogvol}} {{sourcerg}} {{destserver}} {{destdatavol}} {{destlogvol}} {{destrg}}
     register: result
     when: 
-       -  tasktype == "Build"
-       -  result.rc == 0
+       - tasktype == "Build"
+       - stateresult.rc == 0
     
     vars:
       ansible_become: true
