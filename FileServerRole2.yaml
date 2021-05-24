@@ -3,7 +3,6 @@
   gather_facts: yes
   tasks:
   
-   tasks:
   - setup:
     register: ansible_facts
   - debug: item
