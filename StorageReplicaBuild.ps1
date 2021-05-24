@@ -37,11 +37,11 @@ if ($task -eq "diskcheck")
   try 
   {
     net use t: \\$destserver\$serverdatavol"`$"
-    write-output "Performed check - Storage Replica not currently installed so can install"
+    write-host "Performed check - Storage Replica not currently installed so can install"
   }
   catch 
   {
-    write-output "Replica already installed."
+    write-host "Replica already installed."
   }
 }
 
