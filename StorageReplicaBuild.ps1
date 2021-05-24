@@ -14,26 +14,37 @@ param
 [string]$task
 )
 
+function testdisk
 
-function DiskCheck
 {
-$a = New-PSDrive -Name "Public" -PSProvider "FileSystem" -Root "\\ansclient02\e$"
-#net use t: \\$destserver\$serverdatavol"`$"
-#write-output "Performed check - Storage Replica not currently installed so can install"
-write-host $a
-pause
-return $a
+ try 
+  {
+    New-PSDrive -Name "A" -PSProvider "FileSystem" -Root "\\$destserver\$destdatavol$"
+
+    if ($Error[0].Exception.Message -like "*does not exist*")
+    {
+      throw [System.IO.FileNotFoundException]::new("Could not find folder")
+    }
+    else
+    {
+      return
+    }  
+
+  }
+  catch [System.IO.FileNotFoundException]
+  {
+   exit 2 
+  }
 }
 
 If ($task -eq "Build")
 {
-  New-SRPartnership -SourceComputerName $sourceserver -SourceRGName $sourcerg -SourceVolumeName $sourcedatavol":" -SourceLogVolumeName $sourcelogvol":" -DestinationComputerName $destserver -DestinationRGName $destrg -DestinationVolumeName $destdatavol":" -DestinationLogVolumeName $destlogvol":"
+  New-SRPartnership -SourceComputerName $sourceserver -SourceRGName $sourcerg -SourceVolumeName $sourcedatavol":" -SourceLogVolumeName   $sourcelogvol":" -DestinationComputerName $destserver -DestinationRGName $destrg -DestinationVolumeName $destdatavol":" -  DestinationLogVolumeName $destlogvol":"
 }
 
 if ($task -eq "Test")
 {
-  $b = DiskCheck
-  write-host $b
+  testdisk
   Test-SRTopology -SourceComputerName $sourceserver -SourceVolumeName $sourcedatavol":" -SourceLogVolumeName $sourcelogvol":" -DestinationComputerName $destserver -DestinationVolumeName $destdatavol":" -DestinationLogVolumeName $destlogvol":" -DurationInMinutes 5 -ResultPath c:\temp -verbose
 }
 
