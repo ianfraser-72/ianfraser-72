@@ -34,7 +34,7 @@
   tasks:
  
    - name: RunDiskCheckPreTest
-     win_command: "net use t: \\$destserver\$serverdatavol"`$""
+     win_command: "net use t:" "\\$destserver\$serverdatavol"`$""
   
 #  - name: RunDiskCheckPreTest
 #    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "diskcheck" {{destserver}} {{destdatavol}}
