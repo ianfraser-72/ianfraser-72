@@ -63,6 +63,12 @@
     win_shell: C:\Temp\Diskcheck.ps1 {{destserver}} {{destdatavol}}
     register: resultdisk
     ignore_errors: yes 
+    
+    vars:
+      ansible_become: true
+      ansible_become_user: automation\kerbadm
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas
 
   - name: Run SRTest PowerShell
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelog vol{{sourcelogvol}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}}
