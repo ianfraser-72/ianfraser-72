@@ -6,7 +6,7 @@
   - name: Copy Build Script
     win_copy:
       src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
-      dest: C:\Temp\StorageReplicaBuild.ps1"
+      dest: C:\Temp\StorageReplicaBuild.ps1
       force: yes
       
   - name: Copy StateCheck Script
