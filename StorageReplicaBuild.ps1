@@ -50,11 +50,17 @@ if ($task -eq "Test")
   }
 }
 
-if ($task -eq "Remove")
+if ($task -eq "RemoveService")
 {
   Remove-SRPartnership -SourceComputerName $sourceserver -SourceRGName $sourcerg -DestinationComputerName $destserver -DestinationRGName $destrg
-  get-srgroup | Remove-SRGroup -name $_.name
 }
+
+if ($task -eq "RemoveGroup")
+{
+  get-srgroup | Remove-SRGroup -name $_.name -force
+}
+
+
 
 if ($task -eq "statecheck")
 {
