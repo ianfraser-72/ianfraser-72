@@ -64,7 +64,7 @@
     
   - name: Run Remove Service via Powershell
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "RemoveService" -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}}
-    register: removeresult
+    register: removeresultservice
     when: 
        - tasktype == "Remove"
        - stateresult.rc == 0
@@ -81,7 +81,7 @@
 
   - name: Run Remove Groups via Powershell
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "RemoveGroups" -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}}
-    register: removeresult
+    register: removeresultgroups
     when: 
        - tasktype == "Remove"
        - stateresult.rc == 0
