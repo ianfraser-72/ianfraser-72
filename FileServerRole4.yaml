@@ -33,9 +33,10 @@
   gather_facts: no
   tasks:
  
-   - name: RunDiskCheckPreTest
-     win_command: "net use t:"
-     args: "\\$destserver\$serverdatavol$"
+   - name: MapDrive
+       win_mapped_drive: t
+       path: \\{{ $destserver}}\{{$serverdatavol}}$
+       state: present
      
 #  - name: RunDiskCheckPreTest
 #    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "diskcheck" {{destserver}} {{destdatavol}}
