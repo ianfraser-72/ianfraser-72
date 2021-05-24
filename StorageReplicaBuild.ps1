@@ -39,7 +39,7 @@ function testdisk
 
 If ($task -eq "Build")
 {
-  New-SRPartnership -SourceComputerName $sourceserver -SourceRGName $sourcerg -SourceVolumeName $sourcedatavol":" -SourceLogVolumeName   $sourcelogvol":" -DestinationComputerName $destserver -DestinationRGName $destrg -DestinationVolumeName $destdatavol":" -  DestinationLogVolumeName $destlogvol":"
+  New-SRPartnership -SourceComputerName $sourceserver -SourceRGName $sourcerg -SourceVolumeName $sourcedatavol":" -SourceLogVolumeName $sourcelogvol":" -DestinationComputerName $destserver -DestinationRGName $destrg -DestinationVolumeName $destdatavol":" -  DestinationLogVolumeName $destlogvol":"
 }
 
 if ($task -eq "Test")
