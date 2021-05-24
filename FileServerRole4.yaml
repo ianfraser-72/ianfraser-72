@@ -63,7 +63,7 @@
       ansible_become_method: runas
     
   - name: Run Remove Service via Powershell
-    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "RemoveService" -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}}
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "RemoveService" -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
     register: removeresultservice
     when: 
        - tasktype == "Remove"
@@ -80,7 +80,7 @@
   tasks:
 
   - name: Run Remove Groups via Powershell
-    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "RemoveGroups" -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}}
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "RemoveGroups" -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
     register: removeresultgroups
     when: 
        - tasktype == "Remove"
