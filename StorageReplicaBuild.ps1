@@ -37,11 +37,11 @@ if ($task -eq "diskcheck")
   try 
   {
     net use t: \\$destserver\$serverdatavol"`$"
-    write-host "Performed check - Storage Replica not currently installed so can install"
+    write-output "Performed check - Storage Replica not currently installed so can install"
   }
   catch 
   {
-    write-host "Replica already installed."
+    write-output "Replica already installed."
   }
 }
 
@@ -50,12 +50,12 @@ if ($task -eq "statecheck")
    $state = get-windowsfeature stor*
    if ($state.name -match "Storage-Replica")
    {
-   write-host "Storage Replica Installed"
+   write-output "Storage Replica Installed"
    Exit 0
    }
 else
    {
-   write-host "Storage Replica not Installed"
+   write-output "Storage Replica not Installed"
    Exit 2
    }
 }
