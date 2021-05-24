@@ -85,7 +85,7 @@
       ansible_become_method: runas
 
   - name: Process win_shell output
-    set_fact: TestResult.stdout
+    set_fact: "{{resultdisk.stdout}}"
 
 
 
