@@ -2,13 +2,7 @@
 - hosts: all
   gather_facts: yes
   tasks:
-  
-  - setup:
-    register: ansible_facts
-    
-  - debug: item
-    with_dict: ansible_facts
-  
+
   - name: Copy Build Script
     win_copy:
       src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
@@ -45,6 +39,8 @@
       ansible_become_user: automation\kerbadm
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
+  
+  - debug: var=resultdisk.stdout_lines
 
   - name: Run SRTest PowerShell
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelog vol{{sourcelogvol}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}}
@@ -90,8 +86,7 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
 
-  - name: Process win_shell output
-    set_fact: "{{resultdisk.stdout}}"
+  
 
 
 
