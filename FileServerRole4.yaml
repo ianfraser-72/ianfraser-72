@@ -61,8 +61,7 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
       
-  - debug:
-      var: "{{TestResult.stdout_lines}}"
+  - debug: msg="{{TestResult.stdout_lines}}"
   
   - name: Run Build Powershell
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelog vol{{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}}
