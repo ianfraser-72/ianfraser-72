@@ -32,11 +32,14 @@
 - hosts: "{{sourceserver}}"
   gather_facts: no
   tasks:
+ 
+   - name: RunDiskCheckPreTest
+     win_command: "net use t: \\$destserver\$serverdatavol"`$""
   
-  - name: RunDiskCheckPreTest
-    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "diskcheck" {{destserver}} {{destdatavol}}
-    register: resultdisk
-    ignore_errors: yes 
+#  - name: RunDiskCheckPreTest
+#    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "diskcheck" {{destserver}} {{destdatavol}}
+#    register: resultdisk
+#    ignore_errors: yes 
     
     vars:
       ansible_become: true
