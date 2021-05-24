@@ -57,7 +57,6 @@
     when: 
        - tasktype == "Build"
        - stateresult.rc == 0
-       - resultdisk.stderr == ""
     
     vars:
       ansible_become: true
