@@ -52,7 +52,7 @@ if ($task -eq "Test")
 
 if ($task -eq "RemoveService")
 {
-  Remove-SRPartnership -SourceComputerName $sourceserver -SourceRGName $sourcerg -DestinationComputerName $destserver -DestinationRGName $destrg
+  Remove-SRPartnership -SourceComputerName $sourceserver -SourceRGName $sourcerg -DestinationComputerName $destserver -DestinationRGName $destrg -force
 }
 
 if ($task -eq "RemoveGroup")
