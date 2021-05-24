@@ -31,9 +31,9 @@
   
   - name: Win Map Drive
     win_mapped_drive:
-    letter: U
-    path: \\$destserver\$serverdatavol"$"
-    state: present
+      letter: U
+      path: \\$destserver\$serverdatavol"$"
+      state: present
   
   - name: RunDiskCheckPreTest
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "diskcheck" {{destserver}} {{destdatavol}}
