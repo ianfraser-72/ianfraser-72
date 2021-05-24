@@ -3,17 +3,26 @@
 
 param
 (
-[switch]$sourceserver,
-[switch]$sourcedatavol,
-[switch]$sourcelogvol,
-[switch]$sourcerg,
-[switch]$destserver,
-[switch]$destdatavol,
-[switch]$destlogvol,
-[switch]$destrg,
-[switch]$task
-
+[string]$sourceserver,
+[string]$sourcedatavol,
+[string]$sourcelogvol,
+[string]$sourcerg,
+[string]$destserver,
+[string]$destdatavol,
+[string]$destlogvol,
+[string]$destrg,
+[string]$task
 )
+
+
+function DiskCheck
+{
+$a = New-PSDrive -Name "Public" -PSProvider "FileSystem" -Root "\\ansclient02\e$"
+#net use t: \\$destserver\$serverdatavol"`$"
+#write-output "Performed check - Storage Replica not currently installed so can install"
+write-host $a
+return $a
+}
 
 If ($task -eq "Build")
 {
@@ -22,27 +31,14 @@ If ($task -eq "Build")
 
 if ($task -eq "Test")
 {
+  $b = DiskCheck
+  write-host $b
   Test-SRTopology -SourceComputerName $sourceserver -SourceVolumeName $sourcedatavol":" -SourceLogVolumeName $sourcelogvol":" -DestinationComputerName $destserver -DestinationVolumeName $destdatavol":" -DestinationLogVolumeName $destlogvol":" -DurationInMinutes 5 -ResultPath c:\temp -verbose
 }
 
 if ($task -eq "Remove")
 {
   Remove-SRPartnership -SourceComputerName $sourceserver -SourceRGName $sourcerg -DestinationComputerName $destserver -DestinationRGName $destrg
-}
-
-if ($task -eq "diskcheck")
-{
-  $destserver = $args[0]
-  $serverdatavol = $args[1]
-  try 
-  {
-    net use t: \\$destserver\$serverdatavol"`$"
-    write-host "Performed check - Storage Replica not currently installed so can install"
-  }
-  catch 
-  {
-    write-host "Replica already installed."
-  }
 }
 
 if ($task -eq "statecheck")
