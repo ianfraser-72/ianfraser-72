@@ -14,30 +14,6 @@
       src: "{{ playbook_dir }}/SRStateCheck.ps1"
       dest: C:\Temp\SRStateCheck.ps1
       force: yes
-      
-  - name: Copy TestSR Script
-    win_copy:
-      src: "{{ playbook_dir }}/TestSR.ps1"
-      dest: C:\Temp\TestSR.ps1
-      force: yes
-      
-  - name: Copy BuildSR Script
-    win_copy:
-      src: "{{ playbook_dir }}/BuildSR.ps1"
-      dest: C:\Temp\BuildSR.ps1
-      force: yes
-      
-  - name: Copy Diskcheck Script
-    win_copy:
-      src: "{{ playbook_dir }}/diskcheck.ps1"
-      dest: C:\Temp\diskcheck.ps1
-      force: yes
-   
-  - name: Copy Flag file
-    win_copy:
-      src: "{{ playbook_dir }}/checkflag.txt"
-      dest: C:\Temp\checkflag.txt
-      force: yes      
        
   - name: Install the Storage Replica
     win_feature:
@@ -52,7 +28,7 @@
     when: ReplicaInstall.reboot_required
     
   - name: run state check 
-    win_shell: C:\Temp\SRStateCheck.ps1
+    win_shell: C:\Temp\torageReplicaBuild.ps1.ps1 -task "statecheck"
     register: stateresult
     
 - hosts: "{{sourceserver}}"
@@ -60,7 +36,7 @@
   tasks:
   
   - name: RunDiskCheckPreTest
-    win_shell: C:\Temp\Diskcheck.ps1 {{destserver}} {{destdatavol}}
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "diskcheck" {{destserver}} {{destdatavol}}
     register: resultdisk
     ignore_errors: yes 
     
