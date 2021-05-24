@@ -21,6 +21,7 @@ $a = New-PSDrive -Name "Public" -PSProvider "FileSystem" -Root "\\ansclient02\e$
 #net use t: \\$destserver\$serverdatavol"`$"
 #write-output "Performed check - Storage Replica not currently installed so can install"
 write-host $a
+pause
 return $a
 }
 
