@@ -21,7 +21,9 @@
       
   - name: Reboot
     win_reboot:
-    when: ReplicaInstall.reboot_required
+    when: 
+       - tasktype == "Build"
+       - ReplicaInstall.reboot_required
     
   - name: Run state check to see if Replica Installed
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "statecheck"
