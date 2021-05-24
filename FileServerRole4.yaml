@@ -32,7 +32,7 @@
   - name: Win Map Drive
     win_mapped_drive:
     letter: U
-    path: \\$destserver\$serverdatavol"\$"
+    path: \\$destserver\$serverdatavol"$"
     state: present
   
   - name: RunDiskCheckPreTest
