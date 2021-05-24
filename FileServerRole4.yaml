@@ -62,11 +62,11 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
     
-  - name: Run Remove Powershell
+  - name: Run Remove Service via Powershell
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}}
     register: removeresult
     when: 
-       - tasktype == "Remove"
+       - tasktype == "RemoveService"
        - stateresult.rc == 0
     
     vars:
@@ -75,7 +75,23 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
 
-  
+- hosts: all
+  gather_facts: no
+  tasks:
+
+  - name: Run Remove Groups via Powershell
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}}
+    register: removeresult
+    when: 
+       - tasktype == "RemoveGroups"
+       - stateresult.rc == 0
+    
+    vars:
+      ansible_become: true
+      ansible_become_user: automation\kerbadm
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas
+
 
 
 
