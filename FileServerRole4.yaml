@@ -9,19 +9,21 @@
       dest: C:\Temp\StorageReplicaBuild.ps1
       force: yes
        
-  - name: Install the Storage Replica
+  - name: Install the Storage Replica if not present
     win_feature:
       name: Storage-Replica
       state: present
       include_sub_features: yes
       include_management_tools: yes
     register: ReplicaInstall
+    when: 
+      - tasktype == "Build"
       
   - name: Reboot
     win_reboot:
     when: ReplicaInstall.reboot_required
     
-  - name: run state check 
+  - name: Run state check to see if Replica Installed
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "statecheck"
     register: stateresult
     
