@@ -32,8 +32,6 @@
 - hosts: "{{sourceserver}}"
   gather_facts: no
   tasks:
-     
-  - debug: msg="{{resultdisk.stdout}}"
 
   - name: Run SRTest PowerShell
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelog vol{{sourcelogvol}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}}
