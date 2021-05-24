@@ -33,7 +33,7 @@
   gather_facts: no
   tasks:
 
-  - name Test Windows Reg for Replica config
+  - name: Test Windows Reg for Replica config
     win_reg_stat:
       path: HKLM:\SOFTWARE\Microsoft\WVR\ConfigStore\{{sourcerg}}
       name: ReplicationGroupName
