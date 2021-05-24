@@ -22,7 +22,7 @@
     when: ReplicaInstall.reboot_required
     
   - name: run state check 
-    win_shell: C:\Temp\StorageReplicaBuild.ps1.ps1 -task "statecheck"
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "statecheck"
     register: stateresult
     
 - hosts: "{{sourceserver}}"
