@@ -9,7 +9,7 @@ param
 [switch]$destserver,
 [switch]$destdatavol,
 [switch]$destlogvol,
-[switch]$destrg
+[switch]$destrg,
 [switch]$task
 
 )
