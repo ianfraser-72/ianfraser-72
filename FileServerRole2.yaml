@@ -1,8 +1,14 @@
 ---
 - hosts: all
-  gather_facts: no
+  gather_facts: yes
   tasks:
- 
+  
+   tasks:
+  - setup:
+    register: ansible_facts
+  - debug: item
+    with_dict: ansible_facts
+  
   - name: Copy Build Script
     win_copy:
       src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
