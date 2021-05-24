@@ -33,10 +33,11 @@
   gather_facts: no
   tasks:
  
-   - name: MapDrive
-       win_mapped_drive: t
-       path: \\{{ $destserver}}\{{$serverdatavol}}$
-       state: present
+  - name: MapDrive
+    win_mapped_drive:
+      letter: t
+      path: \\{{ $destserver}}\{{$serverdatavol}}$
+      state: present
      
 #  - name: RunDiskCheckPreTest
 #    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "diskcheck" {{destserver}} {{destdatavol}}
