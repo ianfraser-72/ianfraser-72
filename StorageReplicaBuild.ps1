@@ -57,7 +57,7 @@ if ($task -eq "RemoveService")
 
 if ($task -eq "RemoveGroups")
 {
-  get-srgroup | Remove-SRGroup -name $_.name -force
+  get-srgroup | Remove-SRGroup -name {$_.name} -force
 }
 
 
