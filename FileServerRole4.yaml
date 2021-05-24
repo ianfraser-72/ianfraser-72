@@ -1,0 +1,98 @@
+---
+- hosts: all
+  gather_facts: yes
+  tasks:
+
+  - name: Copy Build Script
+    win_copy:
+      src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
+      dest: C:\Temp\StorageReplicaBuild.ps1
+      force: yes
+       
+  - name: Install the Storage Replica
+    win_feature:
+      name: Storage-Replica
+      state: present
+      include_sub_features: yes
+      include_management_tools: yes
+    register: ReplicaInstall
+      
+  - name: Reboot
+    win_reboot:
+    when: ReplicaInstall.reboot_required
+    
+  - name: run state check 
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "statecheck"
+    register: stateresult
+    
+- hosts: "{{sourceserver}}"
+  gather_facts: no
+  tasks:
+  
+  - name: Win Map Drive
+    win_mapped_drive:
+    letter: U
+    path: \\$destserver\$serverdatavol"\$"
+    state: present
+  
+  - name: RunDiskCheckPreTest
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "diskcheck" {{destserver}} {{destdatavol}}
+    register: resultdisk
+    ignore_errors: yes 
+    
+    vars:
+      ansible_become: true
+      ansible_become_user: automation\kerbadm
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas
+  
+  - debug: msg="{{resultdisk.stdout}}"
+
+  - name: Run SRTest PowerShell
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelog vol{{sourcelogvol}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}}
+    register: TestResult
+    when: 
+       - tasktype == "Test"
+       - stateresult.rc == 0
+       - resultdisk.stderr == ""
+    
+    vars:
+      ansible_become: true
+      ansible_become_user: automation\kerbadm
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas
+      
+  - debug:
+      var: "{{TestResult.stdout_lines}}"
+  
+  - name: Run Build Powershell
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelog vol{{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}}
+    register: buildresult
+    when: 
+       - tasktype == "Build"
+       - stateresult.rc == 0
+       - resultdisk.stderr == ""
+    
+    vars:
+      ansible_become: true
+      ansible_become_user: automation\kerbadm
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas
+    
+  - name: Run Remove Powershell
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelog vol{{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}}
+    register: removeresult
+    when: 
+       - tasktype == "Remove"
+       - stateresult.rc == 0
+    
+    vars:
+      ansible_become: true
+      ansible_become_user: automation\kerbadm
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas
+
+  
+
+
+
