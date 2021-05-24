@@ -84,8 +84,8 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
 
-   -name: Process win_shell output
-    set_fact: {{TestResult.stdout}}
+   - name: Process win_shell output
+     set_fact: {{TestResult.stdout}}
 
 
 
