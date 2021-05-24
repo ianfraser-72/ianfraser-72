@@ -42,7 +42,7 @@
 
   - name: Run SRTest PowerShell
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelog vol{{sourcelogvol}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}}
-    register: SRTest
+    register: TestResult
     when: 
        - tasktype == "Test"
        - stateresult.rc == 0
@@ -55,11 +55,11 @@
       ansible_become_method: runas
       
   - debug:
-      var: SRTest.stdout_lines
+      var: {{TestResult.stdout_lines}}
   
   - name: Run Build Powershell
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelog vol{{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}}
-    register: result
+    register: buildresult
     when: 
        - tasktype == "Build"
        - stateresult.rc == 0
@@ -73,7 +73,7 @@
     
   - name: Run Remove Powershell
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelog vol{{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}}
-    register: result
+    register: removeresult
     when: 
        - tasktype == "Remove"
        - stateresult.rc == 0
@@ -83,4 +83,9 @@
       ansible_become_user: automation\kerbadm
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
+
+   -name: Process win_shell output
+    set_fact: {{TestResult.stdout}}
+
+
 
