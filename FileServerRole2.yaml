@@ -40,7 +40,7 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
   
-  - debug: var=resultdisk.stdout_lines
+  - debug: msg=resultdisk.stdout_lines
 
   - name: Run SRTest PowerShell
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelog vol{{sourcelogvol}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}}
