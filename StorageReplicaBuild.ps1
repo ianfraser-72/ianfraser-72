@@ -28,3 +28,10 @@ if ($task -eq "Remove")
 {
 Remove-SRPartnership -SourceComputerName $sourceserver -SourceRGName $sourcerg -DestinationComputerName $destserver -DestinationRGName $destrg
 }
+
+if ($task -eq "diskcheck")
+{
+$destserver = $args[0]
+$serverdatavol = $args[1]
+net use t: \\$destserver\$serverdatavol"`$"
+}
