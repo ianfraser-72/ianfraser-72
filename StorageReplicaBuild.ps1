@@ -44,8 +44,10 @@ If ($task -eq "Build")
 
 if ($task -eq "Test")
 {
-  testdisk
+  if (!(get-srpartnership))
+  {  
   Test-SRTopology -SourceComputerName $sourceserver -SourceVolumeName $sourcedatavol":" -SourceLogVolumeName $sourcelogvol":" -DestinationComputerName $destserver -DestinationVolumeName $destdatavol":" -DestinationLogVolumeName $destlogvol":" -DurationInMinutes 5 -ResultPath c:\temp -verbose
+  }
 }
 
 if ($task -eq "Remove")
