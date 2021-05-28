@@ -39,7 +39,16 @@ function testdisk
 
 If ($task -eq "Build")
 {
-  New-SRPartnership -SourceComputerName $sourceserver -SourceRGName $sourcerg -SourceVolumeName $sourcedatavol":" -SourceLogVolumeName $sourcelogvol":" -DestinationComputerName $destserver -DestinationRGName $destrg -DestinationVolumeName $destdatavol":" -DestinationLogVolumeName $destlogvol":"
+  $tempstring = $sourcedatavol -split ","
+  foreach ($item in $tempstring)
+  {
+  $newstring += $item  + ":`"`,`""
+  }
+  $sourcedatavol = "`"" + $newstring.substring(0,$newstring.length-2)
+  $destdatavol = "`"" + $newstring.substring(0,$newstring.length-2)
+
+  New-SRPartnership -SourceComputerName $sourceserver -SourceRGName $sourcerg -SourceVolumeName $sourcedatavol -SourceLogVolumeName $sourcelogvol -DestinationComputerName $destserver -DestinationRGName $destrg -DestinationVolumeName $destdatavol -DestinationLogVolumeName $destlogvol
+
 }
 
 if ($task -eq "Test")
