@@ -4,11 +4,11 @@
 param
 (
 [string]$sourceserver,
-[string]$sourcedatavol,
+[array]$sourcedatavol,
 [string]$sourcelogvol,
 [string]$sourcerg,
 [string]$destserver,
-[string]$destdatavol,
+[array]$destdatavol,
 [string]$destlogvol,
 [string]$destrg,
 [string]$task
@@ -39,21 +39,18 @@ function testdisk
 
 If ($task -eq "Build")
 {
-  $tempstring = $sourcedatavol -split ","
-  foreach ($item in $tempstring)
-  {
-  $newstring += $item  + ":`"`,`""
-  }
-  $sourcedatavol = "`"" + $newstring.substring(0,$newstring.length-2)
-  $destdatavol = "`"" + $newstring.substring(0,$newstring.length-2)
 
-  New-SRPartnership -SourceComputerName $sourceserver -SourceRGName $sourcerg -SourceVolumeName $sourcedatavol -SourceLogVolumeName $sourcelogvol -DestinationComputerName $destserver -DestinationRGName $destrg -DestinationVolumeName $destdatavol -DestinationLogVolumeName $destlogvol
+$sourcedatavol1 = $sourcedatavol -join ","
+$destdatavol1 = $destdatavol -join ","
 
+$tempstring = "new-srpartnership -SourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -SourceVolumeName $sourcedatavol1 -SourceLogVolumeName $sourcelogvol -DestinationComputerName $destserver -DestinationRGName `"$destrg`" -DestinationVolumeName $destdatavol1 -DestinationLogVolumeName $destlogvol -enableencryption"
+write-host $tempstring
+invoke-expression $tempstring
 }
 
 if ($task -eq "Test")
 {
-  if (!(get-srpartnership))
+  if (!(get-srpartnership))	
   {  
   Test-SRTopology -SourceComputerName $sourceserver -SourceVolumeName $sourcedatavol":" -SourceLogVolumeName $sourcelogvol":" -DestinationComputerName $destserver -DestinationVolumeName $destdatavol":" -DestinationLogVolumeName $destlogvol":" -DurationInMinutes 5 -ResultPath c:\temp -verbose
   }
@@ -61,7 +58,9 @@ if ($task -eq "Test")
 
 if ($task -eq "RemoveService")
 {
-  Remove-SRPartnership -SourceComputerName $sourceserver -SourceRGName $sourcerg -DestinationComputerName $destserver -DestinationRGName $destrg -force
+  $tempstring = "Remove-SRPartnership -SourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver -DestinationRGName `"$destrg`"  -force"
+  write-host $tempstring
+  invoke-expression $tempstring
 }
 
 if ($task -eq "RemoveGroups")
