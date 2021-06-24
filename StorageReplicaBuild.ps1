@@ -68,7 +68,12 @@ if ($task -eq "RemoveGroups")
   get-srgroup | Remove-SRGroup -name {$_.name} -force
 }
 
-
+if ($task -eq "Failback")
+{
+  $tempstring = "Set-SRPartnership -NewSourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver -DestinationRGName `"$destrg`""
+  write-host $tempstring
+  invoke-expression $tempstring
+}
 
 if ($task -eq "statecheck")
 {
