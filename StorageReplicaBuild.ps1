@@ -75,6 +75,23 @@ if ($task -eq "Failback")
   invoke-expression $tempstring
 }
 
+if ($task -eq "Check")
+{
+  $tempstring = "Get-SRGroup"
+  write-host $tempstring
+  invoke-expression $tempstring
+  if ($tempstring.ReplicationStatus -match "ContinuouslyReplicating")
+  {
+   write-host "Replication Status is $($tempstring.ReplicationStatus) for Replication group $($tempstring.name)"
+  }
+  if ($tempstring.ReplicationStatus -notmatch "ConnectingtoSource)
+  {
+   write-host "Replication Status is $($tempstring.ReplicationStatus) for Replication group $($tempstring.name)"
+   Write-host "This will cause data loss"
+  }
+  
+}
+
 if ($task -eq "statecheck")
 {
    $state = get-windowsfeature stor*
