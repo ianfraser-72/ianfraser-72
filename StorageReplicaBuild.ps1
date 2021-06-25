@@ -84,7 +84,7 @@ if ($task -eq "Check")
   {
    write-host "Replication Status is $($tempstring.ReplicationStatus) for Replication group $($tempstring.name)"
   }
-  if ($tempstring.ReplicationStatus -notmatch "ConnectingtoSource)
+  if ($tempstring.ReplicationStatus -notmatch "ConnectingtoSource")
   {
    write-host "Replication Status is $($tempstring.ReplicationStatus) for Replication group $($tempstring.name)"
    Write-host "This will cause data loss"
