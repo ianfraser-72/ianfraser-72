@@ -68,13 +68,13 @@ if ($task -eq "RemoveGroups")
   get-srgroup | Remove-SRGroup -name {$_.name} -force
 }
 
-if ($task -eq "FailbackOnline")
+if ($task -eq "failback_online")
 {
   $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver -DestinationRGName `"$destrg`""
   $run = invoke-expression $runstring
 }
 
-if ($task -eq "CheckReplicationStatus")
+if ($task -eq "check_replication_status")
 {
   $runstring = "Get-SRGroup"
   $run = invoke-expression $runstring
