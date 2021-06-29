@@ -77,17 +77,16 @@ if ($task -eq "FailbackOnline")
 
 if ($task -eq "CheckReplicationStatus")
 {
-  $tempstring = "Get-SRGroup"
-  write-host $tempstring
-  invoke-expression $tempstring
+  $runstring = "Get-SRGroup"
+  $run = invoke-expression $runstring
   if ($tempstring.ReplicationStatus -match "ContinuouslyReplicating")
   {
    write-host "Replication Status is $($tempstring.ReplicationStatus) for Replication group $($tempstring.name)"
   }
-  if ($tempstring.ReplicationStatus -notmatch "ConnectingtoSource")
+  if ($tempstring.ReplicationStatus -match "ConnectingtoSource")
   {
    write-host "Replication Status is $($tempstring.ReplicationStatus) for Replication group $($tempstring.name)"
-   Write-host "This will cause data loss"
+   Write-host "One replication partner is offline, data will be lost if failing back - see doucmentation on how to fail back without losing data"
   }
   
 }
