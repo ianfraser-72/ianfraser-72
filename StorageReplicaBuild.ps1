@@ -70,7 +70,7 @@ if ($task -eq "RemoveGroups")
 
 if ($task -eq "failback_online")
 {
-  $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver -DestinationRGName `"$destrg`""
+  $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver -DestinationRGName `"$destrg`" -force"
   $run = invoke-expression $runstring
 }
 
