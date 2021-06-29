@@ -75,7 +75,7 @@ if ($task -eq "FailbackOnline")
   invoke-expression $tempstring
 }
 
-if ($task -eq "Check")
+if ($task -eq "CheckReplicationStatus")
 {
   $tempstring = "Get-SRGroup"
   write-host $tempstring
