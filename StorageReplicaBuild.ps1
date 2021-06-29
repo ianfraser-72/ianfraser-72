@@ -82,6 +82,7 @@ if ($task -eq "CheckReplicationStatus")
   if ($run.ReplicationStatus -match "ContinuouslyReplicating")
   {
    write-host "Replication Status is $($run.ReplicationStatus) for Replication group $($run.name)"
+   Write-host "Both replication partners are online, and online failback can be used to failback partners"
   }
   if ($run.ReplicationStatus -match "ConnectingtoSource")
   {
