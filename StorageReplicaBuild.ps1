@@ -70,9 +70,8 @@ if ($task -eq "RemoveGroups")
 
 if ($task -eq "FailbackOnline")
 {
-  $tempstring = "Set-SRPartnership -NewSourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver -DestinationRGName `"$destrg`""
-  write-host $tempstring
-  invoke-expression $tempstring
+  $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver -DestinationRGName `"$destrg`""
+  $run = invoke-expression $runstring
 }
 
 if ($task -eq "CheckReplicationStatus")
@@ -82,12 +81,11 @@ if ($task -eq "CheckReplicationStatus")
   if ($run.ReplicationStatus -match "ContinuouslyReplicating")
   {
    write-host "Replication Status is $($run.ReplicationStatus) for Replication group $($run.name)"
-   Write-host "Both replication partners are online, and online failback can be used to failback partners"
   }
   if ($run.ReplicationStatus -match "ConnectingtoSource")
   {
    write-host "Replication Status is $($run.ReplicationStatus) for Replication group $($run.name)"
-   Write-host "One replication partner is offline, data will be lost if failing back - see doucmentation on how to fail back without losing data"
+   Write-host "This will cause data loss"
   }
   
 }
