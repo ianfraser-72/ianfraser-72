@@ -96,7 +96,7 @@
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
     register: checkresults
     when: 
-       - tasktype == "Check"
+       - tasktype == "CheckReplicationStatus"
        - stateresult.rc == 0
     
     vars:
