@@ -56,11 +56,13 @@ if ($task -eq "Test")
   }
   try
   {
+  $run
   Write-host "Test successful. `r`n`r`n$run"
   }
   catch
   {
-   Write-host "Replica failover failed. `r`n`r`n$run"
+   Write-host "Replica failover failed. `r`n`r`n"
+   $run
   }
 }
 
