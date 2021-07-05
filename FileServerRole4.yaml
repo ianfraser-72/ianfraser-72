@@ -48,7 +48,7 @@
     
     vars:
       ansible_become: true
-      ansible_become_user: automation\kerbadm
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WINRM
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
       
@@ -63,7 +63,7 @@
     
     vars:
       ansible_become: true
-      ansible_become_user: automation\kerbadm
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WINRM
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
     
@@ -76,7 +76,7 @@
     
     vars:
       ansible_become: true
-      ansible_become_user: automation\kerbadm
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WINRM
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
 
@@ -93,7 +93,7 @@
     
     vars:
       ansible_become: true
-      ansible_become_user: automation\kerbadm
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WINRM
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
 
@@ -106,7 +106,7 @@
     
     vars:
       ansible_become: true
-      ansible_become_user: automation\kerbadm
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WINRM
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
 
@@ -119,7 +119,7 @@
     
     vars:
       ansible_become: true
-      ansible_become_user: automation\kerbadm
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WINRM
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
 
