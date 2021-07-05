@@ -108,15 +108,16 @@ if ($task -eq "check_replication_status")
 
 if ($task -eq "statecheck")
 {
-   $state = get-windowsfeature stor*
-   if ($state.name -match "Storage-Replica")
-   {
-   write-output "Storage Replica is Installed"
-   Exit 0
-   }
-else
-   {
-   write-output "Storage Replica is not Installed"
-   Exit 2
-   }
+     $state = get-windowsfeature "Storage-Replica" | ? {$_.InstallState -eq 'Installed'}
+     write-host $s.name $s.("install state")
+     if ($state)
+     {
+       write-output "Storage Replica is Installed"
+       Exit 0
+     }
+    else
+     {
+       write-output "Storage Replica is not Installed"
+       Exit 2
+     }
 }
