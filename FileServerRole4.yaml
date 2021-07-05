@@ -7,7 +7,7 @@
     win_copy:
       src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
       dest: C:\Temp\StorageReplicaBuild.ps1
-      force: yes
+      force: no
        
   - name: Install the Storage Replica if not present
     win_feature:
