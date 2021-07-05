@@ -34,8 +34,8 @@
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "statecheck"
     register: stateresult
     
-- hosts: "{{sourceserver}}"
-  gather_facts: no
+- hosts: "{{ sourceserver }}"
+  gather_facts: yes
   tasks:
 
   - name: Run SRTest PowerShell
