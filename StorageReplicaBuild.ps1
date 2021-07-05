@@ -72,6 +72,14 @@ if ($task -eq "failback_online")
 {
   $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver -DestinationRGName `"$destrg`" -force"
   $run = invoke-expression $runstring
+  try
+  {
+  Write-host "Replica failover successful from $sourceserver to $destserver"
+  }
+  catch
+  {
+   Write-host "Replica failover failed from $sourceserver to $destserver"
+  }
 }
 
 if ($task -eq "check_replication_status")
@@ -95,12 +103,12 @@ if ($task -eq "statecheck")
    $state = get-windowsfeature stor*
    if ($state.name -match "Storage-Replica")
    {
-   write-output "Storage Replica Installed"
+   write-output "Storage Replica is Installed"
    Exit 0
    }
 else
    {
-   write-output "Storage Replica not Installed"
+   write-output "Storage Replica is not Installed"
    Exit 2
    }
 }
