@@ -43,9 +43,10 @@ If ($task -eq "Build")
 $sourcedatavol1 = $sourcedatavol -join ","
 $destdatavol1 = $destdatavol -join ","
 
-$tempstring = "new-srpartnership -SourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -SourceVolumeName $sourcedatavol1 -SourceLogVolumeName $sourcelogvol -DestinationComputerName $destserver -DestinationRGName `"$destrg`" -DestinationVolumeName $destdatavol1 -DestinationLogVolumeName $destlogvol -enableencryption"
-write-host $tempstring
-invoke-expression $tempstring
+$run = "new-srpartnership -SourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -SourceVolumeName $sourcedatavol1 -SourceLogVolumeName $sourcelogvol -DestinationComputerName $destserver -DestinationRGName `"$destrg`" -DestinationVolumeName $destdatavol1 -DestinationLogVolumeName $destlogvol -enableencryption"
+write-host $run
+invoke-expression $run
+$run
 }
 
 if ($task -eq "Test")
