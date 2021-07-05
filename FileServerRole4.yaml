@@ -2,6 +2,11 @@
 - hosts: all
   gather_facts: no
   tasks:
+  
+  - name: Create directory structure
+    win_file:
+      path: C:\Temp
+      state: directory
 
   - name: Copy Build Script
     win_copy:
