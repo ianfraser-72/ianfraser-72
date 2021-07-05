@@ -117,6 +117,6 @@ if ($task -eq "statecheck")
     else
      {
        write-output "Storage Replica is not Installed"
-       Exit 2
+       Exit 0
      }
 }
