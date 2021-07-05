@@ -52,7 +52,15 @@ if ($task -eq "Test")
 {
   if (!(get-srpartnership))	
   {  
-  Test-SRTopology -SourceComputerName $sourceserver -SourceVolumeName $sourcedatavol":" -SourceLogVolumeName $sourcelogvol":" -DestinationComputerName $destserver -DestinationVolumeName $destdatavol":" -DestinationLogVolumeName $destlogvol":" -DurationInMinutes 5 -ResultPath c:\temp -verbose
+  $run = Test-SRTopology -SourceComputerName $sourceserver -SourceVolumeName $sourcedatavol":" -SourceLogVolumeName $sourcelogvol":" -DestinationComputerName $destserver -DestinationVolumeName $destdatavol":" -DestinationLogVolumeName $destlogvol":" -DurationInMinutes 5 -ResultPath c:\temp -verbose
+  }
+  try
+  {
+  Write-host "Test successful. `r`n`r`n$run"
+  }
+  catch
+  {
+   Write-host "Replica failover failed. `r`n`r`n$run"
   }
 }
 
