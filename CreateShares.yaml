@@ -5,7 +5,7 @@
   - name: Add hidden share
     win_share:
       name: internal
-      description: top secret share
+      description: Share1 File Share Demo
       path: E:\Share1
       list: no
       full: Administrators
