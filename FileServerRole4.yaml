@@ -80,6 +80,19 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
 
+  - name: Run Online Failback
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
+    register: failbackonline
+    when: 
+       - tasktype == "failback_online"
+       - stateresult.rc == 0
+    
+    vars:
+      ansible_become: true
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas
+
 - hosts: all
   gather_facts: no
   tasks:
@@ -110,16 +123,4 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
 
-  - name: Run Online Failback
-    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
-    register: failbackonline
-    when: 
-       - tasktype == "failback_online"
-       - stateresult.rc == 0
-    
-    vars:
-      ansible_become: true
-      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
-      ansible_become_password: "{{password}}"
-      ansible_become_method: runas
 
