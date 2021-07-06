@@ -3,7 +3,7 @@
   tasks:
 
   - name: Add hidden share
-    ansible.windows.win_share:
+    win_share:
       name: internal
       description: top secret share
       path: E:\Share1
