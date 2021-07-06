@@ -1,0 +1,13 @@
+---
+- hosts: all
+  tasks:
+
+  - name: Add hidden share
+    ansible.windows.win_share:
+      name: internal
+      description: top secret share
+      path: E:\Share1
+      list: no
+      full: Administrators
+      read: u49162
+      deny: !u49162
