@@ -100,11 +100,13 @@ if ($task -eq "check_replication_status")
   if ($run.ReplicationStatus -match "ContinuouslyReplicating")
   {
    write-host "Replication Status is $($run.ReplicationStatus) for Replication group $($run.name)"
+   write-host "Output is $run"
   }
   if ($run.ReplicationStatus -match "ConnectingtoSource")
   {
    write-host "Replication Status is $($run.ReplicationStatus) for Replication group $($run.name)"
    Write-host "This will cause data loss"
+   write-host "Output is $run"
   }
   
 }
