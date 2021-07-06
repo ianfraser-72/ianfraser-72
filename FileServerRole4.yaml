@@ -22,12 +22,12 @@
       include_management_tools: yes
     register: ReplicaInstall
     when: 
-      - tasktype == "Build"
+      - tasktype == "Build_Service"
       
   - name: Reboot
     win_reboot:
     when: 
-       - tasktype == "Build"
+       - tasktype == "Build_Service"
        - ReplicaInstall.reboot_required
     
   - name: Run state check to see if Replica Installed
@@ -41,7 +41,7 @@
   - name: Run SRTest PowerShell
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}}
     when: 
-       - tasktype == "Test"
+       - tasktype == "Pre_Flight_Check"
        - stateresult.rc == 0
        
     register: TestResult
@@ -58,7 +58,7 @@
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}}
     register: buildresult
     when: 
-       - tasktype == "Build"
+       - tasktype == "Build_Service"
        - stateresult.rc == 0
     
     vars:
@@ -68,10 +68,10 @@
       ansible_become_method: runas
     
   - name: Run Remove Service via Powershell
-    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "RemoveService" -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "Remove_Partnership" -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
     register: removeresultservice
     when: 
-       - tasktype == "Remove"
+       - tasktype == "Remove_Partnership"
        - stateresult.rc == 0
     
     vars:
@@ -88,7 +88,7 @@
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "RemoveGroups" -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
     register: removeresultgroups
     when: 
-       - tasktype == "remove"
+       - tasktype == "Remove_Partnership"
        - stateresult.rc == 0
     
     vars:
