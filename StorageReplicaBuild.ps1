@@ -37,7 +37,7 @@ function testdisk
   }
 }
 
-If ($task -eq "Build")
+If ($task -eq "Build_Service")
 {
 
 $sourcedatavol1 = $sourcedatavol -join ","
@@ -49,7 +49,7 @@ invoke-expression $run
 $run
 }
 
-if ($task -eq "Test")
+if ($task -eq "Pre_Flight_Check")
 {
   if (!(get-srpartnership))	
   {  
@@ -67,7 +67,7 @@ if ($task -eq "Test")
   }
 }
 
-if ($task -eq "RemoveService")
+if ($task -eq "Remove_Partnership")
 {
   $tempstring = "Remove-SRPartnership -SourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver -DestinationRGName `"$destrg`"  -force"
   write-host $tempstring
