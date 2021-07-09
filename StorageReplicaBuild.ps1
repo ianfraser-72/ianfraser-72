@@ -51,21 +51,30 @@ $run
 
 if ($task -eq "Pre_Flight_Check")
 {
-  if (!(get-srpartnership))	
-  {  
+  
+  try 
+  {
+  get-srpartnership
+  }
+  catch 
+  { 
   $run = Test-SRTopology -SourceComputerName $sourceserver -SourceVolumeName $sourcedatavol":" -SourceLogVolumeName $sourcelogvol":" -DestinationComputerName $destserver -DestinationVolumeName $destdatavol":" -DestinationLogVolumeName $destlogvol":" -DurationInMinutes 5 -ResultPath c:\temp -verbose
+  $runcmd = $true
   }
-  try
+  
+  if ($runcmd)
   {
-  $run
-  Write-host "Test successful. `r`n`r`n$run"
+    try
+    {
+      $run
+      Write-host "Test successful. `r`n`r`n$run"
+    }
+    catch
+    {
+     Write-host "Test failed. `r`n`r`n"
+     $run
+    }
   }
-  catch
-  {
-   Write-host "Replica failover failed. `r`n`r`n"
-   $run
-  }
-}
 
 if ($task -eq "Remove_Partnership")
 {
