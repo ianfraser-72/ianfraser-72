@@ -119,7 +119,9 @@ if ($task -eq "check_replication_status")
   {
    write-host "Replication Status is $($run.ReplicationStatus) for Replication group $($run.name)"
    Write-host "Be aware, data loss will occur if the failed server comes back online, and this is then made the source server. "
-   write-host "You must repeat the original failover step of making the original destination server the source server, before making the original source server the source server.""
+   write-host "You must repeat the original failover step by running failover online play, and running an online failover step, but ensuring the newly recovered server is the destination server, not the source."
+   write-host "This will ensure new data is replicated to the destination server (the orginal source server)
+   write-hsot "You can then run the failover online play again to re-establsh the original partnership order"
    write-host "Output is $run"
   }
   
