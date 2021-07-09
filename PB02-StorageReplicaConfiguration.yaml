@@ -33,6 +33,7 @@
   - name: Run state check to see if Replica Installed
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "statecheck"
     register: stateresult
+    changed_when: False
     
 - hosts: "{{ sourceserver }}"
   gather_facts: no
