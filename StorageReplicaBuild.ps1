@@ -118,10 +118,7 @@ if ($task -eq "check_replication_status")
   if ($run.ReplicationStatus -match "ConnectingtoSource")
   {
    write-host "Replication Status is $($run.ReplicationStatus) for Replication group $($run.name)"
-   Write-host "Be aware, data loss will occur if the failed server comes back online, and this is then made the source server. "
-   write-host "You must repeat the original failover step by running failover online play, and running an online failover step, but ensuring the newly recovered server is the destination server, not the source."
-   write-host "This will ensure new data is replicated to the destination server (the orginal source server)"
-   write-host "You can then run the failover online play again to re-establsh the original partnership order"
+   Write-host "In this instance it is critical that if the data stored on the new source server during a failing of the original source server is to be retained, certain steps must be followed.Data loss will occur if the failed server comes back online, and this is then immediately made the source server as this will then force replication and deletion from the recovered source to the destination, effectively wiping the newly stored data. To avoid this scenario, you must repeat the original failover step by running the failover online play and ensuring the newly recovered server is the destination server, not the source when updating the survey. This will ensure new data is replicated to the destination server (the original source server). You can then run the failover online play again to re-establish the original partnership order (basically now reversing the source and destination)"
    write-host "Output is $run"
   }
   
