@@ -70,7 +70,7 @@ if ($task -eq "Pre_Flight_Check")
     }
     catch
     {
-     Write-host "Test not run `r`n`r`n"
+     Write-host "Test not run as Storage Replica not installed`r`n`r`n"
     }
   }
   else
