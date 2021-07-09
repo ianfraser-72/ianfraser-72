@@ -75,6 +75,7 @@ if ($task -eq "Pre_Flight_Check")
      $run
     }
   }
+}
 
 if ($task -eq "Remove_Partnership")
 {
