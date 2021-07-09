@@ -58,7 +58,6 @@ if ($task -eq "Pre_Flight_Check")
   }
   catch 
   { 
-  $run = Test-SRTopology -SourceComputerName $sourceserver -SourceVolumeName $sourcedatavol":" -SourceLogVolumeName $sourcelogvol":" -DestinationComputerName $destserver -DestinationVolumeName $destdatavol":" -DestinationLogVolumeName $destlogvol":" -DurationInMinutes 5 -ResultPath c:\temp -verbose
   $runcmd = $true
   }
   
