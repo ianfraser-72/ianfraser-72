@@ -14,7 +14,7 @@
       dest: C:\Temp\StorageReplicaBuild.ps1
       force: yes
        
-  - name: Install the Storage Replica if not present
+  - name: Install the Storage Replica Server Role
     win_feature:
       name: Storage-Replica
       state: present
@@ -30,7 +30,7 @@
        - tasktype == "Build_Service"
        - ReplicaInstall.reboot_required
     
-  - name: Run state check to see if Replica Installed
+  - name: Run state check to see if Replica Installed (PowerShell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "statecheck"
     register: stateresult
     changed_when: False
@@ -39,7 +39,7 @@
   gather_facts: no
   tasks:
 
-  - name: Run SRTest PowerShell
+  - name: Run Pre Test for Storage Replica Connectivity (PowerShell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}}
     when: 
        - tasktype == "Pre_Flight_Check"
@@ -56,7 +56,7 @@
       
   #- debug: msg="{{TestResult.stdout_lines}}"
   
-  - name: Run Build Powershell
+  - name: Create Storage Replica Partnership (Powershell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}}
     register: buildresult
     when: 
@@ -69,7 +69,7 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
     
-  - name: Run Remove Service via Powershell
+  - name: Remove Storage Replica Partnership (Powershell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "Remove_Partnership" -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
     register: removeresultservice
     when: 
@@ -82,7 +82,7 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
 
-  - name: Run Online Failback
+  - name: Run Online Failback (PowerShell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
     register: failbackonline
     when: 
@@ -99,7 +99,7 @@
   gather_facts: no
   tasks:
 
-  - name: Run Remove Groups via Powershell
+  - name: Run Remove Groups (Powershell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "RemoveGroups" -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
     register: removeresultgroups
     when: 
@@ -112,7 +112,7 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
 
-  - name: Check Status of Replication Groups
+  - name: Check Status of Replication Groups (PowerShell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
     register: checkresults
     when: 
