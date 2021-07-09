@@ -30,7 +30,7 @@
        - tasktype == "Build_Service"
        - ReplicaInstall.reboot_required
     
-  - name: Run state check to see if Replica Installed (PowerShell)
+  - name: Check if Storage Replica Server Role is Installed (PowerShell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "statecheck"
     register: stateresult
     changed_when: False
