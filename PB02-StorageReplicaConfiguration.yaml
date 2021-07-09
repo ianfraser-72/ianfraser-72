@@ -46,6 +46,7 @@
        - stateresult.rc == 0
        
     register: TestResult
+    changed_when: False
     
     vars:
       ansible_become: true
