@@ -118,7 +118,8 @@ if ($task -eq "check_replication_status")
   if ($run.ReplicationStatus -match "ConnectingtoSource")
   {
    write-host "Replication Status is $($run.ReplicationStatus) for Replication group $($run.name)"
-   Write-host "This will cause data loss"
+   Write-host "Be aware, data loss will occur if the failed server comes back online, and this is then made the source server. "
+   write-host "You must repeat the original failover step of making the original destination server the source server, before making the original source server the source server.""
    write-host "Output is $run"
   }
   
