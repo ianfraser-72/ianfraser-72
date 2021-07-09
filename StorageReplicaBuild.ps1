@@ -66,15 +66,19 @@ if ($task -eq "Pre_Flight_Check")
   {
     try
     {
-      $run
+      Test-SRTopology -SourceComputerName $sourceserver -SourceVolumeName $sourcedatavol":" -SourceLogVolumeName $sourcelogvol":" -DestinationComputerName $destserver -DestinationVolumeName $destdatavol":" -DestinationLogVolumeName $destlogvol":" -DurationInMinutes 5 -ResultPath c:\temp -verbose
       Write-host "Test successful. `r`n`r`n$run"
     }
     catch
     {
-     Write-host "Test failed. `r`n`r`n"
-     $run
+     Write-host "Test not run `r`n`r`n"
     }
   }
+  else
+  {
+    Write-host "Test not run as Storage Replica not installed`r`n`r`n"
+  }
+  
 }
 
 if ($task -eq "Remove_Partnership")
