@@ -37,6 +37,12 @@ function testdisk
   }
 }
 
+function (StateCheck)
+{
+ $state = get-windowsfeature "Storage-Replica" | ? {$_.InstallState -eq 'Installed'}
+ return $state
+}
+
 If ($task -eq "Build_Service")
 {
 
@@ -126,7 +132,7 @@ if ($task -eq "check_replication_status")
 
 if ($task -eq "statecheck")
 {
-     $state = get-windowsfeature "Storage-Replica" | ? {$_.InstallState -eq 'Installed'}
+     $state = StateCheck
      if ($state)
      {
        write-output "Storage Replica is Installed"
@@ -135,6 +141,8 @@ if ($task -eq "statecheck")
     else
      {
        write-output "Storage Replica is not Installed"
+      
        Exit 0
      }
 }
+
