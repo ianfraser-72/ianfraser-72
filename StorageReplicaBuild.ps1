@@ -73,7 +73,7 @@ if ($task -eq "Pre_Flight_Check")
     try
     {
       $state = Test-SRTopology -SourceComputerName $sourceserver -SourceVolumeName $sourcedatavol":" -SourceLogVolumeName $sourcelogvol":" -DestinationComputerName $destserver -DestinationVolumeName $destdatavol":" -DestinationLogVolumeName $destlogvol":" -DurationInMinutes 1 -ResultPath c:\temp -verbose
-      if !($error) 
+      if (!($error))
       {
       Write-host "Test Successful`r`n`r`n"
       Test-SRTopology -GenerateReport -DataPath "C:\temp" 
