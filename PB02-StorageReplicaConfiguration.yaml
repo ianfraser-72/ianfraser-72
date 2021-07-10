@@ -7,6 +7,7 @@
     win_file:
       path: C:\Temp
       state: directory
+      ignore_errors: yes
 
   - name: Copy Build Script
     win_copy:
