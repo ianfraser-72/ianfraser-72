@@ -92,9 +92,17 @@ if ($task -eq "Remove_Partnership")
 {
   $sourceserver = $sourceserver.split(".")
   $desterver = $destserver.split(".")
-  $tempstring = "Remove-SRPartnership -SourceComputerName $($sourceserver[0]) -SourceRGName `"$sourcerg`" -DestinationComputerName $($destserver[0]) -DestinationRGName `"$destrg`"  -force"
-  write-host $tempstring
-  invoke-expression $tempstring
+  try 
+  {
+  $run = Remove-SRPartnership -SourceComputerName $($sourceserver[0]) -SourceRGName `"$sourcerg`" -DestinationComputerName $($destserver[0]) -DestinationRGName `"$destrg`"  -force"
+  Write-host "Partnership removed`r`n`r`n"
+  $run
+  }
+  catch
+  {
+   Write-host "No partnership to remove`r`n`r`n"
+   $run
+  }
 }
 
 if ($task -eq "RemoveGroups")
