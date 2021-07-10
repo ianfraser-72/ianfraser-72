@@ -5,9 +5,9 @@
   
   - name: Create directory structure
     win_file:
+      ignore_errors: yes
       path: C:\Temp
       state: directory
-      ignore_errors: yes
       failed_when: result.rc "Does not exist" not in result.stdout
       
   - name: Copy Build Script
