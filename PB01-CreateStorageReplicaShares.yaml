@@ -11,3 +11,4 @@
       full: Administrators
       read: u49162
       deny: gph
+      when: tasktype == "Build_Service"
