@@ -77,7 +77,7 @@ if ($task -eq "Pre_Flight_Check")
       {
       Write-host "Test Successful`r`n`r`n"
       Test-SRTopology -GenerateReport -DataPath "C:\temp" 
-      }
+      }      
     }
     catch
     {
