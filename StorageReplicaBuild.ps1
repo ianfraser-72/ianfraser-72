@@ -90,10 +90,10 @@ if ($task -eq "Pre_Flight_Check")
 
 if ($task -eq "Remove_Partnership")
 {
-  $sourceserver = $sourceserver.split(".")
-  $desterver = $destserver.split(".")
-  $sourceserver = $sourceserver[0]
-  $destserver = $destserver[0]
+  $sourceserver1 = $sourceserver.split(".")
+  $desterver1 = $destserver.split(".")
+  $sourceserver = $sourceserver1[0]
+  $destserver = $destserver1[0]
   try 
   {
   $runstring = "Remove-SRPartnership -SourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver) -DestinationRGName `"$destrg`"  -force"
