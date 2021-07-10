@@ -8,7 +8,8 @@
       path: C:\Temp
       state: directory
       ignore_errors: yes
-
+      failed_when: result.rc "Does not exist" not in result.stdout
+      
   - name: Copy Build Script
     win_copy:
       src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
