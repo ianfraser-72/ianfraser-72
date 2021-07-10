@@ -37,7 +37,7 @@ function testdisk
   }
 }
 
-function (StateCheck)
+function StateCheck
 {
  $state = get-windowsfeature "Storage-Replica" | ? {$_.InstallState -eq 'Installed'}
  return $state
