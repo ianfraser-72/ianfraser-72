@@ -90,7 +90,9 @@ if ($task -eq "Pre_Flight_Check")
 
 if ($task -eq "Remove_Partnership")
 {
-  $tempstring = "Remove-SRPartnership -SourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver -DestinationRGName `"$destrg`"  -force"
+  $sourceserver = $sourceserver.split(".")
+  $desterver = $destserver.split(".")
+  $tempstring = "Remove-SRPartnership -SourceComputerName $sourceserver[0] -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver[0] -DestinationRGName `"$destrg`"  -force"
   write-host $tempstring
   invoke-expression $tempstring
 }
