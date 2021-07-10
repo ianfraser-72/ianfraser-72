@@ -95,7 +95,7 @@ if ($task -eq "Remove_Partnership")
   try 
   {
   $runstring = "Remove-SRPartnership -SourceComputerName $($sourceserver[0]) -SourceRGName `"$sourcerg`" -DestinationComputerName $($destserver[0]) -DestinationRGName `"$destrg`"  -force"
-  $runstring
+  $run = invoke-expression $runstring
   }
   catch
   {
