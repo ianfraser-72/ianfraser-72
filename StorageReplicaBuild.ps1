@@ -91,7 +91,7 @@ if ($task -eq "Pre_Flight_Check")
 if ($task -eq "Remove_Partnership")
 {
   $sourceserver1 = $sourceserver.split(".")
-  $desterver1 = $destserver.split(".")
+  $destserver1 = $destserver.split(".")
   $sourceserver2 = $sourceserver1[0]
   $destserver2 = $destserver1[0]
   try 
