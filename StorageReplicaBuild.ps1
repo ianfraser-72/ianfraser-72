@@ -61,10 +61,11 @@ if ($task -eq "Pre_Flight_Check")
   try 
   {
   get-srpartnership
+  $runcmd = $true
   }
   catch 
   { 
-  $runcmd = $true
+  $runcmd = $false
   }
   
   if ($runcmd)
