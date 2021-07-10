@@ -23,6 +23,7 @@
     register: ReplicaInstall
     when: 
       - tasktype == "Build_Service"
+      - tasktype == "Pre_Flight_Check"
       
   - name: Reboot
     win_reboot:
