@@ -22,8 +22,7 @@
       include_sub_features: yes
       include_management_tools: yes
     register: ReplicaInstall
-    when: 
-      - tasktype == "Build_Service" or tasktype == "Pre_Flight_Check"
+    when: (tasktype == "Build_Service") or (tasktype == "Pre_Flight_Check")
       
   - name: Reboot
     win_reboot:
