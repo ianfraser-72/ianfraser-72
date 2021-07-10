@@ -105,7 +105,6 @@
     register: removeresultgroups
     when: 
        - tasktype == "Remove_Partnership"
-       - removeresultservice.rc == 0
        - stateresult.rc == 0
     
     vars:
