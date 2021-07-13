@@ -32,12 +32,12 @@
       include_sub_features: yes
       include_management_tools: yes
     register: ReplicaInstall
-    when: (tasktype == "Remove_Partnership")
+    when: (tasktype == "Remove_Role")
       
   - name: Reboot
     win_reboot:
     when: 
-    - (tasktype == "Build_Service") or (tasktype == "Pre_Flight_Check") or (tasktype == "Remove_Partnership")
+    - (tasktype == "Build_Service") or (tasktype == "Pre_Flight_Check") or (tasktype == "Remove_Role")
     - ReplicaInstall.reboot_required
     
   - name: Check if Storage Replica Server Role is Installed (PowerShell)
