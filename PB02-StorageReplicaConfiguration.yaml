@@ -37,7 +37,7 @@
   - name: Reboot
     win_reboot:
     when: 
-    - (tasktype == "Build_Service") or (tasktype == "Pre_Flight_Check") 
+    - (tasktype == "Build_Service") or (tasktype == "Pre_Flight_Check") or (tasktype == "Remove_Partnership")
     - ReplicaInstall.reboot_required
     
   - name: Check if Storage Replica Server Role is Installed (PowerShell)
