@@ -34,13 +34,13 @@
     register: ReplicaRemove
     when: (tasktype == "Remove_Replica_Role")
  
-  - name: Reboot
+  - name: RebootInstall
     win_reboot:
     when: 
        - ReplicaInstall.reboot_required 
        - (tasktype == "Build_Service") or (tasktype == "Pre_Flight_Check")
     
-  - name: Reboot
+  - name: RebootRemove
     win_reboot:
     when: 
        - ReplicaRemove.reboot_required
