@@ -150,7 +150,9 @@ if ($task -eq "Check_Replication_Status")
    write-host $run
   }
   else
+  {
   write-host "no compare" $run
+  }
   
 }
 
