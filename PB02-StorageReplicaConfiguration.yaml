@@ -25,6 +25,15 @@
     register: ReplicaInstall
     when: (tasktype == "Build_Service") or (tasktype == "Pre_Flight_Check")
       
+  - name: Remove the Storage Replica Server Role
+    win_feature:
+      name: Storage-Replica
+      state: absent
+      include_sub_features: yes
+      include_management_tools: yes
+    register: ReplicaInstall
+    when: (tasktype == "Remove Service")
+      
   - name: Reboot
     win_reboot:
     when: 
