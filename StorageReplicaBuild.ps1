@@ -115,7 +115,7 @@ if ($task -eq "RemoveGroups")
   get-srgroup | Remove-SRGroup -name {$_.name} -force
 }
 
-if ($task -eq "failback_online")
+if ($task -eq "failover")
 {
   $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver -DestinationRGName `"$destrg`" -force"
   $run = invoke-expression $runstring
