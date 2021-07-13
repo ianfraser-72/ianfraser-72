@@ -23,7 +23,7 @@
       include_sub_features: yes
       include_management_tools: yes
     register: ReplicaInstall
-    when: (tasktype == "Build_Service") or (tasktype == "Pre_Flight_Check")
+    when: (tasktype == "Build_Service") or (tasktype == "Check_Connectivity")
  
   - name: Remove the Storage Replica Server Role
     win_feature:
@@ -37,7 +37,7 @@
   - name: RebootInstall
     win_reboot:
     when: 
-       - (tasktype == "Build_Service") or (tasktype == "Pre_Flight_Check")
+       - (tasktype == "Build_Service") or (tasktype == "Check_Connectivity")
        - ReplicaInstall.reboot_required 
     
   - name: RebootRemove
@@ -58,7 +58,7 @@
   - name: Run Pre Test for Storage Replica Connectivity (PowerShell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}}
     when: 
-       - tasktype == "Pre_Flight_Check"
+       - tasktype == "Check_Connectivity"
        - stateresult.rc == 0
        
     register: TestResult
