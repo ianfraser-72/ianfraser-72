@@ -25,11 +25,19 @@
     register: ReplicaInstall
     when: (tasktype == "Build_Service") or (tasktype == "Pre_Flight_Check")
  
+ - name: Remove the Storage Replica Server Role
+    win_feature:
+      name: Storage-Replica
+      state: present
+      include_sub_features: yes
+      include_management_tools: yes
+    register: ReplicaRemove
+    when: (tasktype == "Build_Service") or (tasktype == "Pre_Flight_Check")
+ 
   - name: Reboot
     win_reboot:
-    when: 
-    - (tasktype == "Build_Service") or (tasktype == "Pre_Flight_Check")
-    - ReplicaInstall.reboot_required
+    when: (ReplicaInstall.reboot_required) or (ReplicaRemove.reboot_required)
+    
     
   - name: Check if Storage Replica Server Role is Installed (PowerShell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "statecheck"
