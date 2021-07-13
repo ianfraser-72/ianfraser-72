@@ -132,10 +132,11 @@ if ($task -eq "failover")
 if ($task -eq "Check_Replication_Status")
 {
   
-  $runstring1 = Get-SRPartnership
-  $run1 = invoke-expression $runstring1
-  write-host "Replica Partner Status is"
-  write-host $run1
+  $runstring = Get-SRPartnership
+  $partners = invoke-expression $runstring
+  write-host "Replica Partners are"
+  write-host "Source: " $partners.sourcecomputername
+  write-host "Partners: " $partners.destinationcomputername
   
   $runstring = "Get-SRGroup"
   $run = invoke-expression $runstring
