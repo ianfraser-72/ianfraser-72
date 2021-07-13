@@ -149,6 +149,8 @@ if ($task -eq "Check_Replication_Status")
    Write-host "Replication suspended check connectivity"
    write-host $run
   }
+  else
+  write-host "no compare" $run
   
 }
 
