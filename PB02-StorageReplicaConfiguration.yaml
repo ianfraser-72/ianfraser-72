@@ -37,14 +37,14 @@
   - name: RebootInstall
     win_reboot:
     when: 
-       - ReplicaInstall.reboot_required 
        - (tasktype == "Build_Service") or (tasktype == "Pre_Flight_Check")
+       - ReplicaInstall.reboot_required 
     
   - name: RebootRemove
     win_reboot:
     when: 
-       - ReplicaRemove.reboot_required
        - tasktype == "Remove_Replica_Role"
+       - ReplicaRemove.reboot_required
     
   - name: Check if Storage Replica Server Role is Installed (PowerShell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "statecheck"
