@@ -32,7 +32,7 @@
       include_sub_features: yes
       include_management_tools: yes
     register: ReplicaInstall
-    when: (tasktype == "Remove Service")
+    when: (tasktype == "Remove_Partnership")
       
   - name: Reboot
     win_reboot:
