@@ -11,7 +11,8 @@ param
 [array]$destdatavol,
 [string]$destlogvol,
 [string]$destrg,
-[string]$task
+[string]$task,
+[string]$replicationmode
 )
 
 function testdisk
@@ -49,7 +50,7 @@ If ($task -eq "Build_Service")
 $sourcedatavol1 = $sourcedatavol -join ","
 $destdatavol1 = $destdatavol -join ","
 
-$run = "new-srpartnership -SourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -SourceVolumeName $sourcedatavol1 -SourceLogVolumeName $sourcelogvol -DestinationComputerName $destserver -DestinationRGName `"$destrg`" -DestinationVolumeName $destdatavol1 -DestinationLogVolumeName $destlogvol -enableencryption"
+$run = "new-srpartnership -SourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -SourceVolumeName $sourcedatavol1 -SourceLogVolumeName $sourcelogvol -DestinationComputerName $destserver -DestinationRGName `"$destrg`" -DestinationVolumeName $destdatavol1 -DestinationLogVolumeName $destlogvol -enableencryption -replicationmode $replicationmode"
 write-host $run
 invoke-expression $run
 $run
