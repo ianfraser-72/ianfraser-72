@@ -59,7 +59,7 @@
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
     register: failbackonline
     when: 
-       - tasktype == "failback_online"
+       - tasktype == "failover"
        - stateresult.rc == 0
     
     vars:
