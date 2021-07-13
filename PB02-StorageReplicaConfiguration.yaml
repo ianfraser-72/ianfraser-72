@@ -28,11 +28,11 @@
  - name: Remove the Storage Replica Server Role
     win_feature:
       name: Storage-Replica
-      state: present
+      state: absent
       include_sub_features: yes
       include_management_tools: yes
     register: ReplicaRemove
-    when: (tasktype == "Build_Service") or (tasktype == "Pre_Flight_Check")
+    when: (tasktype == "Remove_Replica_Role")
  
   - name: Reboot
     win_reboot:
