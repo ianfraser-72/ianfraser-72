@@ -146,7 +146,7 @@ if ($task -eq "Check_Replication_Status")
   
   $runstring = "Get-SRGroup"
   $run = invoke-expression $runstring
-  write-host "Status now is" $run.ReplicationStatus
+
   if ($run.ReplicationStatus -match "ContinuouslyReplicating")
   {
    write-host "Replication Status is $($run.ReplicationStatus) for Replication group $($run.name)"
