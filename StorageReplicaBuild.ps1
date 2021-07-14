@@ -38,7 +38,7 @@ function testdisk
   }
 }
 
-function StateCheck
+function ReplicaInstallCheck
 {
  $state = get-windowsfeature "Storage-Replica" | ? {$_.InstallState -eq 'Installed'}
  return $state
@@ -64,12 +64,15 @@ if ($task -eq "Check_Connectivity")
   get-srpartnership
   $runcmd = $true
   }
-  catch 
+  catch [System.Management.Automation.CommandNotFoundException]
+  Write-host "Test not run as Storage Replica not installed`r`n`r`n"
+  exit 1
   { 
+  
   $runcmd = $false
   }
   
-  if ($runcmd)
+  if ($runcmd -eq $true)
   {
     try
     {
@@ -158,7 +161,7 @@ if ($task -eq "Check_Replication_Status")
 
 if ($task -eq "statecheck")
 {
-     $state = StateCheck
+     $state = ReplicaInstallCheck
      if ($state)
      {
        write-output "Storage Replica is Installed"
@@ -166,8 +169,7 @@ if ($task -eq "statecheck")
      }
     else
      {
-       write-output "Storage Replica is not Installed"
-      
+       write-output "Storage Replica is not Installed"   
        Exit 0
      }
 }
