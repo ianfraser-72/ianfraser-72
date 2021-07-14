@@ -108,7 +108,7 @@ if ($task -eq "Remove_Partnership")
   }
   catch
   {
-   Write-host "Partnership not removed command not found"
+   Write-host "No partnership to remove"
    Write-host $error
   }
   finally
@@ -122,7 +122,7 @@ if ($task -eq "RemoveGroups")
   try
   {
     $run = "get-srgroup | Remove-SRGroup -name {$_.name} -force -erroraction stop"
-    if ($run -ne "")
+    if ($run -ne $null)
     {
     Write-host "Groups Removed"
     }
