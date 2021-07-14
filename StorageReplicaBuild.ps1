@@ -119,6 +119,7 @@ if ($task -eq "Remove_Partnership")
 if ($task -eq "RemoveGroups")
 {
   try
+  {
   $run = get-srgroup | Remove-SRGroup -name {$_.name} -force
   Write-host "Groups Removed"
   }
