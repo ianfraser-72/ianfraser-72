@@ -1,0 +1,15 @@
+---
+- hosts: "{{ sourceserver }}"
+  gather_facts: no
+  tasks:
+
+  - name: Add hidden share
+    win_share:
+      name: internal
+      description: Share1 File Share Demo
+      path: F:\Share1
+      list: no
+      full: Administrators
+      read: u49162
+      deny: gph
+    when: tasktype == "Build_Service"
