@@ -65,8 +65,9 @@ if ($task -eq "Check_Connectivity")
   $runcmd = $true
   }
   catch [System.Management.Automation.CommandNotFoundException]
+  {
   Write-host "Test not run as Storage Replica not installed`r`n`r`n"
-  exit 1
+  exit 1}
   { 
   
   $runcmd = $false
