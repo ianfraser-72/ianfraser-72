@@ -135,8 +135,17 @@ if ($task -eq "failover")
 
 if ($task -eq "Check_Replication_Status")
 {
+  try
+  {
   $partners = Get-SRPartnership
   write-host $partners
+  
+  }
+  Catch [System.Management.Automation.CommandNotFoundException] 
+  {
+  write-host "Storage Replica not installed so cant check connectivity!")
+  exit 1
+  }
   
   $runstring = "Get-SRGroup"
   $run = invoke-expression $runstring
