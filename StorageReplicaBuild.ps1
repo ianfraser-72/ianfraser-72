@@ -67,10 +67,8 @@ if ($task -eq "Check_Connectivity")
   catch [System.Management.Automation.CommandNotFoundException]
   {
   Write-host "Test not run as Storage Replica not installed`r`n`r`n"
-  exit 1}
-  { 
-  
   $runcmd = $false
+  exit 1
   }
   
   if ($runcmd -eq $true)
@@ -139,11 +137,10 @@ if ($task -eq "Check_Replication_Status")
   {
   $partners = Get-SRPartnership
   write-host $partners
-  
   }
   Catch [System.Management.Automation.CommandNotFoundException] 
   {
-  write-host "Storage Replica not installed so cant check Replicaiton Status!")
+  write-host "Storage Replica not installed so cant check Replication Status!"
   exit 1
   }
   
