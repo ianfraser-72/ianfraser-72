@@ -143,7 +143,7 @@ if ($task -eq "Check_Replication_Status")
   }
   Catch [System.Management.Automation.CommandNotFoundException] 
   {
-  write-host "Storage Replica not installed so cant check connectivity!")
+  write-host "Storage Replica not installed so cant check Replicaiton Status!")
   exit 1
   }
   
