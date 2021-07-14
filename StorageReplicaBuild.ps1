@@ -56,7 +56,7 @@ invoke-expression $run
 $run
 }
 
-if ($task -eq "Pre_Flight_Check")
+if ($task -eq "Check_Connectivity")
 {
   
   try 
