@@ -164,6 +164,11 @@ if ($task -eq "Check_Replication_Status")
    Write-host "Replication suspended check connectivity"
    write-host $run
   }  
+   if ($run.ReplicationStatus -eq $null)
+  {
+   write-host "No Replication Group found, partnership not present"
+   write-host $run
+  }  
 }
 
 if ($task -eq "statecheck")
