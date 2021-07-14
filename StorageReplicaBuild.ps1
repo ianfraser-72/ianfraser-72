@@ -121,8 +121,11 @@ if ($task -eq "RemoveGroups")
 {
   try
   {
-  $run = "get-srgroup | Remove-SRGroup -name {$_.name} -force -erroraction stop"
-  Write-host "Groups Removed"
+    $run = "get-srgroup | Remove-SRGroup -name {$_.name} -force -erroraction stop"
+    if ($run -ne "")
+    {
+    Write-host "Groups Removed"
+    }
   }
   catch
   {
