@@ -186,6 +186,12 @@ if ($task -eq "Check_Replication_Status")
    Write-host "Replication suspended check connectivity"
    write-host $run
   }  
+  if ($run.ReplicationStatus -match "InitialBlockCopy")
+  {
+   write-host "Replication Status is $($run.ReplicationStatus) for Replication group $($run.name)"
+   Write-host "Still copying initial block data after creation - failover will not be possible"
+   write-host $run
+  }  
    if ($run.ReplicationStatus -eq $null)
   {
    write-host "No Replication Group found, partnership not present"
