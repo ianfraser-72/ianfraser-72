@@ -140,15 +140,16 @@ if ($task -eq "RemoveGroups")
 
 if ($task -eq "failover")
 {
-  $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver -DestinationRGName `"$destrg`" -force"
-  $run = invoke-expression $runstring
-  try
+  try 
   {
+  $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver -DestinationRGName `"$destrg`" -force -erroraction stop"
+  $run = invoke-expression $runstring
   Write-host "Replica failover successful from $sourceserver to $destserver"
   }
   catch
   {
-   Write-host "Replica failover failed from $sourceserver to $destserver"
+  Write-host "Replica failover failed from $sourceserver to $destserver"
+  $error
   }
 }
 
