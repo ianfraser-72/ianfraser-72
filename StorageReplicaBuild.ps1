@@ -126,10 +126,14 @@ if ($task -eq "RemoveGroups")
     {
     Write-host "Groups Removed"
     }
+    else
+    {
+     Write-host "No Groups found to Remove"
+    }  
   }
   catch
   {
-    Write-host "Groups Not Removed"
+    Write-host "Groups Not Removed command failed"
     Write-host $error
   }
   finally
