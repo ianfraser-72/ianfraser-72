@@ -108,7 +108,7 @@ if ($task -eq "Remove_Partnership")
   }
   catch
   {
-   Write-host "Partnership not removed command not found
+   Write-host "Partnership not removed command not found"
    Write-host $error
   }
   finally
