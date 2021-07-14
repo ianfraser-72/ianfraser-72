@@ -118,6 +118,14 @@ if ($task -eq "RemoveGroups")
 {
   $run = get-srgroup | Remove-SRGroup -name {$_.name} -force
   $run
+  try
+  {
+  Write-host "Groups Removed"
+  }
+  catch
+  {
+    Write-host "Groups Not Removed"
+  }
 }
 
 if ($task -eq "failover")
