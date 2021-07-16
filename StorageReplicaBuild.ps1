@@ -144,11 +144,11 @@ if ($task -eq "failover")
   {
   $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver -DestinationRGName `"$destrg`" -force -erroraction stop"
   $run = invoke-expression $runstring
-  Write-host "Replica failover successful from $sourceserver to $destserver"
+  Write-host "Replica failover successful - new sourceserver is $sourceserver and destination server is $destserver"
   }
   catch
   {
-  Write-host "Replica failover failed from $sourceserver to $destserver"
+  Write-host "Replica failover failed for source server $sourceserver and destination server $destserver"
   $error
   }
 }
