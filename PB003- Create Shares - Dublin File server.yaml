@@ -23,13 +23,7 @@
       full: Administrators,Global\FIL_ACL_DUB_Home_F
       read: u49162
     when: (tasktype == "Build_Service") or (tasktype == "failover")
-
-  - name: Disable inherited ACL's for E:\
-    win_acl_inheritance:
-      path: E:\
-      state: absent  
-      reorganize: yes
-      
+ 
   - name: Remove NTFS ACL's on Root Volume. Everyone - ExecuteFile,Read
     win_acl:
       user: Everyone
@@ -45,7 +39,7 @@
       path: E:\
       type: allow
       rights: FullControl
-      propagation: NoPropagateInherit
+      propagation: 'None'
     when: (tasktype == "Build_Service") or (tasktype == "failover")
         
   - name: Add NTFS ACLS's Read and Execute on Aplications Folder. Global\FIL_ACL_DUB_Applications_RX ExecuteFile,Read
