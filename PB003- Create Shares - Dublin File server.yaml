@@ -29,6 +29,7 @@
       path: E:\Applications
       type: allow
       rights: ExecuteFile,Read
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
       
   - name: Set NTFS ACLS's Read and Execute on Aplications Folder
     win_acl:
@@ -36,3 +37,4 @@
       path: E:\Applications
       type: allow
       rights: ExecuteFile,Read
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
