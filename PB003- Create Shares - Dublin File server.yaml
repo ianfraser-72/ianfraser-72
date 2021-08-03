@@ -36,30 +36,7 @@
       state: absent
       rights: ExecuteFile,Read
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
-      
-  - name: Remove NTFS ACL's on Root Volume. Users
-    win_acl:
-      user: Users
-      path: E:\
-      type: allow
-      state: absent
-      rights: CreateDirectories,AppendData,CreateFiles,ExecuteFile,ListDirectory,Traverse,ReadData,Read,ReadAttributes,ReadExtendedAttributes,ReadPermissions
-    when: (tasktype == "Build_Service") or (tasktype == "failover")     
-    
-  - name: Remove NTFS ACL's on Root Volume. Users - CreateDirectories,AppendData
-    win_acl:
-      user: Users
-      path: E:\
-      type: allow
-      state: absent
-      rights: CreateDirectories,AppendData
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
-      
-  - name: Win_shell Remove NTFS ACL's on Root Volume. Users all perms.
-    win_shell:
-      icacls  e:\ /remove users /T
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
-    
+
   - name: Add NTFS ACL's on Root Volume. Global\FIL_ACLROOT_DRV-E_DUB_F ExecuteFile,Read
     win_acl:
       user: Global\FIL_ACLROOT_DRV-E_DUB_F
@@ -67,8 +44,7 @@
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
-    
-      
+        
   - name: Add NTFS ACLS's Read and Execute on Aplications Folder. Global\FIL_ACL_DUB_Applications_RX ExecuteFile,Read
     win_acl:
       user: Global\FIL_ACL_DUB_Applications_RX
