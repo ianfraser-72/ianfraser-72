@@ -24,7 +24,7 @@
     when: (tasktype == "Build_Service") or (tasktype == "failover")
 
   - name: Disable inherited ACL's for E:\
-      win_acl_inheritance:
+    win_acl_inheritance:
       path: E:\
       state: absent  
       
