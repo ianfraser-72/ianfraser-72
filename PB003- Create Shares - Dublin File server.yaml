@@ -53,7 +53,8 @@
       type: allow
       state: absent
       rights: CreateDirectories,AppendData
-    when: (tasktype == "Build_Service") or (tasktype == "failover")   
+      
+    winshell: icacls  e:\ /remove users /T
     
   - name: Add NTFS ACL's on Root Volume. Global\FIL_ACLROOT_DRV-E_DUB_F ExecuteFile,Read
     win_acl:
