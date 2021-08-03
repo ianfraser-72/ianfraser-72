@@ -46,7 +46,7 @@
       rights: CreateDirectories,AppendData,CreateFiles,ExecuteFile,ListDirectory,Traverse,ReadData,Read,ReadAttributes,ReadExtendedAttributes,ReadPermissions
     when: (tasktype == "Build_Service") or (tasktype == "failover")     
     
-  - name: Remove NTFS ACL's on Root Volume. Users - CreateFiles,ExecuteFile,ListDirectory,Traverse,ReadData,Read,ReadAttributes,ReadExtendedAttributes,ReadPermissions
+  - name: Remove NTFS ACL's on Root Volume. Users - CreateDirectories,AppendData
     win_acl:
       user: Users
       path: E:\
