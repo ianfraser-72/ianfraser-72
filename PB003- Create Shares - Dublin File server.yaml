@@ -56,7 +56,7 @@
     when: (tasktype == "Build_Service") or (tasktype == "failover")
       
   - name: Win_shell Remove NTFS ACL's on Root Volume. Users all perms.
-    win_shell: i
+    win_shell:
       icacls  e:\ /remove users /T
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
