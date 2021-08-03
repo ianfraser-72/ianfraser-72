@@ -1,6 +1,8 @@
 ---
 - hosts: "{{ sourceserver }}"
+  ignore_errors: yes
   gather_facts: no
+  when: (tasktype == "Build_Service") or (tasktype == "failover")
   tasks:
 
   - name: Dublin Applications Share
