@@ -23,15 +23,48 @@
       read: u49162
     when: (tasktype == "Build_Service") or (tasktype == "failover")
 
-  - name: Set NTFS ACL's on Root Volume
+  - name: Disable inherited ACL's for E:\
+      win_acl_inheritance:
+      path: E:\
+      state: absent  
+      
+  - name: Remove NTFS ACL's on Root Volume. Everyone - ExecuteFile,Read
+    win_acl:
+      user: Everyone
+      path: E:\
+      type: allow
+      state: absent
+      rights: ExecuteFile,Read
+    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+      
+  - name: Remove NTFS ACL's on Root Volume. Users - ExecuteFile,Read
+    win_acl:
+      user: Users
+      path: E:\
+      type: allow
+      state: absent
+      rights: ExecuteFile,Read
+    when: (tasktype == "Build_Service") or (tasktype == "failover")     
+    
+  - name: Remove NTFS ACL's on Root Volume. Users - CreateFolders,AppendData
+    win_acl:
+      user: Users
+      path: E:\
+      type: allow
+      state: absent
+      rights: CreateFolders,AppendData
+    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+      
+  - name: Add NTFS ACL's on Root Volume. Global\FIL_ACLROOT_DRV-E_DUB_F ExecuteFile,Read
     win_acl:
       user: Global\FIL_ACLROOT_DRV-E_DUB_F
-      path: E:\Applications
+      path: E:\
       type: allow
       rights: ExecuteFile,Read
     when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
       
-  - name: Set NTFS ACLS's Read and Execute on Aplications Folder
+  - name: Add NTFS ACLS's Read and Execute on Aplications Folder. Global\FIL_ACL_DUB_Applications_RX ExecuteFile,Read
     win_acl:
       user: Global\FIL_ACL_DUB_Applications_RX
       path: E:\Applications
