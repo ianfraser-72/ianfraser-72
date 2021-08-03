@@ -3,13 +3,36 @@
   gather_facts: no
   tasks:
 
-  - name: Add hidden share
+  - name: Dublin Applications Share
     win_share:
-      name: internal
-      description: Share1 File Share Demo
-      path: E:\Share1
+      name: Applications
+      description: Dublin Applications File Share
+      path: E:\Applications
       list: no
-      full: Administrators
+      full: Administrators,Global\FIL_ACL_DUB_Applications_F
       read: u49162
-      deny: gph
     when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Dublin Home Share
+    win_share:
+      name: Home
+      description: Dublin Home File Share
+      path: E:\Home
+      list: no
+      full: Administrators,Global\FIL_ACL_DUB_Home_F
+      read: u49162
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+
+  - name: Set NTFS ACL's on Root Volume
+    win_acl:
+      user: Global\FIL_ACLROOT_DRV-E_DUB_F
+      path: E:\Applications
+      type: allow
+      rights: ExecuteFile,Read
+      
+  - name: Set NTFS ACLS's Read and Execute on Aplications Folder
+    win_acl:
+      user: Global\FIL_ACL_DUB_Applications_RX
+      path: E:\Applications
+      type: allow
+      rights: ExecuteFile,Read
