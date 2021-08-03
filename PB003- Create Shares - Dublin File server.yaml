@@ -37,13 +37,13 @@
       rights: ExecuteFile,Read
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
       
-  - name: Remove NTFS ACL's on Root Volume. Users - CreateFiles,ExecuteFile,ListFolderContents,Traverse,ReadData,Read,ReadAttributes,ReadExtendedAttributes,ReadPermissions
+  - name: Remove NTFS ACL's on Root Volume. Users - CreateFiles,ExecuteFile,ListDirectory,Traverse,ReadData,Read,ReadAttributes,ReadExtendedAttributes,ReadPermissions
     win_acl:
       user: Users
       path: E:\
       type: allow
       state: absent
-      rights: CreateDirectories,AppendData,CreateFiles,ExecuteFile,ListFolderContents,Traverse,ReadData,Read,ReadAttributes,ReadExtendedAttributes,ReadPermissions
+      rights: CreateDirectories,AppendData,CreateFiles,ExecuteFile,ListDirectory,Traverse,ReadData,Read,ReadAttributes,ReadExtendedAttributes,ReadPermissions
     when: (tasktype == "Build_Service") or (tasktype == "failover")     
     
   - name: Add NTFS ACL's on Root Volume. Global\FIL_ACLROOT_DRV-E_DUB_F ExecuteFile,Read
