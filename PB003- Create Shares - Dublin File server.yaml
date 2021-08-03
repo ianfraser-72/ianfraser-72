@@ -35,7 +35,7 @@
 
   - name: Add NTFS ACL's on Root Volume. Global\FIL_ACLROOT_DRV-E_DUB_F ExecuteFile,Read
     win_acl:
-      user: Global\FIL_ACLROOT_DRV-E_DUB_F
+      user: Global\FIL_ACLROOT_GLOBALADMIN_F
       path: E:\
       type: allow
       rights: FullControl
