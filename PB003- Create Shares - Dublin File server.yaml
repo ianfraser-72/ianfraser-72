@@ -28,6 +28,7 @@
     win_acl_inheritance:
       path: E:\
       state: absent  
+      reorganize: yes
       
   - name: Remove NTFS ACL's on Root Volume. Everyone - ExecuteFile,Read
     win_acl:
