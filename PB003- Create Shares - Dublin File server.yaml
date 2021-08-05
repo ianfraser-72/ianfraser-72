@@ -81,16 +81,27 @@
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
     
-  - name: Remove NTFS ACLS's Full Control for All Generic Users
+  - name: Remove Priviledged NTFS ACLS's for Authenitcated Users
     win_acl:
-      user: Authenticated Users,Everyone,Domain Users,Guest
+      user: Authenticated Users
       path: E:\Applications
       type: allow
-      rights: FullControl
+      rights: FullControl,ReadOnly,listdirectory,ReadData,createdirectories,Modify
       propagation: NoPropagateInherit
       Inherit: None  
       state: absent
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
+    
+  - name: Remove Priviledged NTFS ACLS's for Everyone
+    win_acl:
+      user: Everyone
+      path: E:\Applications
+      type: allow
+      rights: FullControl,ReadOnly,listdirectory,ReadData,createdirectories,Modify
+      propagation: NoPropagateInherit
+      Inherit: None  
+      state: absent
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
     
   - name: Add NTFS ACLS's list folder, this folder only for Authenticated Users
     win_acl:
