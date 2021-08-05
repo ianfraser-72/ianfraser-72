@@ -55,3 +55,27 @@
       type: allow
       rights: ExecuteFile,Read
     when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's Read and Execute on Aplications Folder. FIL_ACL_DUB_Applications_F Full Control
+    win_acl:
+      user: Global\FIL_ACL_DUB_Applications_F
+      path: E:\Applications
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's Read and Execute on Aplications Folder. SYSTERM ExecuteFile,Read
+    win_acl:
+      user: SYSTEM
+      path: E:\Applications
+      type: allow
+      rights: ExecuteFile,Read
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's Read and Execute on Aplications Folder. ADministrators Full Control
+    win_acl:
+      user: Administrators
+      path: E:\Applications
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
