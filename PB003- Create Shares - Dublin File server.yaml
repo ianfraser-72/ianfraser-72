@@ -80,6 +80,16 @@
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
+  - name: Add NTFS ACLS's list folder, this folder only for Authenticated Users
+    win_acl:
+      user: Authenticated Users
+      path: E:\Applications
+      type: allow
+      rights: listdirectory
+      propagation: NoPropagateInherit
+      Inherit: None    
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
   
   - name: Add NTFS ACLS's FullControl on Home Folder for Administrators.
     win_acl:
