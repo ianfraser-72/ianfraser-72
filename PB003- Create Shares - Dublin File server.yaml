@@ -86,7 +86,7 @@
       user: Authenticated Users
       path: E:\Applications
       type: allow
-      rights: ReadData, WriteData, CreateFiles, CreateDirectories, AppendData, ReadExtendedAttributes, WriteExtendedAttributes, Traverse, ExecuteFile, DeleteSubdirectoriesAndFiles, ReadAttributes, WriteAttributes, Write, Delete, ReadPermissions, Read, ReadAndExecute, Modify, ChangePermissions, TakeOwnership, Synchronize, FullControl
+      rights: FullControl
       propagation: NoPropagateInherit
       Inherit: None  
       state: absent
@@ -97,7 +97,7 @@
       user: Everyone
       path: E:\Applications
       type: allow
-      rights: ReadData, WriteData, CreateFiles, CreateDirectories, AppendData, ReadExtendedAttributes, WriteExtendedAttributes, Traverse, ExecuteFile, DeleteSubdirectoriesAndFiles, ReadAttributes, WriteAttributes, Write, Delete, ReadPermissions, Read, ReadAndExecute, Modify, ChangePermissions, TakeOwnership, Synchronize, FullControl
+      rights: FullControl
       propagation: NoPropagateInherit
       Inherit: None  
       state: absent
