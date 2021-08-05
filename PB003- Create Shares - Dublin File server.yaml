@@ -24,9 +24,9 @@
       read: u49162
     when: (tasktype == "Build_Service") or (tasktype == "failover")
  
-  - name: Disable Inheritance on Root Volume
+  - name: Disable Inheritance on Applications Folder
     win_acl_inheritance:
-      path: E:\
+      path: E:\Applications
       state: absent
     when: (tasktype == "Build_Service") or (tasktype == "failover")
  
