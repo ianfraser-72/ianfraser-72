@@ -39,7 +39,7 @@
       rights: ExecuteFile,Read
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
 
-  - name: Add NTFS ACL's on Root Volume. Global\FIL_ACLROOT_DRV-E_DUB_F ExecuteFile,Read
+  - name: Add NTFS ACL's Read and Execute on Root Volume for Global\FIL_ACLROOT_DRV-E_DUB_F
     win_acl:
       user: Global\FIL_ACLROOT_GLOBALADMIN_F
       path: E:\
@@ -48,7 +48,7 @@
       propagation: None
     when: (tasktype == "Build_Service") or (tasktype == "failover")
         
-  - name: Add NTFS ACLS's Read and Execute on Aplications Folder. Global\FIL_ACL_DUB_Applications_RX ExecuteFile,Read
+  - name: Add NTFS ACLS's Read and Execute on Aplications Folder for Global\FIL_ACL_DUB_Applications_RX
     win_acl:
       user: Global\FIL_ACL_DUB_Applications_RX
       path: E:\Applications
@@ -56,7 +56,7 @@
       rights: ExecuteFile,Read
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
-  - name: Add NTFS ACLS's Read and Execute on Aplications Folder. FIL_ACL_DUB_Applications_F Full Control
+  - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_DUB_Applications_F
     win_acl:
       user: Global\FIL_ACL_DUB_Applications_F
       path: E:\Applications
@@ -64,7 +64,7 @@
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
-  - name: Add NTFS ACLS's Read and Execute on Aplications Folder. SYSTERM ExecuteFile,Read
+  - name: Add NTFS ACLS's FullControl on Aplications Folder for SYSTEM.
     win_acl:
       user: SYSTEM
       path: E:\Applications
@@ -72,7 +72,7 @@
       rights: ExecuteFile,Read
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
-  - name: Add NTFS ACLS's Read and Execute on Aplications Folder. ADministrators Full Control
+  - name: Add NTFS ACLS's FullControl on Aplications Folder for Administrators.
     win_acl:
       user: Administrators
       path: E:\Applications
