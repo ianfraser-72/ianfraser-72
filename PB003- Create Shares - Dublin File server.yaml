@@ -81,7 +81,7 @@
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
     
-    name: Remove NTFS ACLS's Full Control for All Generic Users
+  - name: Remove NTFS ACLS's Full Control for All Generic Users
     win_acl:
       user: Authenticated Users,Everyone,Domain Users,Guest
       path: E:\Applications
