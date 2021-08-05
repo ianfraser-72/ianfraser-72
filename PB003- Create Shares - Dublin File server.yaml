@@ -125,7 +125,7 @@
       user: Authenticated Users
       path: E:\Home
       type: allow
-      rights: readdata,listdirectory
+      rights: listdirectory,ReadData,createdirectories
       propagation: NoPropagateInherit
       Inherit: None    
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
@@ -135,7 +135,7 @@
       user: Creator Owner
       path: E:\Home
       type: allow
-      rights: Full Control
+      rights: FullControl
       propagation: InheritOnly
       Inherit: ContainerInherit, ObjectInherit  
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
