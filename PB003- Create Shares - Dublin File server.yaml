@@ -24,6 +24,12 @@
       read: u49162
     when: (tasktype == "Build_Service") or (tasktype == "failover")
  
+  - name: Disable Inheritance on Root Volume
+    win_acl_Inheritance:
+      path: E:\Applications
+      state: absent
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+ 
   - name: Remove NTFS ACL's on Root Volume. Everyone - ExecuteFile,Read
     win_acl:
       user: Everyone
