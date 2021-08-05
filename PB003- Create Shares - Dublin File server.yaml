@@ -70,7 +70,7 @@
       user: SYSTEM
       path: E:\Applications
       type: allow
-      rights: ExecuteFile,Read
+      rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
   
   - name: Add NTFS ACLS's FullControl on Applications Folder for Administrators.
@@ -109,7 +109,7 @@
       user: SYSTEM
       path: E:\Home
       type: allow
-      rights: ExecuteFile,Read
+      rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
   - name: Add NTFS ACLS's list folder/read data & create folders/append data, this folder only for Authenticated Users
