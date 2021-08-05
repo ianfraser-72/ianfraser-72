@@ -81,6 +81,17 @@
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
     
+    name: Remove NTFS ACLS's Full Control for All Generic Users
+    win_acl:
+      user: Authenticated Users,Everyone,Domain Users,Guest
+      path: E:\Applications
+      type: allow
+      rights: FullControl
+      propagation: NoPropagateInherit
+      Inherit: None  
+      state: absent
+    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+    
   - name: Add NTFS ACLS's list folder, this folder only for Authenticated Users
     win_acl:
       user: Authenticated Users
@@ -99,7 +110,7 @@
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
     
-  - name: Disable Inheritance on Applications Folder
+  - name: Disable Inheritance on Home Folder
     win_acl_inheritance:
       path: E:\Home
       state: absent
@@ -122,7 +133,7 @@
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
-  - name: Add NTFS ACLS's list folder/read data & create folders/append data, this folder only for Authenticated Users
+  - name: Add NTFS ACLS's list folder/read data & create folders/append data this folder only, on Home folder for Authenticated Users
     win_acl:
       user: Authenticated Users
       path: E:\Home
