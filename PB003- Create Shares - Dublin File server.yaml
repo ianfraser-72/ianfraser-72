@@ -39,14 +39,14 @@
       path: E:\
       type: allow
       rights: FullControl
-      propagation: None
+      propagation: NoPropagateInherit
     when: (tasktype == "Build_Service") or (tasktype == "failover")
         
   - name: Disable Inheritance on Applications Folder
     win_acl_inheritance:
       path: E:\Applications
       state: absent
-      reorganize: yes
+      reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")     
         
   - name: Add NTFS ACLS's Read and Execute on Aplications Folder for Global\FIL_ACL_DUB_Applications_RX
@@ -73,10 +73,51 @@
       rights: ExecuteFile,Read
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
-  - name: Add NTFS ACLS's FullControl on Aplications Folder for Administrators.
+  - name: Add NTFS ACLS's FullControl on Home Folder for Administrators.
     win_acl:
       user: Administrators
+      path: E:\Home
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
+  - name: Disable Inheritance on Applications Folder
+    win_acl_inheritance:
+      path: E:\Home
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")     
+        
+  - name: Add NTFS ACLS's Full Control on Home Folder for Global\FIL_ACL_DUB_Home_F
+    win_acl:
+      user: Global\FIL_ACL_DUB_Home_F
+      path: E:\Home
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_DUB_Applications_F
+    win_acl:
+      user: Global\FIL_ACL_DUB_Applications_F
       path: E:\Applications
       type: allow
       rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's FullControl on Home Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: E:\Home
+      type: allow
+      rights: ExecuteFile,Read
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's list folder/read data & create folders/append data, this folder only for Authenticated Users.
+    win_acl:
+      user: Authenticated Users
+      path: E:\Home
+      type: allow
+      rights: readdata,listdirectory
+      propagation: NoPropagateInherit
+      Inherit: None    
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
