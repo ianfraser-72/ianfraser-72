@@ -112,7 +112,15 @@
       rights: ExecuteFile,Read
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
-  - name: Add NTFS ACLS's list folder/read data & create folders/append data, this folder only for Authenticated Users.
+  - name: Add NTFS ACLS's FullControl on Home Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: E:\Home
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's list folder/read data & create folders/append data, this folder only for Authenticated Users
     win_acl:
       user: Authenticated Users
       path: E:\Home
@@ -120,4 +128,14 @@
       rights: readdata,listdirectory
       propagation: NoPropagateInherit
       Inherit: None    
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
+  - name: Add NTFS ACLS's Full Control sub folder and files only for Creator Owner
+    win_acl:
+      user: Creator Owner
+      path: E:\Home
+      type: allow
+      rights: Full Control
+      propagation: InheritOnly
+      Inherit: ContainerInherit, ObjectInherit  
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
