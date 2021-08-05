@@ -72,7 +72,15 @@
       type: allow
       rights: ExecuteFile,Read
     when: (tasktype == "Build_Service") or (tasktype == "failover")
-    
+  
+  - name: Add NTFS ACLS's FullControl on Applications Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: E:\Applications
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+  
   - name: Add NTFS ACLS's FullControl on Home Folder for Administrators.
     win_acl:
       user: Administrators
@@ -96,28 +104,12 @@
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
-  - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_DUB_Applications_F
-    win_acl:
-      user: Global\FIL_ACL_DUB_Applications_F
-      path: E:\Applications
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
-    
   - name: Add NTFS ACLS's FullControl on Home Folder for SYSTEM.
     win_acl:
       user: SYSTEM
       path: E:\Home
       type: allow
       rights: ExecuteFile,Read
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
-    
-  - name: Add NTFS ACLS's FullControl on Home Folder for Administrators.
-    win_acl:
-      user: Administrators
-      path: E:\Home
-      type: allow
-      rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
   - name: Add NTFS ACLS's list folder/read data & create folders/append data, this folder only for Authenticated Users
