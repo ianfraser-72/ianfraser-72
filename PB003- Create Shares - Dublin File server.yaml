@@ -11,7 +11,7 @@
       path: E:\Applications
       list: no
       full: Everyone,Administrators,Global\FIL_ACL_DUB_Applications_F
-      read: no
+      read: u49162
     when: (tasktype == "Build_Service") or (tasktype == "failover")
 
   - name: Dublin Home Share
