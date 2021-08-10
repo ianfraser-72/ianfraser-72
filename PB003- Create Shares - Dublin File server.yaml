@@ -10,20 +10,20 @@
       description: Dublin Applications File Share
       path: E:\Applications
       list: no
-      full: Administrators,Global\FIL_ACL_DUB_Applications_F
-      read: u49162
+      full: Everyone,Administrators,Global\FIL_ACL_DUB_Applications_F
+      read: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")
-    
+
   - name: Dublin Home Share
     win_share:
       name: Home
       description: Dublin Home File Share
       path: E:\Home
       list: no
-      full: Administrators,Global\FIL_ACL_DUB_Home_F
+      full: Everyone,Administrators,Global\FIL_ACL_DUB_Home_F
       read: u49162
     when: (tasktype == "Build_Service") or (tasktype == "failover")
-
+    
   - name: Remove NTFS ACL's on Root Volume. Everyone - ExecuteFile,Read
     win_acl:
       user: Everyone
@@ -94,6 +94,16 @@
   - name: Add NTFS ACLS's Read, Execute,list folder, this folder only for DUB Users
     win_acl:
       user: Global\DUB-USERS
+      path: E:\Applications
+      type: allow
+      rights: listdirectory, ExecuteFile,Read
+      propagation: NoPropagateInherit
+      Inherit: None    
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
+  - name: Add NTFS ACLS's Read, Execute,list folder, this folder only for DUB Users
+    win_acl:
+      user: Users
       path: E:\Applications
       type: allow
       rights: listdirectory, ExecuteFile,Read
