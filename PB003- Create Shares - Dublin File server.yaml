@@ -41,14 +41,7 @@
       rights: FullControl
       propagation: NoPropagateInherit
     when: (tasktype == "Build_Service") or (tasktype == "failover")
-        
-  - name: Disable Inheritance on Applications Folder
-    win_acl_inheritance:
-      path: E:\Applications
-      state: absent
-      reorganize: no
-    when: (tasktype == "Build_Service") or (tasktype == "failover")     
-        
+   
   - name: Add NTFS ACLS's Read and Execute on Aplications Folder for Global\FIL_ACL_DUB_Applications_RX
     win_acl:
       user: Global\FIL_ACL_DUB_Applications_RX
