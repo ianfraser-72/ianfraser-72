@@ -53,11 +53,11 @@ $destdatavol1 = $destdatavol -join ","
 
 if ($seedingchoice -eq "Yes")
 {
-$seedingchoice -eq "True"
+$seedingchoice = "True"
 }
 if ($seedingchoice -eq "No")
 {
-$seedingchoice -eq "False"
+$seedingchoice = "False"
 }
 
 $run = "new-srpartnership -seeded $seedingchoice -SourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -SourceVolumeName $sourcedatavol1 -SourceLogVolumeName $sourcelogvol -DestinationComputerName $destserver -DestinationRGName `"$destrg`" -DestinationVolumeName $destdatavol1 -DestinationLogVolumeName $destlogvol -enableencryption -replicationmode $replicationmode"
