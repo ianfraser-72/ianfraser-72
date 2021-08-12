@@ -86,7 +86,7 @@
   #- debug: msg="{{TestResult.stdout_lines}}"
   
   - name: Create Storage Replica Partnership (Powershell)
-    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}} -replicationmode {{replicationmode}}
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}} -replicationmode {{replicationmode}} -seeded {{seedingchoice}}
     register: buildresult
     when: 
        - tasktype == "Build_Service"
@@ -140,7 +140,6 @@
       ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
-      
 
 
 
