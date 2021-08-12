@@ -53,7 +53,6 @@ $destdatavol1 = $destdatavol -join ","
 $run = "new-srpartnership -SourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -SourceVolumeName $sourcedatavol1 -SourceLogVolumeName $sourcelogvol -DestinationComputerName $destserver -DestinationRGName `"$destrg`" -DestinationVolumeName $destdatavol1 -DestinationLogVolumeName $destlogvol -enableencryption -replicationmode $replicationmode"
 write-host $run
 invoke-expression $run
-$run
 }
 
 if ($task -eq "Check_Connectivity")
