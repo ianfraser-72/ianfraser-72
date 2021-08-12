@@ -12,7 +12,8 @@ param
 [string]$destlogvol,
 [string]$destrg,
 [string]$task,
-[string]$replicationmode
+[string]$replicationmode,
+[string]$seedingchoice
 )
 
 function testdisk
@@ -50,7 +51,16 @@ If ($task -eq "Build_Service")
 $sourcedatavol1 = $sourcedatavol -join ","
 $destdatavol1 = $destdatavol -join ","
 
-$run = "new-srpartnership -SourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -SourceVolumeName $sourcedatavol1 -SourceLogVolumeName $sourcelogvol -DestinationComputerName $destserver -DestinationRGName `"$destrg`" -DestinationVolumeName $destdatavol1 -DestinationLogVolumeName $destlogvol -enableencryption -replicationmode $replicationmode"
+if ($seedingchoice -eq "Yes")
+{
+$seedingchoice -eq "True"
+}
+if ($seedingchoice -eq "No")
+{
+$seedingchoice -eq "False"
+}
+
+$run = "new-srpartnership -seeded $seedingchoice -SourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -SourceVolumeName $sourcedatavol1 -SourceLogVolumeName $sourcelogvol -DestinationComputerName $destserver -DestinationRGName `"$destrg`" -DestinationVolumeName $destdatavol1 -DestinationLogVolumeName $destlogvol -enableencryption -replicationmode $replicationmode"
 write-host $run
 invoke-expression $run
 }
