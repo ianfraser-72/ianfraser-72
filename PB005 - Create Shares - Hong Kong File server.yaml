@@ -16,7 +16,7 @@
 - name: Hong Kong Data Share
     win_share:
       name: Applications
-      description: Dublin Applications File Share
+      description: Hong Kong Applications File Share
       path: E:\Applications
       list: no
       full: Everyone,Administrators,Global\FIL_ACL_HKG_Applications_F
