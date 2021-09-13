@@ -17,7 +17,7 @@
     win_share:
       name: Applications
       description: Hong Kong Data File Share
-      path: E:\Applications
+      path: E:\Data
       list: no
       full: Everyone,Administrators,Global\FIL_ACL_HKG_Data_F
     when: (tasktype == "Build_Service") or (tasktype == "failover")
