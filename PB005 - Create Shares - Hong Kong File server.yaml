@@ -4,24 +4,32 @@
   gather_facts: no
   tasks:
 
-  - name: Dublin Applications Share
+  - name: Hong Kong Applications Share
+    win_share:
+      name: Applications
+      description: Hong Kong Applications File Share
+      path: E:\Applications
+      list: no
+      full: Everyone,Administrators,Global\FIL_ACL_HKG_Applications_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+
+- name: Hong Kong Data Share
     win_share:
       name: Applications
       description: Dublin Applications File Share
       path: E:\Applications
       list: no
-      full: Everyone,Administrators,Global\FIL_ACL_DUB_Applications_F
-      read: u49162
+      full: Everyone,Administrators,Global\FIL_ACL_HKG_Applications_F
     when: (tasktype == "Build_Service") or (tasktype == "failover")
 
-  - name: Dublin Home Share
+  - name: Hong Kong Home Share
     win_share:
       name: Home
-      description: Dublin Home File Share
+      description: Hong Kong Home File Share
       path: E:\Home
       list: no
-      full: Everyone,Administrators,Global\FIL_ACL_DUB_Home_F
-      read: u49162
+      full: Everyone,Administrators,Global\FIL_ACL_HKG_Home_F
+ 
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
   - name: Remove NTFS ACL's on Root Volume. Everyone - ExecuteFile,Read
@@ -33,7 +41,7 @@
       rights: ExecuteFile,Read
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
 
-  - name: Add NTFS ACL's Read and Execute on Root Volume for Global\FIL_ACLROOT_DRV-E_DUB_F
+  - name: Add NTFS ACL's Read and Execute on Root Volume for Global\FIL_ACLROOT_DRV-E_HKG_F
     win_acl:
       user: Global\FIL_ACLROOT_GLOBALADMIN_F
       path: E:\
@@ -42,17 +50,25 @@
       propagation: NoPropagateInherit
     when: (tasktype == "Build_Service") or (tasktype == "failover")
    
-  - name: Add NTFS ACLS's Read and Execute on Aplications Folder for Global\FIL_ACL_DUB_Applications_RX
+  - name: Add NTFS ACLS's Read and Execute on Aplications Folder for Global\FIL_ACL_HKG_Applications_RX
     win_acl:
-      user: Global\FIL_ACL_DUB_Applications_RX
+      user: Global\FIL_ACL_HKG_Applications_RX
       path: E:\Applications
       type: allow
       rights: ExecuteFile,Read
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
-  - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_DUB_Applications_F
+    - name: Add NTFS ACLS's Read,Execute and Write on Data Folder for Global\FIL_ACL_DUB_Data_RWXD
     win_acl:
-      user: Global\FIL_ACL_DUB_Applications_F
+      user: Global\FIL_ACL_HKG_DATA_RWVD
+      path: E:\Data
+      type: allow
+      rights: ExecuteFile,Read,Write,Delete
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_HKG_Applications_F
+    win_acl:
+      user: Global\FIL_ACL_HKG_Applications_F
       path: E:\Applications
       type: allow
       rights: FullControl
@@ -74,9 +90,9 @@
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
     
-  - name: Add NTFS ACLS's Read, Execute,list folder, all folders for DUB Users
+  - name: Add NTFS ACLS's Read, Execute,list folder, all folders for HKG Users
     win_acl:
-      user: Global\DUB-USERS
+      user: Global\HKG-USERS
       path: E:\Applications
       type: allow
       rights: listdirectory, ExecuteFile,Read
@@ -99,9 +115,9 @@
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")     
         
-  - name: Add NTFS ACLS's Full Control on Home Folder for Global\FIL_ACL_DUB_Home_F
+  - name: Add NTFS ACLS's Full Control on Home Folder for Global\FIL_ACL_HKG_Home_F
     win_acl:
-      user: Global\FIL_ACL_DUB_Home_F
+      user: Global\FIL_ACL_HKG_Home_F
       path: E:\Home
       type: allow
       rights: FullControl
