@@ -15,7 +15,7 @@
 
   - name: Hong Kong Data Share
     win_share:
-      name: Applications
+      name: Data
       description: Hong Kong Data File Share
       path: E:\Data
       list: no
