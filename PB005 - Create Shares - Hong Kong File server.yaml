@@ -50,6 +50,13 @@
       rights: ReadandExecute
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
 
+  - name: Disable Inheritance on Applications Folder
+    win_acl_inheritance:
+      path: E:\Data1
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+
   - name: Add NTFS ACLS's Read,Execute and Write on Data Folder for Global\FIL_ACL_HKG_Data_RWXD
     win_acl:
       user: Global\FIL_ACL_HKG_DATA_RWXD
@@ -88,8 +95,7 @@
       type: allow
       rights: ExecuteFile,Read
     when: (tasktype == "Build_Service") or (tasktype == "failover")
- 
-    
+  
   - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_HKG_Applications_F
     win_acl:
       user: Global\FIL_ACL_HKG_Applications_F
