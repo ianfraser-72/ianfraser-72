@@ -51,8 +51,8 @@
     
   - name: Remove NTFS ACL's on Root Volume. Users - ExecuteFile,Read, Write, Create Folders / Append Data, Create Files / Write Data
     win_acl:
-      user: Everyone
-      path: E:\
+      user: Users
+      path: E:\Data
       type: allow
       state: absent
       rights: ReadandExecute, Read,Write,CreateDirectories,AppendData,CreateFiles,WriteData
