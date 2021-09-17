@@ -49,13 +49,13 @@
       rights: ReadandExecute,ExecuteFile,Read, Write,listdirectory
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
     
-  - name: Remove NTFS ACL's on Root Volume. Users - ExecuteFile,Read, Write
+  - name: Remove NTFS ACL's on Root Volume. Users - ExecuteFile,Read, Write, Create Folders / Append Data, Create Files / Write Data
     win_acl:
       user: Everyone
       path: E:\
       type: allow
       state: absent
-      rights: ReadandExecute
+      rights: ReadandExecute, Read,Write,CreateDirectories,AppendData,CreateFiles,WriteData
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
 
   - name: Disable Inheritance on Data Folder
@@ -64,6 +64,15 @@
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")
+
+  - name: Remove NTFS ACL's on Root Volume. Users - ExecuteFile,Read, Write
+    win_acl:
+      user: Everyone
+      path: E:\
+      type: allow
+      state: absent
+      rights: ReadandExecute
+    when: (tasktype == "Build_Service") or (tasktype == "failover")   
 
   - name: Add NTFS ACLS's Read,Execute and Write on Data Folder for Global\FIL_ACL_HKG_Data_RWXD
     win_acl:
