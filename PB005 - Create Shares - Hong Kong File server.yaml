@@ -81,7 +81,7 @@
       rights: ExecuteFile,Read,Write,Delete
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
-   - name: Add NTFS ACLS's FullControl on Data Folder for Administrators.
+  - name: Add NTFS ACLS's FullControl on Data Folder for Administrators.
     win_acl:
       user: Administrators
       path: E:\Data
