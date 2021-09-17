@@ -49,7 +49,7 @@
       rights: ReadandExecute,ExecuteFile,Read, Write,listdirectory
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
     
-  - name: Remove NTFS ACL's on Root Volume. Users - ExecuteFile,Read, Write, Create Folders / Append Data, Create Files / Write Data
+  - name: Remove NTFS ACL's on Users folder. Users - ExecuteFile,Read, Write, Create Folders / Append Data, Create Files / Write Data
     win_acl:
       user: Users
       path: E:\Data
