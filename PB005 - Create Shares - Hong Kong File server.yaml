@@ -31,6 +31,15 @@
       full: Authenticated Users,Administrators,Global\FIL_ACL_HKG_Home_F
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
+  - name: Hong Kong Departments Share
+    win_share:
+      name: Departments
+      description: Hong Kong Departments File Share
+      path: E:\Departments
+      list: no
+      full: Authenticated Users,Administrators,Global\FIL_ACL_HKG_Departments_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
   - name: Remove NTFS ACL's on Root Volume. Everyone - ExecuteFile,Read
     win_acl:
       user: Everyone
