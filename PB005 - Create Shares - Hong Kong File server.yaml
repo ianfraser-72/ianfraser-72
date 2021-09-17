@@ -56,7 +56,7 @@
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
     
   - name: Remove using icacls win-acl has an issue with the built in users group
-    ansible.windows.win_command: icacls e:\nw1 /remove "builtin\users"
+    win_command: icacls e:\nw1 /remove "builtin\users"
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
 
   - name: Remove NTFS ACL's on Root Volume. Users - ExecuteFile,Read, Write
