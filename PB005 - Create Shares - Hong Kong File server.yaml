@@ -53,17 +53,11 @@
     win_acl_inheritance:
       path: E:\Data
       state: absent
-      reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
     
-  - name: Remove NTFS ACL's on Users folder on Data. Users - ExecuteFile,Read, Write, Create Folders / Append Data, Create Files / Write Data
-    win_acl:
-      user: Users
-      path: E:\Data
-      type: allow
-      state: absent
-      rights: ReadandExecute,ListDirectory,Read,CreateDirectories,AppendData,CreateFiles,WriteData
-    when: (tasktype == "Build_Service") or (tasktype == "failover")   
+  - name: Remove using icacls - win-acl has an issue with the built in users group
+    ansible.windows.win_command: icacls e:\nw1/remove "builtin\users"
+    when: (tasktype == "Build_Service") or (tasktype == "failover")  
 
   - name: Remove NTFS ACL's on Root Volume. Users - ExecuteFile,Read, Write
     win_acl:
