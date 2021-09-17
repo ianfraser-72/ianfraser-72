@@ -49,13 +49,13 @@
       rights: ReadandExecute,ExecuteFile,Read, Write,listdirectory
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
     
-  - name: Remove NTFS ACL's on Users folder. Users - ExecuteFile,Read, Write, Create Folders / Append Data, Create Files / Write Data
+  - name: Remove NTFS ACL's on Users folder on Data. Users - ExecuteFile,Read, Write, Create Folders / Append Data, Create Files / Write Data
     win_acl:
       user: Users
       path: E:\Data
       type: allow
       state: absent
-      rights: ReadandExecute, Read,Write,CreateDirectories,AppendData,CreateFiles,WriteData
+      rights: ReadandExecute,CreateDirectories,AppendData,CreateFiles,WriteData
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
 
   - name: Disable Inheritance on Data Folder
