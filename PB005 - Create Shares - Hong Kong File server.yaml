@@ -39,7 +39,25 @@
       list: no
       full: Authenticated Users,Administrators,Global\FIL_ACL_HKG_Departments_F
     when: (tasktype == "Build_Service") or (tasktype == "failover")
-    
+  
+  - name: Hong Kong Update Share
+    win_share:
+      name: Update
+      description: Hong Kong Update File Share
+      path: E:\Update
+      list: no
+      full: Authenticated Users,Administrators,Global\FIL_ACL_HKG_Update_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+  
+  - name: Hong Kong HK Share
+    win_share:
+      name: HK
+      description: Hong Kong HK File Share
+      path: E:\HK
+      list: no
+      full: Authenticated Users,Administrators,Global\FIL_ACL_HKG_HK_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+  
   - name: Remove NTFS ACL's on Root Volume. Everyone - ExecuteFile,Read
     win_acl:
       user: Everyone
