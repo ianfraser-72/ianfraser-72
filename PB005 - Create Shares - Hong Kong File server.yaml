@@ -65,26 +65,17 @@
       type: allow
       state: absent
       rights: ReadandExecute,ExecuteFile,Read, Write,listdirectory
-    when: (tasktype == "Build_Service") or (tasktype == "failover")  
-  
+    when: (tasktype == "Build_Service") or (tasktype == "failover")    
+   
   - name: Disable Inheritance on Data Folder
     win_acl_inheritance:
       path: E:\Data
       state: absent
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
     
-  - name: Remove using icacls win-acl has an issue with the built in users group
+  - name: Remove using icacls win-acl has an issue with the built in users group 
     win_command: icacls e:\Data /remove "builtin\users"
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
-
-  - name: Remove NTFS ACL's on Root Volume. Users - ExecuteFile,Read, Write
-    win_acl:
-      user: Everyone
-      path: E:\
-      type: allow
-      state: absent
-      rights: ReadandExecute
-    when: (tasktype == "Build_Service") or (tasktype == "failover")   
 
   - name: Add NTFS ACLS's Read,Execute and Write on Data Folder for Global\FIL_ACL_HKG_Data_RWXD
     win_acl:
@@ -192,12 +183,12 @@
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
    
-  - name: Add NTFS ACLS's Read and Execute on Update Folder for Global\FIL_ACL_HKG_Update_RX
+  - name: Add NTFS ACLS's Read and Execute, REad, Write, Delete on Update Folder for Global\FIL_ACL_HKG_Update_RWXD
     win_acl:
-      user: Global\FIL_ACL_HKG_Update_RX
+      user: Global\FIL_ACL_HKG_Update_RWXD
       path: E:\Update
       type: allow
-      rights: ExecuteFile,Read
+      rights: ExecuteFile,Read,Write,Delete
     when: (tasktype == "Build_Service") or (tasktype == "failover")
   
   - name: Add NTFS ACLS's FullControl on Update Folder for FIL_ACL_HKG_Update_F
@@ -241,12 +232,12 @@
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
    
-  - name: Add NTFS ACLS's Read and Execute on Update Folder for Global\FIL_ACL_HKG_HK_RX
+  - name: Add NTFS ACLS's ExecuteFile,Read,Write,Delete on Update Folder for Global\FIL_ACL_HKG_HK_RWXD
     win_acl:
-      user: Global\FIL_ACL_HKG_HK_RX
+      user: Global\FIL_ACL_HKG_HK_RWXD
       path: E:\HK
       type: allow
-      rights: ExecuteFile,Read
+      rights: ExecuteFile,Read,Write,Delete
     when: (tasktype == "Build_Service") or (tasktype == "failover")
   
   - name: Add NTFS ACLS's FullControl on HK Folder for FIL_ACL_HKG_HK_F
