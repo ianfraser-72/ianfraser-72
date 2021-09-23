@@ -76,22 +76,6 @@
   - name: Remove using icacls win-acl has an issue with the built in users group 
     win_command: icacls e:\Data /remove "builtin\users"
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
-
-  - name: Add NTFS ACLS's Read,Execute and Write on Data Folder for Global\FIL_ACL_HKG_Data_RWXD
-    win_acl:
-      user: Global\FIL_ACL_HKG_DATA_RWXD
-      path: E:\Data
-      type: allow
-      rights: ExecuteFile,Read,Write,Delete
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
-   
-  - name: Add NTFS ACLS's Read,Execute and Write on Data Folder for Global\FIL_ACL_HKG_Data_RWXD
-    win_acl:
-      user: Global\FIL_ACL_HKG_DATA_RWXD
-      path: E:\Data
-      type: allow
-      rights: ExecuteFile,Read,Write,Delete
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
     
   - name: Add NTFS ACLS's FullControl on Data Folder for Administrators.
     win_acl:
@@ -133,14 +117,6 @@
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
-   
-  - name: Add NTFS ACLS's Read and Execute on Aplications Folder for Global\FIL_ACL_HKG_Applications_RX
-    win_acl:
-      user: Global\FIL_ACL_HKG_Applications_RX
-      path: E:\Applications
-      type: allow
-      rights: ExecuteFile,Read
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
   
   - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_HKG_Applications_F
     win_acl:
@@ -165,16 +141,6 @@
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
-    
-  - name: Add NTFS ACLS's Read, Execute,list folder, Applications folder for HKG Users
-    win_acl:
-      user: Global\HKG-USERS
-      path: E:\Applications
-      type: allow
-      rights: listdirectory, ExecuteFile,Read
-      propagation: None
-      Inherit: None    
-    when: (tasktype == "Build_Service") or (tasktype == "failover") 
   
   - name: Disable Inheritance on Update Folder
     win_acl_inheritance:
@@ -182,14 +148,6 @@
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
-   
-  - name: Add NTFS ACLS's Read and Execute, REad, Write, Delete on Update Folder for Global\FIL_ACL_HKG_Update_RWXD
-    win_acl:
-      user: Global\FIL_ACL_HKG_Update_RWXD
-      path: E:\Update
-      type: allow
-      rights: ExecuteFile,Read,Write,Delete
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
   
   - name: Add NTFS ACLS's FullControl on Update Folder for FIL_ACL_HKG_Update_F
     win_acl:
@@ -215,30 +173,12 @@
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
     
-  - name: Add NTFS ACLS's Read, Execute,list folder, Update folder for HKG Users
-    win_acl:
-      user: Global\HKG-USERS
-      path: E:\Update
-      type: allow
-      rights: listdirectory, ExecuteFile,Read
-      propagation: None
-      Inherit: None    
-    when: (tasktype == "Build_Service") or (tasktype == "failover") 
-  
   - name: Disable Inheritance on HK Folder
     win_acl_inheritance:
       path: E:\HK
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
-   
-  - name: Add NTFS ACLS's ExecuteFile,Read,Write,Delete on Update Folder for Global\FIL_ACL_HKG_HK_RWXD
-    win_acl:
-      user: Global\FIL_ACL_HKG_HK_RWXD
-      path: E:\HK
-      type: allow
-      rights: ExecuteFile,Read,Write,Delete
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
   
   - name: Add NTFS ACLS's FullControl on HK Folder for FIL_ACL_HKG_HK_F
     win_acl:
@@ -263,16 +203,6 @@
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
-    
-  - name: Add NTFS ACLS's Read, Execute,list folder, HK folder for HKG Users
-    win_acl:
-      user: Global\HKG-USERS
-      path: E:\HK
-      type: allow
-      rights: listdirectory, ExecuteFile,Read
-      propagation: None
-      Inherit: None    
-    when: (tasktype == "Build_Service") or (tasktype == "failover") 
   
   - name: Disable Inheritance on Departments Folder
     win_acl_inheritance:
@@ -280,14 +210,6 @@
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
-   
-  - name: Add NTFS ACLS's Read,Execute and Write on Departments Folder for Global\FIL_ACL_HKG_Departments_RWXD
-    win_acl:
-      user: Global\FIL_ACL_HKG_Departments_RWXD
-      path: E:\Departments
-      type: allow
-      rights: ExecuteFile,Read,Write,Delete
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
   
   - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_HKG_Departments_F
     win_acl:
@@ -311,16 +233,6 @@
       path: E:\Departments
       type: allow
       rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover") 
-    
-  - name: Add NTFS ACLS's Read, Execute,list folder, Departments folders for HKG Users
-    win_acl:
-      user: Global\HKG-USERS
-      path: E:\Departments
-      type: allow
-      rights: listdirectory, ExecuteFile,Read
-      propagation: None
-      Inherit: None    
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
   
   - name: Add NTFS ACLS's FullControl on Home Folder for Administrators.
