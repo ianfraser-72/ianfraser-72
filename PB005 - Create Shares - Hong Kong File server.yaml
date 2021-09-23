@@ -69,7 +69,7 @@
    
   - name: Disable Inheritance on Data Folder
     win_acl_inheritance:
-      path: E:\Data
+      path: E:\Data2
       state: absent
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
     
@@ -80,7 +80,7 @@
   - name: Add NTFS ACLS's FullControl on Data Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\Data
+      path: E:\Data2
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
@@ -88,7 +88,7 @@
   - name: Add NTFS ACLS's FullControl on Data Folder for Global\FIL_ACL_HKG_Data_F
     win_acl:
       user: Global\FIL_ACL_HKG_Data_F
-      path: E:\Data
+      path: E:\Data2
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -96,14 +96,14 @@
   - name: Add NTFS ACLS's FullControl on Data Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\Data
+      path: E:\Data2
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
    
   - name: Disable Inheritance on Applications Folder
     win_acl_inheritance:
-      path: E:\Applications
+      path: E:\Applications2
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
@@ -111,7 +111,7 @@
   - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_HKG_Applications_F
     win_acl:
       user: Global\FIL_ACL_HKG_Applications_F
-      path: E:\Applications
+      path: E:\Applications2
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -119,7 +119,7 @@
   - name: Add NTFS ACLS's FullControl on Aplications Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\Applications
+      path: E:\Applications2
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -127,7 +127,7 @@
   - name: Add NTFS ACLS's FullControl on Applications Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\Applications
+      path: E:\Applications2
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
@@ -165,7 +165,7 @@
   
   - name: Disable Inheritance on HK Folder
     win_acl_inheritance:
-      path: E:\HK
+      path: E:\HK2
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
@@ -173,7 +173,7 @@
   - name: Add NTFS ACLS's FullControl on HK Folder for FIL_ACL_HKG_HK_F
     win_acl:
       user: Global\FIL_ACL_HKG_HK_F
-      path: E:\HK
+      path: E:\HK2
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -181,7 +181,7 @@
   - name: Add NTFS ACLS's FullControl on HK Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\HK
+      path: E:\HK2
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -189,14 +189,14 @@
   - name: Add NTFS ACLS's FullControl on HK Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\HK
+      path: E:\HK2
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
   
   - name: Disable Inheritance on Departments Folder
     win_acl_inheritance:
-      path: E:\Departments
+      path: E:\Departments2
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
@@ -204,7 +204,7 @@
   - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_HKG_Departments_F
     win_acl:
       user: Global\FIL_ACL_HKG_Departments_F
-      path: E:\Departments
+      path: E:\Departments2
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -212,7 +212,7 @@
   - name: Add NTFS ACLS's FullControl on Departments Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\Departments
+      path: E:\Departments2
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -220,7 +220,7 @@
   - name: Add NTFS ACLS's FullControl on Departments Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\Departments
+      path: E:\Departments2
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
