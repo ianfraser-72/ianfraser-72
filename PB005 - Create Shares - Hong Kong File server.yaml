@@ -69,18 +69,18 @@
    
   - name: Disable Inheritance on Data Folder
     win_acl_inheritance:
-      path: E:\Data2
+      path: E:\Data
       state: absent
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
     
   - name: Remove using icacls win-acl has an issue with the built in users group 
-    win_command: icacls e:\Data2 /remove "builtin\users"
+    win_command: icacls e:\Data /remove "global\hkgsupport"
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
 
   - name: Add NTFS ACLS's FullControl on Data Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\Data2
+      path: E:\Data
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
@@ -88,7 +88,7 @@
   - name: Add NTFS ACLS's FullControl on Data Folder for Global\FIL_ACL_HKG_Data_F
     win_acl:
       user: Global\FIL_ACL_HKG_Data_F
-      path: E:\Data2
+      path: E:\Data
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -96,22 +96,26 @@
   - name: Add NTFS ACLS's FullControl on Data Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\Data2
+      path: E:\Data
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
    
   - name: Disable Inheritance on Applications Folder
     win_acl_inheritance:
-      path: E:\Applications2
+      path: E:\Applications
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
   
+  - name: Remove using icacls win-acl has an issue with the hkgsupport group 
+    win_command: icacls e:\Applications /remove "global\hkgsupport"
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+  
   - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_HKG_Applications_F
     win_acl:
       user: Global\FIL_ACL_HKG_Applications_F
-      path: E:\Applications2
+      path: E:\Applications
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -119,7 +123,7 @@
   - name: Add NTFS ACLS's FullControl on Aplications Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\Applications2
+      path: E:\Applications
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -127,7 +131,7 @@
   - name: Add NTFS ACLS's FullControl on Applications Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\Applications2
+      path: E:\Applications
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
@@ -169,15 +173,19 @@
   
   - name: Disable Inheritance on HK Folder
     win_acl_inheritance:
-      path: E:\HK2
+      path: E:\HK
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
   
+  - name: Remove using icacls win-acl has an issue with the hkgsupport group 
+    win_command: icacls e:\HK /remove "global\hkgsupport"
+    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+    
   - name: Add NTFS ACLS's FullControl on HK Folder for FIL_ACL_HKG_HK_F
     win_acl:
       user: Global\FIL_ACL_HKG_HK_F
-      path: E:\HK2
+      path: E:\HK
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -185,7 +193,7 @@
   - name: Add NTFS ACLS's FullControl on HK Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\HK2
+      path: E:\HK
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -193,22 +201,26 @@
   - name: Add NTFS ACLS's FullControl on HK Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\HK2
+      path: E:\HK
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
   
   - name: Disable Inheritance on Departments Folder
     win_acl_inheritance:
-      path: E:\Departments2
+      path: E:\Departments
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
   
+  - name: Remove using icacls win-acl has an issue with the hkgsupport group 
+    win_command: icacls e:\Departments /remove "global\hkgsupport"
+    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+    
   - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_HKG_Departments_F
     win_acl:
       user: Global\FIL_ACL_HKG_Departments_F
-      path: E:\Departments2
+      path: E:\Departments
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -216,7 +228,7 @@
   - name: Add NTFS ACLS's FullControl on Departments Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\Departments2
+      path: E:\Departments
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -224,7 +236,7 @@
   - name: Add NTFS ACLS's FullControl on Departments Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\Departments2
+      path: E:\Departments
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
