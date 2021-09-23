@@ -74,7 +74,7 @@
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
     
   - name: Remove using icacls win-acl has an issue with the built in users group 
-    win_command: icacls e:\Data /remove "builtin\users"
+    win_command: icacls e:\Data2 /remove "builtin\users"
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
 
   - name: Add NTFS ACLS's FullControl on Data Folder for Administrators.
