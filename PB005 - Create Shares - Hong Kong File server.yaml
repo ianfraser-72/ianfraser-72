@@ -84,16 +84,6 @@
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
-    
-  - name: Add NTFS ACLS's Read, Execute,list folder, Data folder for HKG Users
-    win_acl:
-      user: Global\HKG-USERS
-      path: E:\Data
-      type: allow
-      rights: listdirectory, ExecuteFile,Read
-      propagation: None
-      Inherit: None    
-    when: (tasktype == "Build_Service") or (tasktype == "failover") 
    
   - name: Add NTFS ACLS's FullControl on Data Folder for Global\FIL_ACL_HKG_Data_F
     win_acl:
