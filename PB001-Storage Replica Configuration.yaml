@@ -9,14 +9,14 @@
       path: C:\Temp
       state: directory
       failed_when: result.rc "Does not exist" not in result.stdout
-    when: (tasktype == "Build_Service") or (tasktype == "Check_Connectivity")
+    when: (tasktype == "Build_Service") or (tasktype == "Check_Connectivity") or (tasktype == "Remove_Replica_Role")
       
   - name: Copy Build Script
     win_copy:
       src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
       dest: C:\Temp\StorageReplicaBuild.ps1
       force: yes
-    when: (tasktype == "Build_Service") or (tasktype == "Check_Connectivity")  
+    when: (tasktype == "Build_Service") or (tasktype == "Check_Connectivity") or (tasktype == "Remove_Replica_Role")
        
   - name: Install the Storage Replica Server Role
     win_feature:
@@ -52,7 +52,7 @@
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "statecheck"
     register: stateresult
     changed_when: False
-    when: (tasktype == "Build_Service") or (tasktype == "Check_Connectivity")
+    when: (tasktype == "Build_Service") or (tasktype == "Check_Connectivity") or (tasktype == "Remove_Replica_Role")
     
 - hosts: "{{ sourceserver }}"
   gather_facts: no
