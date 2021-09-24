@@ -149,6 +149,11 @@ if ($task -eq "RemoveGroups")
 
 if ($task -eq "failover")
 {
+  $sourceserver1 = $sourceserver.split(".")
+  $destserver1 = $destserver.split(".")
+  $sourceserver2 = $sourceserver1[0]
+  $destserver2 = $destserver1[0]
+  
   try 
   {
   $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver -DestinationRGName `"$destrg`" -force -erroraction stop"
