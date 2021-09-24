@@ -63,7 +63,6 @@
     register: failbackonline
     when: 
        - tasktype == "failover"
-       - stateresult.rc == 0
     
     vars:
       ansible_become: true
