@@ -250,8 +250,12 @@ if ($task -eq "statecheck")
 write-output "GPOBool is $gpobool"
 if ($gpobool -eq "Failover")
 {
-$GPOstring1 = "GAM Win10_Test Drive Maps_" + $sourceserver
-$GPOString2 = "GAM Win10_Test Drive Maps_" + $destserver
-write-output "Setting Drive Maps GPO to map to $sourceserver"
-ChangeGPO $GPOString1 $GPOString2
+  $sourceserver1 = $sourceserver.split(".")
+  $destserver1 = $destserver.split(".")
+  $sourceserver2 = $sourceserver1[0]
+  $destserver2 = $destserver1[0]
+  $GPOstring1 = "GAM Win10_Test Drive Maps_" + $sourceserver2
+  $GPOString2 = "GAM Win10_Test Drive Maps_" + $destserver2
+  write-output "Setting Drive Maps GPO to map to $sourceserver2"
+  ChangeGPO $GPOString1 $GPOString2
 }
