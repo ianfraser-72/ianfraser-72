@@ -71,7 +71,7 @@
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
     register: failbackonline
     when: 
-       - tasktype == "failover"
+       - tasktype == "failover1"
     
     vars:
       ansible_become: true
