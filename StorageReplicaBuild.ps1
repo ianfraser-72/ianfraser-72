@@ -13,6 +13,7 @@ param
 [string]$destrg,
 [string]$task,
 [string]$replicationmode,
+[string]$gpotask,
 [string]$seedingchoice
 )
 
@@ -242,7 +243,8 @@ if ($task -eq "statecheck")
      }
 }
 
-if ($sourceserver -eq "AWAINFILW01P") -or ($sourceserver -eq "AWAINFILW02P")
+if ($gpotask -eq "true")
 {
-ChageGPO "GAM Win10_Test Drive Maps_DR"
+$GPOstring = "GAM Win10_Test Drive Maps_" + $sourceserver
+ChageGPO GPOString
 }
