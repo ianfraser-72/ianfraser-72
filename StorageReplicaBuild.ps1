@@ -50,7 +50,8 @@ function testdisk
 
 Function ChangeGPO ($GPOName)
 {
-$run = "Set-GPLink -Name $GPOName -Target "ou=Computers,ou=euc,dc=global,dc=gam,dc=com" -LinkEnabled Yes"
+$OU = "ou=Computers,ou=euc,dc=global,dc=gam,dc=com"
+$run = "Set-GPLink -Name $GPOName -Target $OU -LinkEnabled Yes"
 invoke-expression $run
 }
 
