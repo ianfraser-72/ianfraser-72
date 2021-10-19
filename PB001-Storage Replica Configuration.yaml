@@ -78,6 +78,18 @@
       ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
+      
+  - name: Run GPO Change (PowerShell)
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{gpobool}}
+    register: failbackonline
+    when: 
+       - GPOBool == "Fail over"
+    
+    vars:
+      ansible_become: true
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas    
 
   - name: Run Pre Test for Storage Replica Connectivity (PowerShell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}}
