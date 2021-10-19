@@ -13,7 +13,6 @@ param
 [string]$destrg,
 [string]$task,
 [string]$replicationmode,
-[string]$gpotask,
 [string]$seedingchoice
 )
 
@@ -243,7 +242,7 @@ if ($task -eq "statecheck")
      }
 }
 
-if ($gpotask -eq "true")
+if ($task -eq "failovergpo")
 {
 $GPOstring = "GAM Win10_Test Drive Maps_" + $sourceserver
 ChageGPO GPOString
