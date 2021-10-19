@@ -80,10 +80,10 @@
       ansible_become_method: runas
       
   - name: Run GPO Change (PowerShell)
-    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{gpobool}}
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -gpobool {{gpobool}}
     register: failbackonline
     when: 
-       - GPOBool == "Fail over"
+       - GPOBool == "Fail over Drive Map GPO"
     
     vars:
       ansible_become: true
