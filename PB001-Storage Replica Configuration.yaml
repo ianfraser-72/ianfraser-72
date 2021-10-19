@@ -10,7 +10,17 @@
       state: directory
       failed_when: result.rc "Does not exist" not in result.stdout
     when: (tasktype == "Build_Service") or (tasktype == "Check_Connectivity") or (tasktype == "Remove_Replica_Role")
-      
+
+  - name: "Install GPMC"
+    win_feature:
+      name: GPMC
+      state: present
+  
+  - name: Add a powershell module
+    win_psmodule:
+      name: GroupPolicy
+      state: present   
+         
   - name: Copy Build Script
     win_copy:
       src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
