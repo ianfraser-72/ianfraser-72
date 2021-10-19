@@ -48,11 +48,13 @@ function testdisk
   }
 }
 
-Function ChangeGPO ($GPOName)
+Function ChangeGPO ($GPOName1,$GPOName2)
 {
 $OU = "ou=Computers,ou=euc,dc=global,dc=gam,dc=com"
-$run = "Set-GPLink -Name $GPOName -Target $OU -LinkEnabled Yes"
-invoke-expression $run
+$run1 = "Set-GPLink -Name $GPOName1 -Target $OU -LinkEnabled Yes"
+$run2 = "Set-GPLink -Name $GPOName2 -Target $OU -LinkEnabled No"
+invoke-expression $run1
+invoke-expression $run2
 }
 
 function ReplicaInstallCheck
@@ -246,6 +248,7 @@ if ($task -eq "statecheck")
 
 if ($gpobool -eq "Fail over Drive Map GPO")
 {
-$GPOstring = "GAM Win10_Test Drive Maps_" + $sourceserver
-ChageGPO $GPOString
+$GPOstring1 = "GAM Win10_Test Drive Maps_" + $sourceserver
+$GPOString2 = "GAM Win10_Test Drive Maps_" + $destserver
+ChageGPO $GPOString1 $GPOString2
 }
