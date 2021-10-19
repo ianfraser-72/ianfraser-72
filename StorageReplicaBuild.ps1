@@ -26,7 +26,6 @@ invoke-expression "icacls e:\$a"
 }
 
 function testdisk
-
 {
  try 
   {
@@ -46,6 +45,12 @@ function testdisk
   {
    exit 2 
   }
+}
+
+Function ChangeGPO ($GPOName)
+{
+$run = "Set-GPLink -Name $GPOName -Target "ou=Computers,ou=euc,dc=global,dc=gam,dc=com" -LinkEnabled Yes"
+invoke-expression $run
 }
 
 function ReplicaInstallCheck
@@ -237,3 +242,7 @@ if ($task -eq "statecheck")
      }
 }
 
+if ($sourceserver -eq "AWAINFILW01P") -or ($sourceserver -eq "AWAINFILW02P")
+{
+ChageGPO "GAM Win10_Test Drive Maps_DR"
+}
