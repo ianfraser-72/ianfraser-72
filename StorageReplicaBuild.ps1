@@ -246,6 +246,7 @@ if ($task -eq "statecheck")
      }
 }
 
+write-output "GPOBool is $gpobool"
 if ($gpobool -eq "Failover")
 {
 $GPOstring1 = "GAM Win10_Test Drive Maps_" + $sourceserver
