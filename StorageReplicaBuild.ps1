@@ -246,5 +246,5 @@ if ($task -eq "statecheck")
 if ($gpobool -eq "Fail over Drive Map GPO")
 {
 $GPOstring = "GAM Win10_Test Drive Maps_" + $sourceserver
-ChageGPO GPOString
+ChageGPO $GPOString
 }
