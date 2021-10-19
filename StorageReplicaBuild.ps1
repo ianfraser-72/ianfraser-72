@@ -16,6 +16,15 @@ param
 [string]$seedingchoice
 )
 
+function listperms
+
+$folders = @("HK"),("Departments"),("Data"),("Applications"),("Update")
+foreach ($a in $folders)
+{
+invoke-expression "icacls e:\$a"
+}
+}
+
 function testdisk
 
 {
