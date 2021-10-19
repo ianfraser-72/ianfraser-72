@@ -250,5 +250,6 @@ if ($gpobool -eq "Fail over Drive Map GPO")
 {
 $GPOstring1 = "GAM Win10_Test Drive Maps_" + $sourceserver
 $GPOString2 = "GAM Win10_Test Drive Maps_" + $destserver
-ChageGPO $GPOString1 $GPOString2
+write-output "Setting Drive Maps GPO to map to $sourceserver"
+ChangeGPO $GPOString1 $GPOString2
 }
