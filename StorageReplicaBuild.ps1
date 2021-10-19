@@ -50,12 +50,13 @@ function testdisk
 
 Function ChangeGPO ($GPOName1,$GPOName2)
 {
-$OU = "ou=Computers,ou=euc,dc=global,dc=gam,dc=com"
-$run1 = "Set-GPLink -Name $GPOName1 -Target $OU -LinkEnabled Yes"
-$run2 = "Set-GPLink -Name $GPOName2 -Target $OU -LinkEnabled No"
-invoke-expression $run1
-invoke-expression $run2
+ [string]$OU = "ou=Computers,ou=euc,dc=global,dc=gam,dc=com"
+ $run1 = "Set-GPLink -Name ""$GPOName1"" -Target ""ou=Computers,ou=euc,dc=global,dc=gam,dc=com"" -LinkEnabled Yes"
+ $run2 = "Set-GPLink -Name ""$GPOName2"" -Target ""ou=Computers,ou=euc,dc=global,dc=gam,dc=com"" -LinkEnabled No"
+ invoke-expression $run1
+ invoke-expression $run2
 }
+
 
 function ReplicaInstallCheck
 {
