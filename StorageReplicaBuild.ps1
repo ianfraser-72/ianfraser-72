@@ -246,7 +246,7 @@ if ($task -eq "statecheck")
      }
 }
 
-if ($gpobool -eq "Fail over Drive Map GPO")
+if ($gpobool -eq "Failover")
 {
 $GPOstring1 = "GAM Win10_Test Drive Maps_" + $sourceserver
 $GPOString2 = "GAM Win10_Test Drive Maps_" + $destserver
