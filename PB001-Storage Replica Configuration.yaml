@@ -83,7 +83,7 @@
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -gpobool {{gpobool}}
     register: failbackonline
     when: 
-       - gpobool == "Fail over Drive Map GPO"
+       - gpobool == "Failover"
     
     vars:
       ansible_become: true
