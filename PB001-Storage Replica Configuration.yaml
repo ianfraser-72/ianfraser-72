@@ -80,7 +80,7 @@
       ansible_become_method: runas
       
   - name: Run GPO Change (PowerShell)
-    win_shell: C:\Temp\StorageReplicaBuild.ps1 -gpobool {{gpobool}}
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -gpobool {{gpobool}} -sourceserver {{sourceserver}} -destserver {{destserver}}
     register: failbackonline
     when: 
        - gpobool == "Failover"
