@@ -18,7 +18,7 @@ param
 )
 
 function listperms
-
+{
 $folders = @("HK"),("Departments"),("Data"),("Applications"),("Update")
 foreach ($a in $folders)
 {
