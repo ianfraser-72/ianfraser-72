@@ -1,5 +1,5 @@
 —
-– hosts: Windows
+– hosts: {sourceserver}
   gather_facts: true
   
   tasks:
