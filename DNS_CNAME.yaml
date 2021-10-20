@@ -12,7 +12,7 @@
   gather_facts: no
   tasks:  
     
-  - name: Update a CNAME record FS-HKG-PROD
+  - name: Update CNAME record 
     community.windows.win_dns_record:
       name: FS_CNAME
       state: present
