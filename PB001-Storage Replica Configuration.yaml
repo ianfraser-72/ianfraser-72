@@ -81,10 +81,11 @@
       
   - name: Run GPO Change (PowerShell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -gpobool {{gpobool}} -sourceserver {{sourceserver}} -destserver {{destserver}}
-    register: failbackonline
+    register: gpochange
     when: 
        - gpobool == "Failover"
-    
+       - failbackonline.rc == 0
+       
     vars:
       ansible_become: true
       ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
