@@ -63,7 +63,7 @@
     changed_when: False
     when: (tasktype == "Build_Service") or (tasktype == "Check_Connectivity") or (tasktype == "Remove_Replica_Role")
     
-  - hosts: "{{sourceserver}}"
+  - hosts: "{{ sourceserver }}"
     gather_facts: no
     tasks:
 
