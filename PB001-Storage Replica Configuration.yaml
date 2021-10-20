@@ -127,7 +127,7 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas     
    
-  - hosts: {{SourceServer}}
+  - hosts: "{{SourceServer}}"
     gather_facts: no
     tasks: 
 
