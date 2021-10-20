@@ -1,15 +1,9 @@
 ---
 - hosts: "{{ sourceserver }}"
-  gather_facts: no
+  gather_facts: yes
   tasks:
-
-  - name: Add hidden share
-    win_share:
-      name: internal
-      description: Share1 File Share Demo
-      path: E:\Share1
-      list: no
-      full: Administrators
-      read: u49162
-      deny: gph
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
+  – name: "What's my name again?"
+    debug:
+       msg: '{{ ansible_user }}'
+    become: yes
+ 
