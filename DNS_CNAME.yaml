@@ -14,7 +14,7 @@
     
   - name: Update a CNAME record FS-HKG-PROD
     community.windows.win_dns_record:
-      name: "{{FS_CNAME}}"
+      name: FS_CNAME
       state: present
       type: "CNAME"
       value: "{{sourceserver}}"
