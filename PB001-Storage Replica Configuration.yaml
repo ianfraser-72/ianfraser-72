@@ -63,9 +63,9 @@
     changed_when: False
     when: (tasktype == "Build_Service") or (tasktype == "Check_Connectivity") or (tasktype == "Remove_Replica_Role")
     
-- hosts: "{{sourceserver}}"
-  gather_facts: no
-  tasks:
+  - hosts: "{{sourceserver}}"
+    gather_facts: no
+    tasks:
 
   - name: Run Online Failback (PowerShell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
@@ -121,11 +121,11 @@
       value: "{{sourceserver}}"
       zone: "global.gam.com"
       
-   vars:
-     ansible_become: true
-     ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
-     ansible_become_password: "{{password}}"
-     ansible_become_method: runas     
+    vars:
+      ansible_become: true
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas     
    
   - hosts: {{SourceServer}}
     gather_facts: no
@@ -174,9 +174,9 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
 
- - hosts: File_Servers
-   gather_facts: no
-   tasks:
+  - hosts: File_Servers
+    gather_facts: no
+    tasks:
 
   - name: Run Remove Groups (Powershell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "RemoveGroups" -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
