@@ -12,8 +12,4 @@
         type: "CNAME"
         value: "{{sourceserver}}"
         zone: "global.gam.com"
-  
-    
-  - name: Basic usage
-  debug:
-    msg: "'{{ lookup('env', 'HOME') }}' is the HOME environment variable."
+ 
