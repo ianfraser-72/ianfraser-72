@@ -2,17 +2,17 @@
   hosts: Domain_Contollers
   tasks:    
       
-     - name: Retrieve CNAME from Fileserver
-       ansible.windows.win_reg_stat:
-         path: HKLM:\SOFTWARE\GAM\Ansible
-         name: FS_CNAME
-       register: FS_CNAME
+  - name: Retrieve CNAME from Fileserver
+    ansible.windows.win_reg_stat:
+      path: HKLM:\SOFTWARE\GAM\Ansible
+      name: FS_CNAME
+    register: FS_CNAME
     
-    - name: Update a CNAME record FS-HKG-PROD
-      community.windows.win_dns_record:
-        name: {{FS_CNAME}}
-        state: present
-        type: "CNAME"
-        value: "{{sourceserver}}"
-        zone: "global.gam.com"
+  - name: Update a CNAME record FS-HKG-PROD
+    community.windows.win_dns_record:
+      name: {{FS_CNAME}}
+      state: present
+      type: "CNAME"
+      value: "{{sourceserver}}"
+      zone: "global.gam.com"
  
