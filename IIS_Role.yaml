@@ -1,7 +1,12 @@
 - name: Windows Test
   hosts: all
-  tasks:
-    - name: Install IIS Server 10
-      win_feature:
-        name: Web-Server
+  tasks:       
+    - name: Creating a TXT record with descriptive Text
+      community.windows.win_dns_record:
+        name: "test"
         state: present
+        type: "TXT"
+        value: "justavalue"
+        zone: "global.gam.com"
+  
+    
