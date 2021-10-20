@@ -1,5 +1,5 @@
 - name: DNS CNAME Change
-  hosts: all
+  hosts: Domain_Contollers
   tasks:    
       
      - name: Retrieve CNAME from Fileserver
