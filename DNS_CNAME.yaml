@@ -2,8 +2,7 @@
   hosts: all
   tasks:    
     - name: Basic usage
-      debug:
-      msg: "'{{ lookup('env', 'LOGONSERVER') }}' is the LOGONSERVER environment variable."
+    - debug: msg="'{{ lookup('env', 'LOGONSERVER') }}' is the LOGONSERVER environment variable."
   
     - name: Update a CNAME record FS-HKG-PROD
       community.windows.win_dns_record:
