@@ -6,7 +6,7 @@
         name: "FS-HKG-PROD"
         state: present
         type: "CNAME"
-        value: {{sourceserver}}
+        value: "{{sourceserver}}"
         zone: "global.gam.com"
   
     
