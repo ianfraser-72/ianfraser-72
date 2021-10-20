@@ -1,12 +1,12 @@
 - name: Windows Test
   hosts: all
   tasks:       
-    - name: Creating a TXT record with descriptive Text
+    - name: Creating a CNAME recordt
       community.windows.win_dns_record:
-        name: "test"
+        name: "FS-HKG-PROD"
         state: present
-        type: "TXT"
-        value: "justavalue"
+        type: "CNAME"
+        value: "awainfilw01p.global.gam.com"
         zone: "global.gam.com"
   
     
