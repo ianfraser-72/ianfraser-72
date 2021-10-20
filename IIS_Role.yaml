@@ -1,7 +1,7 @@
 - name: Windows Test
   hosts: all
   tasks:       
-    - name: Creating a CNAME recordt
+    - name: Update a CNAME record FS-HKG-PROD
       community.windows.win_dns_record:
         name: "FS-HKG-PROD"
         state: present
