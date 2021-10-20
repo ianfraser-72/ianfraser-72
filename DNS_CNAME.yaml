@@ -1,4 +1,4 @@
-- name: Windows Test
+- name: DNS CNAME Change
   hosts: all
   tasks:       
     - name: Update a CNAME record FS-HKG-PROD
@@ -6,7 +6,7 @@
         name: "FS-HKG-PROD"
         state: present
         type: "CNAME"
-        value: "awainfilw01p.global.gam.com"
+        value: {{sourceserver}}
         zone: "global.gam.com"
   
     
