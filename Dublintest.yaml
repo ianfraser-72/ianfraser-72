@@ -2,7 +2,7 @@
 - hosts: "{{ sourceserver }}"
   gather_facts: yes
   tasks:
-  – name: "What's my name again?"
+  - name: "What's my name again?"
     debug:
        msg: '{{ ansible_user }}'
     become: yes
