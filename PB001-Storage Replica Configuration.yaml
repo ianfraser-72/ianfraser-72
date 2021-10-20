@@ -93,6 +93,44 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas    
 
+  - name: Retrieve CNAME from Fileserver
+    ansible.windows.win_reg_stat:
+      path: HKLM:\SOFTWARE\GAM\Ansible
+      name: FS_CNAME
+    register: FS_CNAME
+    when: 
+       - tasktype == "failover"
+       - cnamefailover == "Failover CNAME"
+       - failbackonline.rc == 0
+       
+    vars:
+      ansible_become: true
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas   
+     
+ - hosts: Domain_Controllers
+   gather_facts: no
+   tasks:  
+    
+  - name: Update CNAME record 
+    community.windows.win_dns_record:
+      name: FS_CNAME
+      state: present
+      type: "CNAME"
+      value: "{{sourceserver}}"
+      zone: "global.gam.com"
+      
+   vars:
+     ansible_become: true
+     ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
+     ansible_become_password: "{{password}}"
+     ansible_become_method: runas     
+   
+ - hosts: {{SourceServer}}
+   gather_facts: no
+   tasks: 
+
   - name: Run Pre Test for Storage Replica Connectivity (PowerShell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}}
     when: 
