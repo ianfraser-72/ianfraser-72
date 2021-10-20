@@ -9,5 +9,5 @@
     
   - name: Obtain information about a registry key using short form
     ansible.windows.win_reg_stat:
-      path: HKLM:\SOFTWARE\GAM\Ansible\FS_CNAME
+      path: HKLM:\SOFTWARE\GAM\Ansible
     register: FS_CNAME
