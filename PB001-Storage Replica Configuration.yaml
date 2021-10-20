@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: File_Servers
   gather_facts: no
   tasks:
   
@@ -136,7 +136,7 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
 
-- hosts: all
+- hosts: File_Servers
   gather_facts: no
   tasks:
 
