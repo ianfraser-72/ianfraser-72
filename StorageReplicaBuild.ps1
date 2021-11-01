@@ -166,8 +166,8 @@ if ($task -eq "RemoveGroups")
   $run
   }
 }
-
-if (($task -eq "failover") -and ($cnamefailover -eq $null))
+write-host "Cname failover is $cnamefailover"
+if (($task -eq "failover") -and ($cnamefailover -eq ""))
 {
   $sourceserver1 = $sourceserver.split(".")
   $destserver1 = $destserver.split(".")
@@ -193,7 +193,7 @@ if (($task -eq "failover") -and ($cnamefailover -eq $null))
   }
 } 
 
-if (($task -eq "failover") -and ($cnamefailover -ne $null) -and ($failoversuccess -eq $true))
+if (($task -eq "failover") -and ($cnamefailover -ne "") -and ($failoversuccess -eq $true))
   {
     $sourceserver1 = $sourceserver.split(".")
     $destserver1 = $destserver.split(".")
