@@ -121,6 +121,7 @@
     when: 
        - tasktype == "failover"
        - cnamefailover == "Failover CNAME"
+       - failbackonline.rc == 0
     
   - name: Update CNAME record 
     community.windows.win_dns_record:
@@ -132,6 +133,7 @@
     when: 
        - tasktype == "failover"
        - cnamefailover == "Failover CNAME"
+       - failbackonline.rc == 0
    
   - name: Set service startup mode to auto and ensure it is started
     win_service:
@@ -147,6 +149,7 @@
     when: 
        - tasktype == "failover"
        - cnamefailover == "Failover CNAME"
+       - failbackonline.rc == 0
        
     vars:
       ansible_become: true
