@@ -123,14 +123,12 @@
     when: 
        - tasktype == "failover"
        - cnamefailover == "Failover CNAME"
-       - failbackonline.rc == 0
    
   - name: Update SPN 
     win_command: SETSPN -a host/alias_name {{sourceserver}}   
     when: 
        - tasktype == "failover"
        - cnamefailover == "Failover CNAME"
-       - failbackonline.rc == 0  
           
     vars:
       ansible_become: true
