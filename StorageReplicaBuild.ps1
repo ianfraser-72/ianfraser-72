@@ -176,19 +176,22 @@ if (($task -eq "failover") -and ($cnamefailover -eq $null))
   
   try 
   {
-  $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver2 -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver2 -DestinationRGName `"$destrg`" -force -erroraction stop"
-  $run = invoke-expression $runstring
-  Write-host "Replica failover successful - new sourceserver is $sourceserver2 and destination server is $destserver2"
-  $failoversuccess = $true
+    $error.clear()
+    $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver2 -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver2 -DestinationRGName `"$destrg`" -force -erroraction stop"
+    $run = invoke-expression $runstring
+    if (!$error)
+    {
+      Write-host "Replica failover successful - new sourceserver is $sourceserver2 and destination server is $destserver2"
+      $failoversuccess = $true
+    }
+    catch
+    {
+      Write-host "Replica failover failed for source server $sourceserver2 and destination server $destserver2"
+      $error
+    } 
   }
-  catch
-  {
-  Write-host "Replica failover failed for source server $sourceserver2 and destination server $destserver2"
-  $error
-  } 
-}
 
-if (($task -eq "failover") -and ($cnamefailover -ne $null))
+if (($task -eq "failover") -and ($cnamefailover -ne $null) -and ($failoversuccess -eq $true))
   {
     $sourceserver1 = $sourceserver.split(".")
     $destserver1 = $destserver.split(".")
@@ -197,26 +200,23 @@ if (($task -eq "failover") -and ($cnamefailover -ne $null))
     
   try
   {  
-  $runstring = "SETSPN -a host/alias $sourceserver2"
-  $run = invoke-expression $runstring
-  Write-host "Written SPN NETBIOS alias for $sourceserver2"
+    $runstring = "SETSPN -a host/alias $sourceserver2"
+    $run = invoke-expression $runstring
   }
   catch
   {
-  Write-host "Failed to write SPN NETBIOS alias for $sourceserver2"
-  $error
+    Write-host "Failed to write SPN NETBIOS alias for $sourceserver2"
+    $error
   }
   try
   {
     $runstring = "SETSPN -a host/alias.global.gam.com $sourceserver2"
     $run = invoke-expression $runstring
-    Write-host "Written SPN FQDN alias for $sourceserver2"
-    $failoverspnsuccess = $true
   }
   catch
   {
-   Write-host "Failed to write SPN FQDN alias for $sourceserver2"
-   $error
+    Write-host "Failed to write SPN FQDN alias for $sourceserver2"
+    $error
   }
 }
 
@@ -224,13 +224,13 @@ if ($task -eq "Check_Replication_Status")
 {
   try
   {
-  $partners = Get-SRPartnership
-  write-host $partners
+    $partners = Get-SRPartnership
+    write-host $partners
   }
-  Catch [System.Management.Automation.CommandNotFoundException] 
+    Catch [System.Management.Automation.CommandNotFoundException] 
   {
-  write-host "Storage Replica not installed so cant check Replication Status!"
-  exit 1
+    write-host "Storage Replica not installed so cant check Replication Status!"
+    exit 1
   }
   
   $runstring = "Get-SRGroup"
@@ -238,14 +238,14 @@ if ($task -eq "Check_Replication_Status")
 
   if ($run.ReplicationStatus -match "ContinuouslyReplicating")
   {
-   write-host "Replication Status is $($run.ReplicationStatus) for Replication group $($run.name)"
-   write-host $run
+    write-host "Replication Status is $($run.ReplicationStatus) for Replication group $($run.name)"
+    write-host $run
   }
   if ($run.ReplicationStatus -match "ConnectingtoSource")
   {
-   write-host "Replication Status is $($run.ReplicationStatus) for Replication group $($run.name)"
-   Write-host "In this instance it is critical that if the data stored on the new source server during a failing of the original source server is to be retained, certain steps must be followed.Data loss will occur if the failed server comes back online, and this is then immediately made the source server as this will then force replication and deletion from the recovered source to the destination, effectively wiping the newly stored data. To avoid this scenario, you must repeat the original failover step by running the failover online play and ensuring the newly recovered server is the destination server, not the source when updating the survey. This will ensure new data is replicated to the destination server (the original source server). You can then run the failover online play again to re-establish the original partnership order (basically now reversing the source and destination)"
-   write-host $run
+    write-host "Replication Status is $($run.ReplicationStatus) for Replication group $($run.name)"
+    Write-host "In this instance it is critical that if the data stored on the new source server during a failing of the original source server is to be retained, certain steps must be followed.Data loss will occur if the failed server comes back online, and this is then immediately made the source server as this will then force replication and deletion from the recovered source to the destination, effectively wiping the newly stored data. To avoid this scenario, you must repeat the original failover step by running the failover online play and ensuring the newly recovered server is the destination server, not the source when updating the survey. This will ensure new data is replicated to the destination server (the original source server). You can then run the failover online play again to re-establish the original partnership order (basically now reversing the source and destination)"
+    write-host $run
   }
   if ($run.ReplicationStatus -match "ReplicationSuspended")
   {
