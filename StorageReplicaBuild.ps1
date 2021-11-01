@@ -167,7 +167,7 @@ if ($task -eq "RemoveGroups")
   }
 }
 
-if (($task -eq "failover")
+if ($task -eq "failover")
 {
   $sourceserver1 = $sourceserver.split(".")
   $destserver1 = $destserver.split(".")
