@@ -22,5 +22,5 @@
  
  
   - name: Update SPN 
-    {{ "{{sourceserver}}" | regex_replace('.global.gam.com') }}
+    {{ "{{sourceserver}} | regex_replace('.global.gam.com') }}"
     win_command: "SETSPN -a host/FS_CNAME {{sourceserver}}"
