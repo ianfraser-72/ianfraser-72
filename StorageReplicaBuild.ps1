@@ -186,6 +186,7 @@ if (($task -eq "failover") -and ($cnamefailover -eq $null))
   Write-host "Replica failover failed for source server $sourceserver2 and destination server $destserver2"
   $error
   } 
+}
 
 if (($task -eq "failover") -and ($cnamefailover -ne $null))
   {
