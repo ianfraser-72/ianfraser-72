@@ -125,7 +125,7 @@
        - cnamefailover == "Failover CNAME"
    
   - name: Update SPN 
-    win_command: SETSPN -a host/alias_name {{sourceserver}}   
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -cnamefailover {{cnamefailover}} -alias FS_CNAME
     when: 
        - tasktype == "failover"
        - cnamefailover == "Failover CNAME"
