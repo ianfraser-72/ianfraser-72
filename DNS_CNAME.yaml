@@ -22,4 +22,4 @@
  
   - name: Update SPN 
      #win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -cnamefailover {{cnamefailover}} -alias FS_CNAME
-     win_command: SETSPN -a host/FS_CNAME "{{sourceserver}}"
+     win_command: SETSPN -a host/FS_CNAME {{sourceserver}}
