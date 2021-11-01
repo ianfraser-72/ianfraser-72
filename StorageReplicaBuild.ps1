@@ -176,7 +176,7 @@ if (($task -eq "failover") -and ($cnamefailover -eq ""))
   
   try 
   {
-    $error.clear()
+    write-host "Starting Failover"
     $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver2 -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver2 -DestinationRGName `"$destrg`" -force -erroraction continue"
     $run = invoke-expression $runstring
   }
