@@ -190,13 +190,35 @@ if (($task -eq "failover") -and ($cnamefailover -eq $null))
 
 if (($task -eq "failover") -and ($cnamefailover -ne $null))
   {
-    $runstring = "SETSPN -a host/alias $sourceserver2"
-    $run = invoke-expression $runstring
+    $sourceserver1 = $sourceserver.split(".")
+    $destserver1 = $destserver.split(".")
+    $sourceserver2 = $sourceserver1[0]
+    $destserver2 = $destserver1[0]
+    
+  try
+  {  
+  $runstring = "SETSPN -a host/alias $sourceserver2"
+  $run = invoke-expression $runstring
+  Write-host "Written SPN NETBIOS alias for $sourceserver2"
+  }
+  catch
+  {
+  Write-host "Failed to write SPN NETBIOS alias for $sourceserver2"
+  $error
+  }
+  try
+  {
     $runstring = "SETSPN -a host/alias.global.gam.com $sourceserver2"
     $run = invoke-expression $runstring
+    Write-host "Written SPN FQDN alias for $sourceserver2"
     $failoverspnsuccess = $true
   }
-
+  catch
+  {
+   Write-host "Failed to write SPN FQDN alias for $sourceserver2"
+   $error
+  }
+}
 
 if ($task -eq "Check_Replication_Status")
 {
@@ -259,7 +281,6 @@ if ($task -eq "statecheck")
      }
 }
 
-write-output "GPOBool is $gpobool"
 if ($gpobool -eq "Failover")
 {
   $sourceserver1 = $sourceserver.split(".")
