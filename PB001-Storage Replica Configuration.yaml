@@ -19,8 +19,8 @@
   - name: Add a powershell module
     win_psmodule:
       name: GroupPolicy
-      state: present   
-         
+      state: present    
+    
   - name: Copy Build Script
     win_copy:
       src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
@@ -112,6 +112,12 @@
 - hosts: Domain_Controllers
   gather_facts: no
   tasks:  
+    
+  - name: Copy Build Script DC
+    win_copy:
+      src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
+      dest: C:\Temp\StorageReplicaBuild.ps1
+      force: yes  
     
   - name: Update CNAME record 
     community.windows.win_dns_record:
