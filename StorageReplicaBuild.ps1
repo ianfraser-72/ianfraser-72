@@ -167,7 +167,7 @@ if ($task -eq "RemoveGroups")
   }
 }
 
-if (($task -eq "failover") -and ($cnamefailover -eq $null))
+if (($task -eq "failover")
 {
   $sourceserver1 = $sourceserver.split(".")
   $destserver1 = $destserver.split(".")
@@ -177,7 +177,7 @@ if (($task -eq "failover") -and ($cnamefailover -eq $null))
   try 
   {
     $error.clear()
-    $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver2 -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver2 -DestinationRGName `"$destrg`" -force -erroraction stop"
+    $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver2 -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver2 -DestinationRGName `"$destrg`" -force -erroraction continue"
     $run = invoke-expression $runstring
   }
   catch
