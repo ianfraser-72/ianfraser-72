@@ -13,6 +13,7 @@ param
 [string]$destrg,
 [string]$task,
 [string]$gpobool,
+[string]$alias,
 [string]$replicationmode,
 [string]$seedingchoice
 )
@@ -178,12 +179,23 @@ if ($task -eq "failover")
   $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver2 -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver2 -DestinationRGName `"$destrg`" -force -erroraction stop"
   $run = invoke-expression $runstring
   Write-host "Replica failover successful - new sourceserver is $sourceserver2 and destination server is $destserver2"
+  $failoversuccess = $true
   }
   catch
   {
   Write-host "Replica failover failed for source server $sourceserver2 and destination server $destserver2"
   $error
   }
+  
+  if ($failoverSucess -eq $true)
+  {
+  $runstring = "SETSPN -a host/alias $sourceserver2"
+  $run = invoke-expression $runstring
+  $runstring = "SETSPN -a host/alias.global.gam.com $sourceserver2"
+  $run = invoke-expression $runstring
+  $failoverspnsuccess = $true
+  }
+  
 }
 
 if ($task -eq "Check_Replication_Status")
