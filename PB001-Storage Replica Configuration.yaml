@@ -163,9 +163,9 @@
       - tasktype == "failover"
       - cnamefailover == "Failover CNAME"  
    
-- hosts: "{{ SourceServer }}"
+- hosts: "{{ sourceserver }}"
   gather_facts: no
-  tasks: 
+  tasks:
 
   - name: Run Pre Test for Storage Replica Connectivity (PowerShell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}}
