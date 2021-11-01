@@ -14,6 +14,7 @@ param
 [string]$task,
 [string]$gpobool,
 [string]$alias,
+[string]$cnamefailover,
 [string]$replicationmode,
 [string]$seedingchoice
 )
@@ -119,8 +120,7 @@ if ($task -eq "Check_Connectivity")
   else
   {
     Write-host "Test not run as Storage Replica not installed`r`n`r`n"
-  }
-  
+  }  
 }
 
 if ($task -eq "Remove_Partnership")
@@ -187,15 +187,14 @@ if ($task -eq "failover")
   $error
   }
   
-  if ($failoverSucess -eq $true)
+  if (($failoverSucess -eq $true)) -and ($cnamefailover -ne $null))
   {
-  $runstring = "SETSPN -a host/alias $sourceserver2"
-  $run = invoke-expression $runstring
-  $runstring = "SETSPN -a host/alias.global.gam.com $sourceserver2"
-  $run = invoke-expression $runstring
-  $failoverspnsuccess = $true
+    $runstring = "SETSPN -a host/alias $sourceserver2"
+    $run = invoke-expression $runstring
+    $runstring = "SETSPN -a host/alias.global.gam.com $sourceserver2"
+    $run = invoke-expression $runstring
+    $failoverspnsuccess = $true
   }
-  
 }
 
 if ($task -eq "Check_Replication_Status")
