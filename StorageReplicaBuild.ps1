@@ -187,7 +187,7 @@ if ($task -eq "failover")
   $error
   }
   
-  if (($failoverSucess -eq $true)) -and ($cnamefailover -ne $null))
+  if (($failoverSucess -eq $true) -and ($cnamefailover -ne $null))
   {
     $runstring = "SETSPN -a host/alias $sourceserver2"
     $run = invoke-expression $runstring
