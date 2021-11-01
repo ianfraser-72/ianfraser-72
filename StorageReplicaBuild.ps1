@@ -193,7 +193,7 @@ if (($task -eq "failover") -and ($cnamefailover -eq ""))
   }
 } 
 
-if (($task -eq "failover") -and ($cnamefailover -ne "") -and ($failoversuccess -eq $true))
+if (($task -eq "failover") -and ($cnamefailover -ne ""))
   {
     $sourceserver1 = $sourceserver.split(".")
     $destserver1 = $destserver.split(".")
