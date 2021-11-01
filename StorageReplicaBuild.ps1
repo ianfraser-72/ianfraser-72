@@ -166,7 +166,7 @@ if ($task -eq "RemoveGroups")
   $run
   }
 }
-write-host "Cname failover is $cnamefailover"
+
 if (($task -eq "failover") -and ($cnamefailover -eq ""))
 {
   $sourceserver1 = $sourceserver.split(".")
@@ -195,6 +195,7 @@ if (($task -eq "failover") -and ($cnamefailover -eq ""))
 
 if (($task -eq "failover") -and ($cnamefailover -ne ""))
   {
+    write-host "Starting SPN Tasks"
     $sourceserver1 = $sourceserver.split(".")
     $destserver1 = $destserver.split(".")
     $sourceserver2 = $sourceserver1[0]
@@ -204,6 +205,7 @@ if (($task -eq "failover") -and ($cnamefailover -ne ""))
   {  
     $runstring = "SETSPN -a host/alias $sourceserver2"
     $run = invoke-expression $runstring
+    $run
   }
   catch
   {
@@ -214,6 +216,7 @@ if (($task -eq "failover") -and ($cnamefailover -ne ""))
   {
     $runstring = "SETSPN -a host/alias.global.gam.com $sourceserver2"
     $run = invoke-expression $runstring
+    $run
   }
   catch
   {
