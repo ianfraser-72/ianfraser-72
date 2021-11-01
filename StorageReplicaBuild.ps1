@@ -167,7 +167,7 @@ if ($task -eq "RemoveGroups")
   }
 }
 
-if ($task -eq "failover")
+if (($task -eq "failover") -and ($cnamefailover -eq $null))
 {
   $sourceserver1 = $sourceserver.split(".")
   $destserver1 = $destserver.split(".")
@@ -186,8 +186,9 @@ if ($task -eq "failover")
   Write-host "Replica failover failed for source server $sourceserver2 and destination server $destserver2"
   $error
   }
-  
-  if (($failoverSucess -eq $true) -and ($cnamefailover -ne $null))
+}  
+
+if (($task -eq "failover") -and ($cnamefailover -ne $null))
   {
     $runstring = "SETSPN -a host/alias $sourceserver2"
    # $run = invoke-expression $runstring
