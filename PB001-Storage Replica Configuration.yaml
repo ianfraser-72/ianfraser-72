@@ -107,7 +107,7 @@
       var: FS_CNAME
   - name: Make var persistent
     set_fact:
-      FS_CNAME1: "{{FS_CNAME.value"}}
+      FS_CNAME1: "{{FS_CNAME.value}}"
    
 - hosts: Domain_Controllers
   gather_facts: no
