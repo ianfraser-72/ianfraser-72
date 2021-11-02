@@ -25,15 +25,13 @@
       src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
       dest: C:\Temp\StorageReplicaBuild.ps1
       force: yes
-      
-  -debug: ms
   
   - name: Update CNAME record 
     community.windows.win_dns_record:
       name: "{{FS_CNAME2}}"
       state: present
       type: "CNAME"
-      value: "awainfilw01p.global.gam.com"
+      value: "{{sourceserver}}"
       zone: "global.gam.com"
   
      vars:
