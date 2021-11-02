@@ -102,12 +102,9 @@
        - tasktype == "failover"
        - cnamefailover == "Failover CNAME"
        - failbackonline.rc == 0
-       
-    vars:
-      ansible_become: true
-      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
-      ansible_become_password: "{{password}}"
-      ansible_become_method: runas   
+        
+  - debug:
+    var: FS_CNAME
      
 - hosts: Domain_Controllers
   gather_facts: no
@@ -156,7 +153,7 @@
   tasks:
 
   - name: Update SPN 
-    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -cnamefailover {{cnamefailover}} -alias FS_CNAME
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -destserver {{destserver}} -cnamefailover {{cnamefailover}} -alias {{FS_CNAME}}
     when: 
        - tasktype == "failover"
        - cnamefailover == "Failover CNAME"
