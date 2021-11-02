@@ -114,7 +114,7 @@
   gather_facts: no
   tasks:  
   
-  - debug msg="{{ hostvars['{{sourceserver}}']['FS_CNAME1'] }}"
+  - debug msg="{{ hostvars["{{sourceserver}}"]['FS_CNAME1'] }}"
     
   - name: Copy Build Script DC
     win_copy:
