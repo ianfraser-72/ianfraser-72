@@ -5,15 +5,15 @@
   - name: Retrieve CNAME from Fileserver
     ansible.windows.win_reg_stat:
       path: HKLM:\SOFTWARE\GAM\Ansible
-      name: FS_CNAME
-    register: FS_CNAME
+      name: FS_CNAME1
+    register: FS_CNAME1
         
   - debug:
       var: FS_CNAME
       
-  - name: Make var persistent
-    set_fact:
-      FS_CNAME1: "{{FS_CNAME.value}}"
+  #- name: Make var persistent
+  #  set_fact:
+  #    FS_CNAME1: "{{FS_CNAME.value}}"
    
 - hosts: Domain_Controllers
   gather_facts: no
@@ -27,13 +27,10 @@
   
   - name: Update CNAME record 
     community.windows.win_dns_record:
-      name: "{{FS_CNAME2}}"
+      name: "{{FS_CNAME}}"
       state: present
       type: "CNAME"
       value: "{{sourceserver}}"
       zone: "global.gam.com"
-  
-    vars:
-      FS_CNAME2: "{{hostvars['awainfilw01p']['FS_CNAME1'] }}"
-  - debug: msg="{{FS_CNAME1}}"
+
 
