@@ -124,7 +124,7 @@
        - cnamefailover == "Failover_CNAME"
     
     vars:
-      FS_CNAME2: "{{hostvars['{{sourceserver}}']['FS_CNAME1'] }}"
+      FS_CNAME2: "{{hostvars['{{sourceserver}}']['FS_CNAME.value'] }}"
     
   - name: Update CNAME record 
     community.windows.win_dns_record:
