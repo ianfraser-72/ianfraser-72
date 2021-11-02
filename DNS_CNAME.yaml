@@ -14,6 +14,7 @@
   - name: Make var persistent
     set_fact:
       FS_CNAME1: "{{FS_CNAME.value}}"
+      FS_CNAME2: "{{FS_CNAME.value}}"
    
 - hosts: Domain_Controllers
   gather_facts: no
@@ -33,8 +34,8 @@
       value: "awainfilw01p.global.gam.com"
       zone: "global.gam.com"
   
-    vars:
+ #   vars:
     #  servername: "{{sourceserver}}"
-      FS_CNAME2: "{{hostvars['awainfilw01p.global.gam.com']['FS_CNAME1'] }}"
- 
+    #  FS_CNAME2: "{{hostvars['awainfilw01p.global.gam.com']['FS_CNAME1'] }}"
+    
 
