@@ -206,7 +206,7 @@ if (($task -eq "failover") -and ($cnamefailover -ne ""))
     $runstring = "SETSPN -d host/$alias $sourceserver2"
     $run = invoke-expression $runstring
     $run
-     $runstring = "SETSPN -d host/$alias.global.gam.com $sourceserver2"
+    $runstring = "SETSPN -d host/$alias.global.gam.com $sourceserver2"
     $run = invoke-expression $runstring
     $run
     $runstring = "SETSPN -d host/$alias $destserver2"
@@ -216,7 +216,7 @@ if (($task -eq "failover") -and ($cnamefailover -ne ""))
     $run = invoke-expression $runstring
     $run
     write-output "Waiting before creating"
-    Start-Sleep -s 10
+    Start-Sleep -s 30
     $runstring = "SETSPN -a host/$alias $sourceserver2"
     $run = invoke-expression $runstring
     $run
