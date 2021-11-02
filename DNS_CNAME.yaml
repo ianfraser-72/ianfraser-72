@@ -34,7 +34,7 @@
       zone: "global.gam.com"
 
     vars:
-      servername: '{{sourceserver}}"
+      servername: "{{sourceserver}}"
       FS_CNAME2: "{{hostvars['{{servername}}']['FS_CNAME1'] }}"
  
 
