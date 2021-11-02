@@ -104,7 +104,7 @@
        - failbackonline.rc == 0
         
   - debug:
-    var: FS_CNAME
+      var: FS_CNAME
      
 - hosts: Domain_Controllers
   gather_facts: no
