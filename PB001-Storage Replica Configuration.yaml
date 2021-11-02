@@ -93,22 +93,18 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas    
 
-  - name: Retrieve CNAME from Fileserver
-    ansible.windows.win_reg_stat:
-      path: HKLM:\SOFTWARE\GAM\Ansible
-      name: FS_CNAME
-    register: FS_CNAME
-    when: 
-       - tasktype == "failover"
-       - cnamefailover == "Failover_CNAME"
-       - failbackonline.rc == 0
+ # - name: Retrieve CNAME from Fileserver
+ #   ansible.windows.win_reg_stat:
+  #    path: HKLM:\SOFTWARE\GAM\Ansible
+ #     name: FS_CNAME
+ #   register: FS_CNAME
+  #  when: 
+   #    - tasktype == "failover"
+   #    - cnamefailover == "Failover_CNAME"
+   #    - failbackonline.rc == 0
         
   - debug:
       var: FS_CNAME
-  - name: Make var persistent
-    set_fact:
-      FS_CNAME1: "{{FS_CNAME.value}}"
-      Server1:  "{{sourceserver}}"
    
 - hosts: Domain_Controllers
   gather_facts: no
@@ -125,7 +121,7 @@
     
   - name: Update CNAME record 
     community.windows.win_dns_record:
-      name: "{{FS_CNAME2}}"
+      name: "{{FS_CNAME}}"
       state: present
       type: "CNAME"
       value: "{{sourceserver}}"
@@ -133,33 +129,31 @@
     when: 
        - tasktype == "failover"
        - cnamefailover == "Failover_CNAME"
-    vars:
-      FS_CNAME2: "{{hostvars['{{Server1}}']['FS_CNAME1'] }}"
-      
-  - name: Set service startup mode to auto and ensure it is started
-    win_service:
-      name: seclogon
-      start_mode: auto
-      state: started  
-    when: 
-       - tasktype == "failover"
-       - cnamefailover == "Failover_CNAME"
    
-  - name: Set service startup mode to disabled and ensure it is stopped
-    win_service:
-      name: seclogon
-      start_mode: disabled
-      state: stopped
-    when: 
-      - tasktype == "failover"
-      - cnamefailover == "Failover_CNAME"  
+ # - name: Set service startup mode to auto and ensure it is started
+ #   win_service:
+  #    name: seclogon
+  #    start_mode: auto
+  #    state: started  
+  #  when: 
+  #     - tasktype == "failover"
+  #     - cnamefailover == "Failover_CNAME"
+   
+ # - name: Set service startup mode to disabled and ensure it is stopped
+ #   win_service:
+  #    name: seclogon
+  #    start_mode: disabled
+   #   state: stopped
+  #  when: 
+   #   - tasktype == "failover"
+    #  - cnamefailover == "Failover_CNAME"  
    
 - hosts: "{{ sourceserver }}"
   gather_facts: no
   tasks:
 
   - name: Update SPN 
-    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -destserver {{destserver}} -cnamefailover {{cnamefailover}} -alias {{FS_CNAME.value}}
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -destserver {{destserver}} -cnamefailover {{cnamefailover}} -alias {{FS_CNAME}}
     when: 
        - tasktype == "failover"
        - cnamefailover == "Failover_CNAME"
