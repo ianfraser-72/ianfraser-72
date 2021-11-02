@@ -32,8 +32,6 @@
       type: "CNAME"
       value: "awainfilw01p.global.gam.com"
       zone: "global.gam.com"
-      
-  - debug  msg: System {{servername}}
   
     vars:
     #  servername: "{{sourceserver}}"
