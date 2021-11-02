@@ -32,7 +32,9 @@
       type: "CNAME"
       value: "{{servername}}"
       zone: "global.gam.com"
-
+      
+  - debug  msg: System {{servername}}
+  
     vars:
       servername: "{{sourceserver}}"
       FS_CNAME2: "{{hostvars['{{servername}}']['FS_CNAME1'] }}"
