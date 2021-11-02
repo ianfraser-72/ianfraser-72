@@ -30,10 +30,11 @@
       name: "{{FS_CNAME2}}"
       state: present
       type: "CNAME"
-      value: "{{sourceserver}}"
+      value: "{{servername}}"
       zone: "global.gam.com"
 
-   # vars:
-     # FS_CNAME2: "{{hostvars['{{sourceserver}}']['FS_CNAME1'] }}"
-      
+    vars:
+      servername: '{{sourceserver}}"
+      FS_CNAME2: "{{hostvars['{{servername}}']['FS_CNAME1'] }}"
+ 
 
