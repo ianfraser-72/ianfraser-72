@@ -35,5 +35,5 @@
   
     vars:
       FS_CNAME2: "{{hostvars['awainfilw01p']['FS_CNAME1'] }}"
-    - debug: msg="{{FS_CNAME1}}"
+  - debug: msg="{{FS_CNAME1}}"
 
