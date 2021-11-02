@@ -216,7 +216,7 @@ if (($task -eq "failover") -and ($cnamefailover -ne ""))
     $run = invoke-expression $runstring
     $run
     write-output "Waiting before creating"
-    Start-Sleep -s 30
+    Start-Sleep -s 60
     $runstring = "SETSPN -a host/$alias $sourceserver2"
     $run = invoke-expression $runstring
     $run
