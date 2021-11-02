@@ -109,9 +109,12 @@
     set_fact:
       FS_CNAME1: "{{FS_CNAME.value}}"
    
+   
 - hosts: Domain_Controllers
   gather_facts: no
   tasks:  
+  
+  - debug msg="{{ hostvars['{{sourceserver}}']['FS_CNAME1'] }}"
     
   - name: Copy Build Script DC
     win_copy:
