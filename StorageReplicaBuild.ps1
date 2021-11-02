@@ -167,8 +167,7 @@ if ($task -eq "RemoveGroups")
   }
 }
 
-write-host "cname failiver is $cnamefailover"
-if ($task -eq "failover")
+if (($task -eq "failover") -and ($cnamefailover -eq ""))
 {
   $sourceserver1 = $sourceserver.split(".")
   $destserver1 = $destserver.split(".")
