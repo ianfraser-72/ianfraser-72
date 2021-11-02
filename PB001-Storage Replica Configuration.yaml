@@ -108,6 +108,7 @@
   - name: Make var persistent
     set_fact:
       FS_CNAME1: "{{FS_CNAME.value}}"
+      Server1:  "{{sourceserver}}"
    
 - hosts: Domain_Controllers
   gather_facts: no
@@ -133,8 +134,8 @@
        - tasktype == "failover"
        - cnamefailover == "Failover_CNAME"
     vars:
-      FS_CNAME2: "{{hostvars['{{sourceserver}}']['FS_CNAME1'] }}"   
-      
+      FS_CNAME2: "{{hostvars['{{Server1}}']['FS_CNAME1'] }}"   
+    
   - name: Set service startup mode to auto and ensure it is started
     win_service:
       name: seclogon
