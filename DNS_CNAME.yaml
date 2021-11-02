@@ -25,7 +25,9 @@
       src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
       dest: C:\Temp\StorageReplicaBuild.ps1
       force: yes
-    
+      
+  -debug: ms
+  
   - name: Update CNAME record 
     community.windows.win_dns_record:
       name: "{{FS_CNAME2}}"
@@ -34,8 +36,8 @@
       value: "awainfilw01p.global.gam.com"
       zone: "global.gam.com"
   
- #   vars:
-    #  servername: "{{sourceserver}}"
-    #  FS_CNAME2: "{{hostvars['awainfilw01p.global.gam.com']['FS_CNAME1'] }}"
+     vars:
+      servername: "{{sourceserver}}"
+      FS_CNAME2: "{{hostvars['File Servers']['FS_CNAME1'] }}"
     
 
