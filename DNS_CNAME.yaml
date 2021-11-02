@@ -1,4 +1,4 @@
-- hosts: "{{ sourceserver }}"
+- hosts: "{{sourceserver}}"
   gather_facts: no
   tasks:
   
@@ -24,9 +24,6 @@
       src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
       dest: C:\Temp\StorageReplicaBuild.ps1
       force: yes
-    when: 
-       - tasktype == "failover"
-       - cnamefailover == "Failover_CNAME"
     
   - name: Update CNAME record 
     community.windows.win_dns_record:
@@ -36,7 +33,7 @@
       value: "{{sourceserver}}"
       zone: "global.gam.com"
 
-    vars:
-      FS_CNAME2: "{{hostvars['{{sourceserver}}']['FS_CNAME1'] }}"
+   # vars:
+     # FS_CNAME2: "{{hostvars['{{sourceserver}}']['FS_CNAME1'] }}"
       
 
