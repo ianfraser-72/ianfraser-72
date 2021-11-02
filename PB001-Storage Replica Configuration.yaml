@@ -123,7 +123,7 @@
        - tasktype == "failover"
        - cnamefailover == "Failover_CNAME"
     
-    - debug hostvars["{{sourceserver}}"]['FS_CNAME1'] }}"
+    - debug hostvars "{{["{{sourceserver}}"]['FS_CNAME1'] }}"
     
   - name: Update CNAME record 
     community.windows.win_dns_record:
