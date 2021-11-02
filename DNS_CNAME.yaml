@@ -1,26 +1,64 @@
-- name: DNS CNAME Change
-  hosts: "{{sourceserver}}"
-  tasks:    
-      
+- hosts: "{{ sourceserver }}"
+  gather_facts: no
+  tasks:
+  
   - name: Retrieve CNAME from Fileserver
     ansible.windows.win_reg_stat:
       path: HKLM:\SOFTWARE\GAM\Ansible
       name: FS_CNAME
     register: FS_CNAME
-    
+    when: 
+       - tasktype == "failover"
+       - cnamefailover == "Failover_CNAME"
+       - failbackonline.rc == 0
+        
+  - debug:
+      var: FS_CNAME
+      
+  - name: Make var persistent
+    set_fact:
+      FS_CNAME1: "{{FS_CNAME.value}}"
+   
 - hosts: Domain_Controllers
   gather_facts: no
   tasks:  
     
+  - name: Copy Build Script DC
+    win_copy:
+      src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
+      dest: C:\Temp\StorageReplicaBuild.ps1
+      force: yes
+    when: 
+       - tasktype == "failover"
+       - cnamefailover == "Failover_CNAME"
+    
   - name: Update CNAME record 
     community.windows.win_dns_record:
-      name: FS_CNAME
+      name: "{{FS_CNAME2}}"
       state: present
       type: "CNAME"
       value: "{{sourceserver}}"
       zone: "global.gam.com"
- 
-  - name: Update SPN1
-    {{ "{{sourceserver}} | regex_replace('.global.gam.com') }}"
-  - name: Update SPN 
-    win_command: "SETSPN -a host/FS_CNAME {{sourceserver}}"
+    when: 
+       - tasktype == "failover"
+       - cnamefailover == "Failover_CNAME"
+    vars:
+      FS_CNAME2: "{{hostvars['{{sourceserver}}']['FS_CNAME1'] }}"
+      
+  - name: Set service startup mode to auto and ensure it is started
+    win_service:
+      name: seclogon
+      start_mode: auto
+      state: started  
+    when: 
+       - tasktype == "failover"
+       - cnamefailover == "Failover_CNAME"
+   
+  - name: Set service startup mode to disabled and ensure it is stopped
+    win_service:
+      name: seclogon
+      start_mode: disabled
+      state: stopped
+    when: 
+      - tasktype == "failover"
+      - cnamefailover == "Failover_CNAME"  
