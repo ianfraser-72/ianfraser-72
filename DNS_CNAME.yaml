@@ -7,10 +7,6 @@
       path: HKLM:\SOFTWARE\GAM\Ansible
       name: FS_CNAME
     register: FS_CNAME
-    when: 
-       - tasktype == "failover"
-       - cnamefailover == "Failover_CNAME"
-       - failbackonline.rc == 0
         
   - debug:
       var: FS_CNAME
@@ -39,26 +35,8 @@
       type: "CNAME"
       value: "{{sourceserver}}"
       zone: "global.gam.com"
-    when: 
-       - tasktype == "failover"
-       - cnamefailover == "Failover_CNAME"
+
     vars:
       FS_CNAME2: "{{hostvars['{{sourceserver}}']['FS_CNAME1'] }}"
       
-  - name: Set service startup mode to auto and ensure it is started
-    win_service:
-      name: seclogon
-      start_mode: auto
-      state: started  
-    when: 
-       - tasktype == "failover"
-       - cnamefailover == "Failover_CNAME"
-   
-  - name: Set service startup mode to disabled and ensure it is stopped
-    win_service:
-      name: seclogon
-      start_mode: disabled
-      state: stopped
-    when: 
-      - tasktype == "failover"
-      - cnamefailover == "Failover_CNAME"  
+
