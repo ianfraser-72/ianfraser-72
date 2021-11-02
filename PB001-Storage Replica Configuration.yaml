@@ -100,7 +100,7 @@
     register: FS_CNAME
     when: 
        - tasktype == "failover"
-       - cnamefailover == "Failover CNAME"
+       - cnamefailover == "Failover_CNAME"
        - failbackonline.rc == 0
         
   - debug:
@@ -117,7 +117,7 @@
       force: yes
     when: 
        - tasktype == "failover"
-       - cnamefailover == "Failover CNAME"
+       - cnamefailover == "Failover_CNAME"
     
   - name: Update CNAME record 
     community.windows.win_dns_record:
@@ -128,7 +128,7 @@
       zone: "global.gam.com"
     when: 
        - tasktype == "failover"
-       - cnamefailover == "Failover CNAME"
+       - cnamefailover == "Failover_CNAME"
    
   - name: Set service startup mode to auto and ensure it is started
     win_service:
@@ -137,7 +137,7 @@
       state: started  
     when: 
        - tasktype == "failover"
-       - cnamefailover == "Failover CNAME"
+       - cnamefailover == "Failover_CNAME"
    
   - name: Set service startup mode to disabled and ensure it is stopped
     win_service:
@@ -146,7 +146,7 @@
       state: stopped
     when: 
       - tasktype == "failover"
-      - cnamefailover == "Failover CNAME"  
+      - cnamefailover == "Failover_CNAME"  
    
 - hosts: "{{ sourceserver }}"
   gather_facts: no
@@ -156,7 +156,7 @@
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -destserver {{destserver}} -cnamefailover {{cnamefailover}} -alias {{FS_CNAME.value}}
     when: 
        - tasktype == "failover"
-       - cnamefailover == "Failover CNAME"
+       - cnamefailover == "Failover_CNAME"
        
     vars:
       ansible_become: true
