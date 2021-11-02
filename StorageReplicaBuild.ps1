@@ -207,7 +207,8 @@ if (($task -eq "failover") -and ($cnamefailover -ne ""))
     $run = invoke-expression $runstring
     $runstring = "SETSPN -d host/$alias $destserver2"
     $run = invoke-expression $runstring
-    Start-Sleep -s 5
+    write-oustput "Waiting for deletion"
+    Start-Sleep -s 10
     $runstring = "SETSPN -a host/$alias $sourceserver2"
     $run = invoke-expression $runstring
     $run
