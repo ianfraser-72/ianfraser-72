@@ -153,7 +153,7 @@
   tasks:
 
   - name: Update SPN 
-    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -destserver {{destserver}} -cnamefailover {{cnamefailover}} -alias {{FS_CNAME}}
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -destserver {{destserver}} -cnamefailover {{cnamefailover}} -alias {{FS_CNAME.value}}
     when: 
        - tasktype == "failover"
        - cnamefailover == "Failover CNAME"
