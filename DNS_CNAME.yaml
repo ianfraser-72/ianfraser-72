@@ -35,6 +35,6 @@
   
     vars:
     #  servername: "{{sourceserver}}"
-      FS_CNAME2: "{{hostvars['{{awainfilw01p.global.gam.com}']['FS_CNAME1'] }}"
+      FS_CNAME2: "{{hostvars['awainfilw01p.global.gam.com']['FS_CNAME1'] }}"
  
 
