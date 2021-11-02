@@ -128,7 +128,7 @@
     
   - name: Update CNAME record 
     community.windows.win_dns_record:
-      name: "{{FS_CNAME1}}"
+      name: "{{FS_CNAME2}}"
       state: present
       type: "CNAME"
       value: "{{sourceserver}}"
