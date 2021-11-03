@@ -179,7 +179,7 @@ if (($task -eq "failover") -and ($cnamefailover -eq ""))
   try 
   {
     write-host "Starting Failover"
-    $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver2 -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver2 -DestinationRGName `"$destrg`" -force -erroraction continue"
+    $runstring = "Set-SRPartnership -NewSourceComputerName $sourceserver2 -SourceRGName `"$sourcerg`" -DestinationComputerName $destserver2 -DestinationRGName `"$destrg`" -force -erroraction stop"
     $run = invoke-expression $runstring
   }
   catch
