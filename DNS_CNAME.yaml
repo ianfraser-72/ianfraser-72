@@ -16,7 +16,7 @@
       force: yes
       
   - name: pause
-    ansible.windows.win_shell: 
+    win_shell: 
       start-sleep 20
   
   - name: Update CNAME record 
