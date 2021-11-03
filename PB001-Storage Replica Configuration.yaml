@@ -109,7 +109,15 @@
 - hosts: Domain_Controllers
   gather_facts: no
   tasks:  
-    
+  
+  - name: Create directory structure DC
+    win_file:
+      ignore_errors: yes
+      path: C:\Temp
+      state: directory
+      failed_when: result.rc "Does not exist" not in result.stdout
+    when: (tasktype == "failover")
+        
   - name: Copy Build Script DC
     win_copy:
       src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
