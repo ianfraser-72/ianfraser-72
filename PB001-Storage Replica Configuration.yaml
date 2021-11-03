@@ -148,7 +148,7 @@
 
   - name: pause
     win_shell: 
-      start-sleep 60
+      start-sleep 120
 
   - name: Add SPN 
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -destserver {{destserver}} -cnamefailover {{cnamefailover}} -alias {{FS_CNAME}} -action "Add"
