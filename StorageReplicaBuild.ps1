@@ -16,7 +16,9 @@ param
 [string]$alias,
 [string]$cnamefailover,
 [string]$replicationmode,
-[string]$seedingchoice
+[string]$seedingchoice,
+[string]$action
+
 )
 
 function listperms
@@ -203,26 +205,30 @@ if (($task -eq "failover") -and ($cnamefailover -ne ""))
     
   try
   {  
-    $runstring = "SETSPN -d host/$alias $sourceserver2"
-    $run = invoke-expression $runstring
-    $run
-    $runstring = "SETSPN -d host/$alias.global.gam.com $sourceserver2"
-    $run = invoke-expression $runstring
-    $run
-    $runstring = "SETSPN -d host/$alias $destserver2"
-    $run = invoke-expression $runstring
-    $run
-    $runstring = "SETSPN -d host/$alias.global.gam.com $destserver2"
-    $run = invoke-expression $runstring
-    $run
-    write-output "Waiting before creating"
-    Start-Sleep -s 60
-    $runstring = "SETSPN -a host/$alias $sourceserver2"
-    $run = invoke-expression $runstring
-    $run
-    $runstring = "SETSPN -a host/$alias.global.gam.com $sourceserver2"
-    $run = invoke-expression $runstring
-    $run
+    if ($action -eq "Delete")
+      {
+      $runstring = "SETSPN -d host/$alias $sourceserver2"
+      $run = invoke-expression $runstring
+      $run
+      $runstring = "SETSPN -d host/$alias.global.gam.com $sourceserver2"
+      $run = invoke-expression $runstring
+      $run
+      $runstring = "SETSPN -d host/$alias $destserver2"
+      $run = invoke-expression $runstring
+      $run
+      $runstring = "SETSPN -d host/$alias.global.gam.com $destserver2"
+      $run = invoke-expression $runstring
+      $run
+    }
+    if ($action -eq "Add")
+    {
+      $runstring = "SETSPN -a host/$alias $sourceserver2"
+      $run = invoke-expression $runstring
+      $run
+      $runstring = "SETSPN -a host/$alias.global.gam.com $sourceserver2"
+      $run = invoke-expression $runstring
+      $run
+    }
   }
   catch
   {
