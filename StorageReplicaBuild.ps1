@@ -197,7 +197,6 @@ if (($task -eq "failover") -and ($cnamefailover -eq ""))
 
 if (($task -eq "failover") -and ($cnamefailover -ne ""))
   {
-    write-host "Starting SPN Tasks"
     $sourceserver1 = $sourceserver.split(".")
     $destserver1 = $destserver.split(".")
     $sourceserver2 = $sourceserver1[0]
@@ -207,6 +206,7 @@ if (($task -eq "failover") -and ($cnamefailover -ne ""))
   {  
     if ($action -eq "Delete")
       {
+      write-host "Starting SPN Delete Tasks"
       $runstring = "SETSPN -d host/$alias $sourceserver2"
       $run = invoke-expression $runstring
       $run
@@ -222,6 +222,7 @@ if (($task -eq "failover") -and ($cnamefailover -ne ""))
     }
     if ($action -eq "Add")
     {
+      write-host "Starting SPN Add Tasks"
       $runstring = "SETSPN -a host/$alias $sourceserver2"
       $run = invoke-expression $runstring
       $run
