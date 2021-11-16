@@ -132,6 +132,7 @@
       name: "{{FS_CNAME}}"
       state: present
       type: "CNAME"
+      ttl: 60
       value: "{{sourceserver}}"
       zone: "global.gam.com"
     when: 
