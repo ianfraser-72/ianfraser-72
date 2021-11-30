@@ -4,60 +4,42 @@
   gather_facts: no
   tasks:
 
-  - name: Hong Kong Applications Share
+  - name: Luxembourg Info Share
     win_share:
-      name: Applications
-      description: Hong Kong Applications File Share
-      path: E:\Applications
+      name: Info
+      description: Luxembourg Info File Share
+      path: E:\Info
       list: no
-      full: Authenticated Users,Administrators,Global\FIL_ACL_HKG_Applications_F
+      full: Authenticated Users,Administrators,Global\FIL_ACL_LUX_Info_F
     when: (tasktype == "Build_Service") or (tasktype == "failover")
 
-  - name: Hong Kong Data Share
+  - name: Luxembourg PowerLib Share
     win_share:
-      name: Data
-      description: Hong Kong Data File Share
-      path: E:\Data
+      name: PowerLib
+      description: Luxembourg PowerLib File Share
+      path: E:\PowerLib
       list: no
-      full: Authenticated Users,Administrators,Global\FIL_ACL_HKG_Data_F
+      full: Authenticated Users,Administrators,Global\FIL_ACL_LUX_PowerLib_F
     when: (tasktype == "Build_Service") or (tasktype == "failover")
 
-  - name: Hong Kong Home Share
+  - name: Luxembourg Transx Share
     win_share:
-      name: Home
-      description: Hong Kong Home File Share
-      path: E:\Home
+      name: Transx
+      description: Luxembourg Transx File Share
+      path: E:\Transx
       list: no
-      full: Authenticated Users,Administrators,Global\FIL_ACL_HKG_Home_F
+      full: Authenticated Users,Administrators,Global\FIL_ACL_LUX_Transx_F
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
-  - name: Hong Kong Departments Share
+  - name: Luxembourg Ghosts Share
     win_share:
-      name: Departments
-      description: Hong Kong Departments File Share
-      path: E:\Departments
+      name: Ghosts
+      description: Luxembourg Ghosts File Share
+      path: E:\Ghosts
       list: no
-      full: Authenticated Users,Administrators,Global\FIL_ACL_HKG_Departments_F
+      full: Authenticated Users,Administrators,Global\FIL_ACL_LUX_Ghosts_F
     when: (tasktype == "Build_Service") or (tasktype == "failover")
-  
-  - name: Hong Kong Update Share
-    win_share:
-      name: Update
-      description: Hong Kong Update File Share
-      path: E:\Update
-      list: no
-      full: Authenticated Users,Administrators,Global\FIL_ACL_HKG_Update_F
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
-  
-  - name: Hong Kong HK Share
-    win_share:
-      name: HK
-      description: Hong Kong HK File Share
-      path: E:\HK
-      list: no
-      full: Authenticated Users,Administrators,Global\FIL_ACL_HKG_HK_F
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
-  
+    
   - name: Remove NTFS ACL's on Root Volume. Everyone - ExecuteFile,Read
     win_acl:
       user: Everyone
@@ -67,55 +49,55 @@
       rights: ReadandExecute,ExecuteFile,Read, Write,listdirectory
     when: (tasktype == "Build_Service") or (tasktype == "failover")    
    
-  - name: Disable Inheritance on Data Folder
+  - name: Disable Inheritance on PowerLib Folder
     win_acl_inheritance:
-      path: E:\Data
+      path: E:\PowerLib
       state: absent
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
     
-  - name: Remove using icacls win-acl has an issue with the built in users group 
-    win_command: icacls e:\Data /remove "global\hkgsupport"
-    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+  #- name: Remove using icacls win-acl has an issue with the built in users group 
+  #  win_command: icacls e:\PowerLib /remove "global\hkgsupport"
+  #  when: (tasktype == "Build_Service") or (tasktype == "failover")  
 
-  - name: Add NTFS ACLS's FullControl on Data Folder for Administrators.
+  - name: Add NTFS ACLS's FullControl on PowerLib Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\Data
+      path: E:\PowerLib
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
    
-  - name: Add NTFS ACLS's FullControl on Data Folder for Global\FIL_ACL_HKG_Data_F
+  - name: Add NTFS ACLS's FullControl on PowerLib Folder for Global\FIL_ACL_LUX_PowerLib_F
     win_acl:
-      user: Global\FIL_ACL_HKG_Data_F
-      path: E:\Data
+      user: Global\FIL_ACL_LUX_PowerLib_F
+      path: E:\PowerLib
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
-  - name: Add NTFS ACLS's FullControl on Data Folder for SYSTEM.
+  - name: Add NTFS ACLS's FullControl on PowerLib Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\Data
+      path: E:\PowerLib
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
    
-  - name: Disable Inheritance on Applications Folder
+  - name: Disable Inheritance on Info Folder
     win_acl_inheritance:
-      path: E:\Applications
+      path: E:\Info
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
   
-  - name: Remove using icacls win-acl has an issue with the hkgsupport group 
-    win_command: icacls e:\Applications /remove "global\hkgsupport"
-    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+  #- name: Remove using icacls win-acl has an issue with the hkgsupport group 
+  #  win_command: icacls e:\Info /remove "global\hkgsupport"
+  #  when: (tasktype == "Build_Service") or (tasktype == "failover") 
   
-  - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_HKG_Applications_F
+  - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_LUX_Info_F
     win_acl:
-      user: Global\FIL_ACL_HKG_Applications_F
-      path: E:\Applications
+      user: Global\FIL_ACL_LUX_Info_F
+      path: E:\Info
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -123,161 +105,91 @@
   - name: Add NTFS ACLS's FullControl on Aplications Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\Applications
+      path: E:\Info
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
   
-  - name: Add NTFS ACLS's FullControl on Applications Folder for Administrators.
+  - name: Add NTFS ACLS's FullControl on Info Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\Applications
+      path: E:\Info
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
   
-  - name: Disable Inheritance on Update Folder
+  - name: Disable Inheritance on Ghosts Folder
     win_acl_inheritance:
-      path: E:\Update
-      state: absent
-      reorganize: no
-    when: (tasktype == "Build_Service") or (tasktype == "failover") 
-    
-  - name: Remove using icacls win-acl has an issue with the hkgsupport group 
-    win_command: icacls e:\Update /remove "global\hkgsupport"
-    when: (tasktype == "Build_Service") or (tasktype == "failover")  
-    
-  - name: Add NTFS ACLS's FullControl on Update Folder for FIL_ACL_HKG_Update_F
-    win_acl:
-      user: Global\FIL_ACL_HKG_Update_F
-      path: E:\Update
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
-    
-  - name: Add NTFS ACLS's FullControl on Update Folder for SYSTEM.
-    win_acl:
-      user: SYSTEM
-      path: E:\Update
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
-  
-  - name: Add NTFS ACLS's FullControl on Update Folder for Administrators.
-    win_acl:
-      user: Administrators
-      path: E:\Update
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover") 
-  
-  - name: Disable Inheritance on HK Folder
-    win_acl_inheritance:
-      path: E:\HK
+      path: E:\Ghosts
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
   
-  - name: Remove using icacls win-acl has an issue with the hkgsupport group 
-    win_command: icacls e:\HK /remove "global\hkgsupport"
-    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+  #- name: Remove using icacls win-acl has an issue with the hkgsupport group 
+  #  win_command: icacls e:\Ghosts /remove "global\hkgsupport"
+  #  when: (tasktype == "Build_Service") or (tasktype == "failover")  
     
-  - name: Add NTFS ACLS's FullControl on HK Folder for FIL_ACL_HKG_HK_F
+  - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_LUX_Ghosts_F
     win_acl:
-      user: Global\FIL_ACL_HKG_HK_F
-      path: E:\HK
+      user: Global\FIL_ACL_LUX_Ghosts_F
+      path: E:\Ghosts
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
-  - name: Add NTFS ACLS's FullControl on HK Folder for SYSTEM.
+  - name: Add NTFS ACLS's FullControl on Ghosts Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\HK
+      path: E:\Ghosts
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
   
-  - name: Add NTFS ACLS's FullControl on HK Folder for Administrators.
+  - name: Add NTFS ACLS's FullControl on Ghosts Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\HK
+      path: E:\Ghosts
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
   
-  - name: Disable Inheritance on Departments Folder
-    win_acl_inheritance:
-      path: E:\Departments
-      state: absent
-      reorganize: no
-    when: (tasktype == "Build_Service") or (tasktype == "failover")   
-  
-  - name: Remove using icacls win-acl has an issue with the hkgsupport group 
-    win_command: icacls e:\Departments /remove "global\hkgsupport"
-    when: (tasktype == "Build_Service") or (tasktype == "failover")  
-    
-  - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_HKG_Departments_F
-    win_acl:
-      user: Global\FIL_ACL_HKG_Departments_F
-      path: E:\Departments
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
-    
-  - name: Add NTFS ACLS's FullControl on Departments Folder for SYSTEM.
-    win_acl:
-      user: SYSTEM
-      path: E:\Departments
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
-  
-  - name: Add NTFS ACLS's FullControl on Departments Folder for Administrators.
+  - name: Add NTFS ACLS's FullControl on Transx Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\Departments
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover") 
-  
-  - name: Add NTFS ACLS's FullControl on Home Folder for Administrators.
-    win_acl:
-      user: Administrators
-      path: E:\Home
+      path: E:\Transx
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
     
-  - name: Disable Inheritance on Home Folder
+  - name: Disable Inheritance on Transx Folder
     win_acl_inheritance:
-      path: E:\Home
+      path: E:\Transx
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")     
         
-  - name: Add NTFS ACLS's Full Control on Home Folder for Global\FIL_ACL_HKG_Home_F
+  - name: Add NTFS ACLS's Full Control on Transx Folder for Global\FIL_ACL_LUX_Transx_F
     win_acl:
-      user: Global\FIL_ACL_HKG_Home_F
-      path: E:\Home
+      user: Global\FIL_ACL_LUX_Transx_F
+      path: E:\Transx
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
-  - name: Add NTFS ACLS's FullControl on Home Folder for SYSTEM.
+  - name: Add NTFS ACLS's FullControl on Transx Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\Home
+      path: E:\Transx
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
-  - name: Add NTFS ACLS's list folder/read data & create folders/append data this folder only, on Home folder for Authenticated Users
+  - name: Add NTFS ACLS's list folder/read PowerLib & create folders/append PowerLib this folder only, on Transx folder for Authenticated Users
     win_acl:
       user: Authenticated Users
-      path: E:\Home
+      path: E:\Transx
       type: allow
-      rights: listdirectory,ReadData,createdirectories
+      rights: listdirectory,ReadPowerLib,createdirectories
       propagation: NoPropagateInherit
       Inherit: None    
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
@@ -285,7 +197,7 @@
   - name: Add NTFS ACLS's Full Control sub folder and files only for Creator Owner
     win_acl:
       user: Creator Owner
-      path: E:\Home
+      path: E:\Transx
       type: allow
       rights: FullControl
       propagation: InheritOnly
