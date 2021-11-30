@@ -1,0 +1,245 @@
+---
+- hosts: File_Servers
+  gather_facts: no
+  tasks:
+  
+  - name: Create directory structure
+    win_file:
+      ignore_errors: yes
+      path: C:\Temp
+      state: directory
+      failed_when: result.rc "Does not exist" not in result.stdout
+    when: (tasktype == "Build_Service") or (tasktype == "Check_Connectivity") or (tasktype == "Remove_Replica_Role")
+
+  - name: "Install GPMC"
+    win_feature:
+      name: GPMC
+      state: present
+  
+  - name: Add a powershell module
+    win_psmodule:
+      name: GroupPolicy
+      state: present    
+    
+  - name: Copy Build Script
+    win_copy:
+      src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
+      dest: C:\Temp\StorageReplicaBuild.ps1
+      force: yes
+       
+  - name: Install the Storage Replica Server Role
+    win_feature:
+      name: Storage-Replica
+      state: present
+      include_sub_features: yes
+      include_management_tools: yes
+    register: ReplicaInstall
+    when: (tasktype == "Build_Service") or (tasktype == "Check_Connectivity")
+ 
+  - name: Remove the Storage Replica Server Role
+    win_feature:
+      name: Storage-Replica
+      state: absent
+      include_sub_features: yes
+      include_management_tools: yes
+    register: ReplicaRemove
+    when: (tasktype == "Remove_Replica_Role")
+ 
+  - name: RebootInstall
+    win_reboot:
+    when: 
+       - (tasktype == "Build_Service") or (tasktype == "Check_Connectivity")
+       - ReplicaInstall.reboot_required 
+    
+  - name: RebootRemove
+    win_reboot:
+    when: 
+       - tasktype == "Remove_Replica_Role"
+       - ReplicaRemove.reboot_required
+    
+  - name: Check if Storage Replica Server Role is Installed (PowerShell)
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "statecheck"
+    register: stateresult
+    changed_when: False
+    when: (tasktype == "Build_Service") or (tasktype == "Check_Connectivity") or (tasktype == "Remove_Replica_Role")
+    
+- hosts: "{{ sourceserver }}"
+  gather_facts: no
+  tasks:
+
+  - name: Run Online Failback (PowerShell)
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
+    register: failbackonline
+    when: 
+       - tasktype == "failover"
+    
+    vars:
+      ansible_become: true
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas
+      
+  - name: Run GPO Change (PowerShell)
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -gpobool {{gpobool}} -sourceserver {{sourceserver}} -destserver {{destserver}}
+    register: gpochange
+    when: 
+       - tasktype == "failover"
+       - gpobool == "Failover"
+       - failbackonline.rc == 0
+       
+    vars:
+      ansible_become: true
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas    
+
+ # - name: Retrieve CNAME from Fileserver
+ #   ansible.windows.win_reg_stat:
+  #    path: HKLM:\SOFTWARE\GAM\Ansible
+ #     name: FS_CNAME
+ #   register: FS_CNAME
+  #  when: 
+   #    - tasktype == "failover"
+   #    - cnamefailover == "Failover_CNAME"
+   #    - failbackonline.rc == 0
+        
+  - debug:
+      var: FS_CNAME
+   
+- hosts: Domain_Controllers
+  gather_facts: no
+  tasks:  
+  
+  - name: Create directory structure DC
+    win_file:
+      ignore_errors: yes
+      path: C:\Temp
+      state: directory
+      failed_when: result.rc "Does not exist" not in result.stdout
+    when: (tasktype == "failover")
+        
+  - name: Copy Build Script DC
+    win_copy:
+      src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
+      dest: C:\Temp\StorageReplicaBuild.ps1
+      force: yes
+    when: 
+       - tasktype == "failover"
+       - cnamefailover == "Failover_CNAME"
+    
+  - name: Update CNAME record 
+    community.windows.win_dns_record:
+      name: "{{FS_CNAME}}"
+      state: present
+      type: "CNAME"
+      ttl: 60
+      value: "{{sourceserver}}"
+      zone: "global.gam.com"
+    when: 
+       - tasktype == "failover"
+       - cnamefailover == "Failover_CNAME"
+   
+- hosts: "{{ sourceserver }}"
+  gather_facts: no
+  tasks:
+
+ # - name: Delete SPN 
+  #  win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -destserver {{destserver}} -cnamefailover {{cnamefailover}} -alias {{FS_CNAME}} -action "Delete"
+ #   when: 
+ #      - tasktype == "failover"
+  #     - cnamefailover == "Failover_CNAME"
+       
+ #   vars:
+  #    ansible_become: true
+  #    ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
+   #   ansible_become_password: "{{password}}"
+   #   ansible_become_method: runas     
+
+ # - name: pause
+ #   win_shell: 
+  #    start-sleep 120
+
+  #- name: Add SPN 
+  #  win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -destserver {{destserver}} -cnamefailover {{cnamefailover}} -alias {{FS_CNAME}} -action "Add"
+  #  when: 
+   #    - tasktype == "failover"
+    #   - cnamefailover == "Failover_CNAME"
+       
+   # vars:
+   #   ansible_become: true
+    #  ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
+    #  ansible_become_password: "{{password}}"
+     # ansible_become_method: runas  
+
+  - name: Run Pre Test for Storage Replica Connectivity (PowerShell)
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}}
+    when: 
+       - tasktype == "Check_Connectivity"
+       - stateresult.rc == 0
+       
+    register: TestResult
+    changed_when: False
+    
+    vars:
+      ansible_become: true
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas
+      
+  #- debug: msg="{{TestResult.stdout_lines}}"
+  
+  - name: Create Storage Replica Partnership (Powershell)
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}} -replicationmode {{replicationmode}} -seedingchoice {{seedingchoice}}
+    register: buildresult
+    when: 
+       - tasktype == "Build_Service"
+       - stateresult.rc == 0
+    
+    vars:
+      ansible_become: true
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas
+    
+  - name: Remove Storage Replica Partnership (Powershell)
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "Remove_Partnership" -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
+    register: removeresultservice
+    when: 
+       - tasktype == "Remove_Partnership"
+       - stateresult.rc == 0
+    
+    vars:
+      ansible_become: true
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas
+
+- hosts: File_Servers
+  gather_facts: no
+  tasks:
+
+  - name: Run Remove Groups (Powershell)
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "RemoveGroups" -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
+    register: removeresultgroups
+    when: 
+       - tasktype == "Remove_Partnership"
+       - stateresult.rc == 0
+    
+    vars:
+      ansible_become: true
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas
+
+  - name: Check Status of Replication Groups (PowerShell)
+    win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
+    register: checkresults
+    when: 
+       - tasktype == "Check_Replication_Status"
+       - stateresult.rc == 0
+    
+    vars:
+      ansible_become: true
+      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
+      ansible_become_password: "{{password}}"
+      ansible_become_method: runas
