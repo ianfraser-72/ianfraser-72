@@ -1,0 +1,205 @@
+---
+- hosts: "{{ sourceserver }}"
+  ignore_errors: yes
+  gather_facts: no
+  tasks:
+
+  - name: Luxembourg Info Share
+    win_share:
+      name: Info
+      description: Luxembourg Info File Share
+      path: E:\Info
+      list: no
+      full: Authenticated Users,Administrators,Global\FIL_ACL_LUX_Info_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+
+  - name: Luxembourg PowerLib Share
+    win_share:
+      name: PowerLib
+      description: Luxembourg PowerLib File Share
+      path: E:\PowerLib
+      list: no
+      full: Authenticated Users,Administrators,Global\FIL_ACL_LUX_PowerLib_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+
+  - name: Luxembourg Transx Share
+    win_share:
+      name: Transx
+      description: Luxembourg Transx File Share
+      path: E:\Transx
+      list: no
+      full: Authenticated Users,Administrators,Global\FIL_ACL_LUX_Transx_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Luxembourg Ghosts Share
+    win_share:
+      name: Ghosts
+      description: Luxembourg Ghosts File Share
+      path: E:\Ghosts
+      list: no
+      full: Authenticated Users,Administrators,Global\FIL_ACL_LUX_Ghosts_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Remove NTFS ACL's on Root Volume. Everyone - ExecuteFile,Read
+    win_acl:
+      user: Everyone
+      path: E:\
+      type: allow
+      state: absent
+      rights: ReadandExecute,ExecuteFile,Read, Write,listdirectory
+    when: (tasktype == "Build_Service") or (tasktype == "failover")    
+   
+  - name: Disable Inheritance on PowerLib Folder
+    win_acl_inheritance:
+      path: E:\PowerLib
+      state: absent
+    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+    
+  #- name: Remove using icacls win-acl has an issue with the built in users group 
+  #  win_command: icacls e:\PowerLib /remove "global\hkgsupport"
+  #  when: (tasktype == "Build_Service") or (tasktype == "failover")  
+
+  - name: Add NTFS ACLS's FullControl on PowerLib Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: E:\PowerLib
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+   
+  - name: Add NTFS ACLS's FullControl on PowerLib Folder for Global\FIL_ACL_LUX_PowerLib_F
+    win_acl:
+      user: Global\FIL_ACL_LUX_PowerLib_F
+      path: E:\PowerLib
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's FullControl on PowerLib Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: E:\PowerLib
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+   
+  - name: Disable Inheritance on Info Folder
+    win_acl_inheritance:
+      path: E:\Info
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")   
+  
+  #- name: Remove using icacls win-acl has an issue with the hkgsupport group 
+  #  win_command: icacls e:\Info /remove "global\hkgsupport"
+  #  when: (tasktype == "Build_Service") or (tasktype == "failover") 
+  
+  - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_LUX_Info_F
+    win_acl:
+      user: Global\FIL_ACL_LUX_Info_F
+      path: E:\Info
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's FullControl on Aplications Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: E:\Info
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+  
+  - name: Add NTFS ACLS's FullControl on Info Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: E:\Info
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+  
+  - name: Disable Inheritance on Ghosts Folder
+    win_acl_inheritance:
+      path: E:\Ghosts
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")   
+  
+  #- name: Remove using icacls win-acl has an issue with the hkgsupport group 
+  #  win_command: icacls e:\Ghosts /remove "global\hkgsupport"
+  #  when: (tasktype == "Build_Service") or (tasktype == "failover")  
+    
+  - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_LUX_Ghosts_F
+    win_acl:
+      user: Global\FIL_ACL_LUX_Ghosts_F
+      path: E:\Ghosts
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's FullControl on Ghosts Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: E:\Ghosts
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+  
+  - name: Add NTFS ACLS's FullControl on Ghosts Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: E:\Ghosts
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+  
+  - name: Add NTFS ACLS's FullControl on Transx Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: E:\Transx
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+    
+  - name: Disable Inheritance on Transx Folder
+    win_acl_inheritance:
+      path: E:\Transx
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")     
+        
+  - name: Add NTFS ACLS's Full Control on Transx Folder for Global\FIL_ACL_LUX_Transx_F
+    win_acl:
+      user: Global\FIL_ACL_LUX_Transx_F
+      path: E:\Transx
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's FullControl on Transx Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: E:\Transx
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's list folder/read PowerLib & create folders/append PowerLib this folder only, on Transx folder for Authenticated Users
+    win_acl:
+      user: Authenticated Users
+      path: E:\Transx
+      type: allow
+      rights: listdirectory,ReadPowerLib,createdirectories
+      propagation: NoPropagateInherit
+      Inherit: None    
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
+  - name: Add NTFS ACLS's Full Control sub folder and files only for Creator Owner
+    win_acl:
+      user: Creator Owner
+      path: E:\Transx
+      type: allow
+      rights: FullControl
+      propagation: InheritOnly
+      Inherit: ContainerInherit, ObjectInherit  
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
