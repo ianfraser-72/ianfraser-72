@@ -11,11 +11,11 @@
       failed_when: result.rc "Does not exist" not in result.stdout
     when: (tasktype == "Build_Service") or (tasktype == "Remove_PrintServer_Role")
     
-  - name: Copy Build Script
-    win_copy:
-      src: "{{ playbook_dir }}/PrintServerBuild.ps1"
-      dest: C:\Temp\PrintServerBuild.ps1
-      force: yes
+#  - name: Copy Build Script
+ #   win_copy:
+#      src: "{{ playbook_dir }}/PrintServerBuild.ps1"
+ #     dest: C:\Temp\PrintServerBuild.ps1
+ #     force: yes
        
   - name: Install the Print Server Role
     win_feature:
