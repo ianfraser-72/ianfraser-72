@@ -9,7 +9,7 @@
       path: C:\Temp
       state: directory
       failed_when: result.rc "Does not exist" not in result.stdout
-    when: (tasktype == "Build_Service") or (tasktype == "Remove_PrintServer_Role")
+    when: (tasktype == "Build_Role") or (tasktype == "Remove_Role")
     
 #  - name: Copy Build Script
  #   win_copy:
@@ -24,7 +24,7 @@
       include_sub_features: yes
       include_management_tools: yes
     register: PrintServerInstall
-    when: (tasktype == "Build_Service")
+    when: (tasktype == "Build_Role")
  
   - name: Remove the Print Server Role
     win_feature:
@@ -33,26 +33,19 @@
       include_sub_features: yes
       include_management_tools: yes
     register: PrintServerRemove
-    when: (tasktype == "Remove_PrintServer__Role")
+    when: (tasktype == "Remove_Role")
  
   - name: RebootInstall
     win_reboot:
     when: 
-       - (tasktype == "Build_Service")
+       - (tasktype == "Build_Role")
        - PrintServerInstall.reboot_required 
     
   - name: RebootRemove
     win_reboot:
     when: 
-       - tasktype == "Remove_Replica_Role"
+       - tasktype == "Remove_Role"
        - PrintServerRemove.reboot_required
-    
-  - name: Check if Print Server Server Role is Installed (PowerShell)
-    win_shell: C:\Temp\PrintServerBuild.ps1 -task "statecheck"
-    register: stateresult
-    changed_when: False
-    when: (tasktype == "Build_Service") or (tasktype == "Remove_PrintServer_Role")
-    
 
 
 
