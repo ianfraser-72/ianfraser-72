@@ -16,7 +16,7 @@
       name: GPMC
       state: present
   
-  - name: Add a powershell module
+  - name: Add GPO powershell module
     win_psmodule:
       name: GroupPolicy
       state: present    
@@ -110,7 +110,7 @@
   gather_facts: no
   tasks:  
   
-  - name: Create directory structure DC
+  - name: Create directory structure on DC
     win_file:
       ignore_errors: yes
       path: C:\Temp
@@ -118,7 +118,7 @@
       failed_when: result.rc "Does not exist" not in result.stdout
     when: (tasktype == "failover")
         
-  - name: Copy Build Script DC
+  - name: Copy Build Script on DC
     win_copy:
       src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
       dest: C:\Temp\StorageReplicaBuild.ps1
@@ -127,7 +127,7 @@
        - tasktype == "failover"
        - cnamefailover == "Failover_CNAME"
     
-  - name: Update CNAME record 
+  - name: Update the CNAME record 
     community.windows.win_dns_record:
       name: "{{FS_CNAME}}"
       state: present
