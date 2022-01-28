@@ -86,7 +86,9 @@
        - tasktype == "failover"
        - gpobool == "Failover"
        - failbackonline.rc == 0
-       
+   
+    failed_when: "Replica failover failed" in result.stdout 
+     
     vars:
       ansible_become: true
       ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
