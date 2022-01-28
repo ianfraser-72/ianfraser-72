@@ -192,7 +192,7 @@
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcedatavol {{sourcedatavol}} -sourcelogvol {{sourcelogvol}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destdatavol {{destdatavol}} -destlogvol {{destlogvol}} -destrg {{destrg}} -replicationmode {{replicationmode}} -seedingchoice {{seedingchoice}}
     register: buildresult
     when: 
-       - tasktype == ("Build_Service") or (tasktype == "Build_Partnership")
+       - (tasktype == "Build_Service") or (tasktype == "Build_Partnership")
        - stateresult.rc == 0
     
     vars:
