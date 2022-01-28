@@ -68,7 +68,7 @@ function ReplicaInstallCheck
  return $state
 }
 
-If ($task -eq "Build_Service")
+If ($task -eq "Build_Service" -or "Build_Partnership")
 {
 
 $sourcedatavol1 = $sourcedatavol -join ","
