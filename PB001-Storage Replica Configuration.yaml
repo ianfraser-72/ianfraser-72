@@ -72,7 +72,7 @@
     register: failbackonline
     when: 
        - tasktype == "failover"
-    failed_when: "'Replica failover failed' in result.stdout"
+    failed_when: "'Replica failover failed' in failbackonline.stdout"
     
     vars:
       ansible_become: true
