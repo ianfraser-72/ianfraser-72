@@ -86,7 +86,6 @@
        - tasktype == "failover"
        - gpobool == "Failover"
        - failbackonline.rc == 0
-   
     failed_when: "Replica failover failed" in result.stdout 
      
     vars:
