@@ -33,6 +33,15 @@
       full: Authenticated Users,Administrators,Global\FIL_ACL_MIL_Transx_F
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
+  - name: Milan PowerLib Share
+    win_share:
+      name: Transx
+      description: Milan PowerLib File Share
+      path: h:\PowerLib
+      list: no
+      full: Authenticated Users,Administrators,Global\FIL_ACL_MIL_PowerLib_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+    
   - name: Remove NTFS ACL's on Root Volume. Everyone - ExecuteFile,Read
     win_acl:
       user: Everyone
@@ -153,6 +162,38 @@
     win_acl:
       user: SYSTEM
       path: h:\Transx
+      type: allow
+      rights: FullControl
+      
+######## PowerLib NTFS Folder ########
+
+  - name: Add NTFS ACLS's FullControl on PowerLib Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: h:\PowerLib
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+    
+  - name: Disable Inheritance on PowerLib Folder
+    win_acl_inheritance:
+      path: h:\PowerLib
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")     
+        
+  - name: Add NTFS ACLS's Full Control on PowerLib Folder for Global\FIL_ACL_MIL_PowerLib_F
+    win_acl:
+      user: Global\FIL_ACL_MIL_PowerLib_F
+      path: h:\PowerLib
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's FullControl on PowerLib Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: h:\PowerLib
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
