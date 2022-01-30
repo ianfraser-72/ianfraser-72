@@ -17,9 +17,9 @@
    
   - name: Luxembourg Org Share
     win_share:
-      name: Info
+      name: Org
       description: Luxembourg Org File Share
-      path: g:\Info
+      path: g:\Org
       list: no
       full: Authenticated Users,Administrators,Global\FIL_ACL_LUX_Org_F
     when: (tasktype == "Build_Service") or (tasktype == "failover")
