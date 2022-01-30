@@ -35,7 +35,7 @@
     
   - name: Milan PowerLib Share
     win_share:
-      name: Transx
+      name: PowerLib
       description: Milan PowerLib File Share
       path: h:\PowerLib
       list: no
