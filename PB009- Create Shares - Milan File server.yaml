@@ -10,14 +10,14 @@
     win_share:
       name: Info
       description: Milan Info File Share
-      path: h:\Info
+      path: h:\Info_mil
       list: no
       full: Authenticated Users,Administrators,Global\FIL_ACL_MIL_Info_F
     when: (tasktype == "Build_Service") or (tasktype == "failover")
 
   - name: Milan Org Share
     win_share:
-      name: Org
+      name: Org_mil
       description: Milan Org File Share
       path: h:\Org
       list: no
@@ -26,7 +26,7 @@
 
   - name: Milan Transx Share
     win_share:
-      name: Transx
+      name: Transx_mil
       description: Milan Transx File Share
       path: h:\Transx
       list: no
@@ -35,7 +35,7 @@
     
   - name: Milan PowerLib Share
     win_share:
-      name: PowerLib
+      name: PowerLib_mil
       description: Milan PowerLib File Share
       path: h:\PowerLib
       list: no
