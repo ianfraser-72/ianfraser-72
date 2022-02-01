@@ -11,10 +11,10 @@
       failed_when: result.rc "Does not exist" not in result.stdout
     when: (tasktype == "Build_Service") or (tasktype == "Check_Connectivity") or (tasktype == "Remove_Replica_Role")
 
-  - name: "Install GPMC"
-    win_feature:
-      name: GPMC
-      state: present
+  #- name: "Install GPMC"
+  #  win_feature:
+  #    name: GPMC
+  #    state: present
   
   #- name: Add GPO powershell module
   #  win_psmodule:
