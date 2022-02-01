@@ -3,7 +3,7 @@
   gather_facts: no
   tasks:
   
-  - name: Create directory structure
+  - name: Create the directory structure
     win_file:
       ignore_errors: yes
       path: C:\Temp
@@ -16,12 +16,12 @@
       name: GPMC
       state: present
   
-  - name: Add GPO powershell module
-    win_psmodule:
-      name: GroupPolicy
-      state: present    
+  #- name: Add GPO powershell module
+  #  win_psmodule:
+  #   name: GroupPolicy
+  #   state: present    
     
-  - name: Copy Build Script
+  - name: Copy the Server Build Script
     win_copy:
       src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
       dest: C:\Temp\StorageReplicaBuild.ps1
@@ -45,13 +45,13 @@
     register: ReplicaRemove
     when: (tasktype == "Remove_Replica_Role")
  
-  - name: RebootInstall
+  - name: Reboot after Role Install
     win_reboot:
     when: 
        - (tasktype == "Build_Service") or (tasktype == "Check_Connectivity")
        - ReplicaInstall.reboot_required 
     
-  - name: RebootRemove
+  - name: Reboot after Role Remove
     win_reboot:
     when: 
        - tasktype == "Remove_Replica_Role"
@@ -67,7 +67,7 @@
   gather_facts: no
   tasks:
 
-  - name: Run Online Failback (PowerShell)
+  - name: Run Online Failover (PowerShell)
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task {{tasktype}} -sourceserver {{sourceserver}} -sourcerg {{sourcerg}} -destserver {{destserver}} -destrg {{destrg}}
     register: failbackonline
     when: 
@@ -120,7 +120,7 @@
       failed_when: result.rc "Does not exist" not in result.stdout
     when: (tasktype == "failover")
         
-  - name: Copy Build Script on DC
+  - name: Copy Build Script to DC
     win_copy:
       src: "{{ playbook_dir }}/StorageReplicaBuild.ps1"
       dest: C:\Temp\StorageReplicaBuild.ps1
