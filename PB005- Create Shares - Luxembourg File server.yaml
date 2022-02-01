@@ -8,7 +8,7 @@
 
   - name: Luxembourg Info Share
     win_share:
-      name: Info
+      name: Info_Lux
       description: Luxembourg Info File Share
       path: g:\Info
       list: no
@@ -17,7 +17,7 @@
    
   - name: Luxembourg Org Share
     win_share:
-      name: Org
+      name: Org_Lux
       description: Luxembourg Org File Share
       path: g:\Org
       list: no
@@ -26,7 +26,7 @@
 
   - name: Luxembourg PowerLib Share
     win_share:
-      name: PowerLib
+      name: PowerLib_Lux
       description: Luxembourg PowerLib File Share
       path: g:\PowerLib
       list: no
@@ -35,7 +35,7 @@
 
   - name: Luxembourg Transx Share
     win_share:
-      name: Transx
+      name: Transx_Lux
       description: Luxembourg Transx File Share
       path: g:\Transx
       list: no
@@ -44,7 +44,7 @@
     
   - name: Luxembourg Ghost Share
     win_share:
-      name: Ghost
+      name: Ghost_Lux
       description: Luxembourg Ghost File Share
       path: g:\Ghost
       list: no
