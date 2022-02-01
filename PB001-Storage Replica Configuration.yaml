@@ -61,7 +61,7 @@
     win_shell: C:\Temp\StorageReplicaBuild.ps1 -task "statecheck"
     register: stateresult
     changed_when: False
-    when: (tasktype == "Build_Service") or (tasktype == "Check_Connectivity") or (tasktype == "Remove_Replica_Role") or (tasktype == "Build_Partnership") or (tasktype == "check_replication_status") 
+    when: (tasktype == "Build_Service") or (tasktype == "Check_Connectivity") or (tasktype == "Remove_Replica_Role") or (tasktype == "Build_Partnership") or (tasktype == "Remove_Partnership") or(tasktype == "check_replication_status") 
     
 - hosts: "{{ sourceserver }}"
   gather_facts: no
