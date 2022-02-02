@@ -8,7 +8,7 @@
 
   - name: Milan Info Share
     win_share:
-      name: Info
+      name: Info_mil$
       description: Milan Info File Share
       path: h:\Info_mil
       list: no
@@ -17,7 +17,7 @@
 
   - name: Milan Org Share
     win_share:
-      name: Org_mil
+      name: Org_mil$
       description: Milan Org File Share
       path: h:\Org
       list: no
@@ -26,7 +26,7 @@
 
   - name: Milan Transx Share
     win_share:
-      name: Transx_mil
+      name: Transx_mil$
       description: Milan Transx File Share
       path: h:\Transx
       list: no
@@ -35,7 +35,7 @@
     
   - name: Milan PowerLib Share
     win_share:
-      name: PowerLib_mil
+      name: PowerLib_mil$
       description: Milan PowerLib File Share
       path: h:\PowerLib
       list: no
