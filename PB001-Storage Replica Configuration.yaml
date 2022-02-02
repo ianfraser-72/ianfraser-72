@@ -80,20 +80,20 @@
       ansible_become_password: "{{password}}"
       ansible_become_method: runas
       
-  - name: Run GPO Change (PowerShell)
-    win_shell: C:\Temp\StorageReplicaBuild.ps1 -gpobool {{gpobool}} -sourceserver {{sourceserver}} -destserver {{destserver}}
-    register: gpochange
-    when: 
-       - tasktype == "failover"
-       - gpobool == "Failover"
-       - failbackonline.rc == 0
-    failed_when: "'Replica failover failed' in result.stdout"
+  #- name: Run GPO Change (PowerShell)
+   # win_shell: C:\Temp\StorageReplicaBuild.ps1 -gpobool {{gpobool}} -sourceserver {{sourceserver}} -destserver {{destserver}}
+   # register: gpochange
+   # when: 
+   #    - tasktype == "failover"
+   #    - gpobool == "Failover"
+   #    - failbackonline.rc == 0
+   # failed_when: "'Replica failover failed' in result.stdout"
     
-    vars:
-      ansible_become: true
-      ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
-      ansible_become_password: "{{password}}"
-      ansible_become_method: runas    
+   # vars:
+   #   ansible_become: true
+   #   ansible_become_user: global.gam.com\RUN-ANSIBLE-PROD-WIN
+   #   ansible_become_password: "{{password}}"
+    #  ansible_become_method: runas    
 
  # - name: Retrieve CNAME from Fileserver
  #   ansible.windows.win_reg_stat:
