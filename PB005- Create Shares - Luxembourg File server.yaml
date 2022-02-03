@@ -70,9 +70,9 @@
       state: absent
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
     
-  #- name: Remove using icacls win-acl has an issue with the built in users group 
-  #  win_command: icacls g:\PowerLib /remove "global\hkgsupport"
-  #  when: (tasktype == "Build_Service") or (tasktype == "failover")  
+  - name: Configure FIL_ACL_LUX_PowerLib_F to only apply at the top level share folder
+    win_command: icacls.exe g:\PowerLib /grant "global\FIL_ACL_LUX_PowerLib_F:(NP)(F)"
+    when: (tasktype == "Build_Service") or (tasktype == "failover")    
 
   - name: Add NTFS ACLS's FullControl on PowerLib Folder for Administrators.
     win_acl:
@@ -81,14 +81,6 @@
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
-   
-  - name: Add NTFS ACLS's FullControl on PowerLib Folder for Global\FIL_ACL_LUX_PowerLib_F
-    win_acl:
-      user: Global\FIL_ACL_LUX_PowerLib_F
-      path: g:\PowerLib
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
     
   - name: Add NTFS ACLS's FullControl on PowerLib Folder for SYSTEM.
     win_acl:
@@ -107,18 +99,10 @@
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
   
-  #- name: Remove using icacls win-acl has an issue with the hkgsupport group 
-  #  win_command: icacls g:\Info /remove "global\hkgsupport"
-  #  when: (tasktype == "Build_Service") or (tasktype == "failover") 
-  
-  - name: Add NTFS ACLS's FullControl on Aplications Folder for FIL_ACL_LUX_Info_F
-    win_acl:
-      user: Global\FIL_ACL_LUX_Info_F
-      path: g:\Info
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
-    
+  - name: Configure FIL_ACL_LUX_Info_F to only apply at the top level share folder
+    win_command: icacls.exe g:\Info /grant "global\FIL_ACL_LUX_Info_F:(NP)(F)"
+    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+
   - name: Add NTFS ACLS's FullControl on Aplications Folder for SYSTEM.
     win_acl:
       user: SYSTEM
