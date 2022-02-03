@@ -5,6 +5,7 @@
   tasks:
 
 ######## Start Processing Shares ########
+    # Using icacls instead of the Ansible Module as the module for the LUX_x_F admin group as it doesnt force disable inheritance to child objects (this folder only equivilent)
 
   - name: Luxembourg Info Share
     win_share:
@@ -128,17 +129,9 @@
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
   
-  #- name: Remove using icacls win-acl has an issue with the hkgsupport group 
-  #  win_command: icacls g:\Ghost /remove "global\hkgsupport"
-  #  when: (tasktype == "Build_Service") or (tasktype == "failover")  
-    
-  - name: Add NTFS ACLS's FullControl on Ghost Folder for FIL_ACL_LUX_Ghost_F
-    win_acl:
-      user: Global\FIL_ACL_LUX_Ghost_F
-      path: g:\Ghost
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
+  - name: Configure FIL_ACL_LUX_Ghost_F to only apply at the top level share folder
+    win_command: icacls.exe g:\Ghost /grant "global\FIL_ACL_LUX_Ghost_F:(NP)(F)"
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
     
   - name: Add NTFS ACLS's FullControl on Ghost Folder for SYSTEM.
     win_acl:
@@ -171,16 +164,12 @@
       path: g:\Transx
       state: absent
       reorganize: no
-    when: (tasktype == "Build_Service") or (tasktype == "failover")     
-        
-  - name: Add NTFS ACLS's Full Control on Transx Folder for Global\FIL_ACL_LUX_Transx_F
-    win_acl:
-      user: Global\FIL_ACL_LUX_Transx_F
-      path: g:\Transx
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    when: (tasktype == "Build_Service") or (tasktype == "failover")    
     
+  - name: Configure FIL_ACL_LUX_Transx_F to only apply at the top level share folder 
+    win_command: icacls.exe g:\Transx /grant "global\FIL_ACL_LUX_Transx_F:(NP)(F)"
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+  
   - name: Add NTFS ACLS's FullControl on Transx Folder for SYSTEM.
     win_acl:
       user: SYSTEM
