@@ -37,7 +37,7 @@
    # win_command: icacls g:\Ghost /remove:g "global\FIL_ACL_LUX_Ghost_F" /T
    # when: (tasktype == "Build_Service") or (tasktype == "failover")  
   - name: Configure FIL_ACL_LUX_Ghost_F to only apply at the top level share folder
-    win_command: icacls.exe $folder /grant "global\FIL_ACL_LUX_Ghost_F:(NP)(F)"
+    win_command: icacls.exe g:\Ghost /grant "global\FIL_ACL_LUX_Ghost_F:(NP)(F)"
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
         
   - name: Add NTFS ACLS's FullControl on Ghost Folder for SYSTEM.
