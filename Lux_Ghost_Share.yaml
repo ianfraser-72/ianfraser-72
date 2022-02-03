@@ -44,7 +44,6 @@
       type: allow
       rights: FullControl
       propagation: NoPropagateInherit
-      inherit: none
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
   - name: Add NTFS ACLS's FullControl on Ghost Folder for SYSTEM.
