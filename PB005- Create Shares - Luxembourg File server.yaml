@@ -178,3 +178,32 @@
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
+    ######## Org Folder ########
+
+  - name: Add NTFS ACLS's FullControl on Org Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: g:\Org
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+    
+  - name: Disable Inheritance on Org Folder
+    win_acl_inheritance:
+      path: g:\Org
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")    
+    
+  - name: Configure FIL_ACL_LUX_Org_F to only apply at the top level share folder 
+    win_command: icacls.exe g:\Org /grant "global\FIL_ACL_LUX_Org_F:(NP)(F)"
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+  
+  - name: Add NTFS ACLS's FullControl on Org Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: g:\Org
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
