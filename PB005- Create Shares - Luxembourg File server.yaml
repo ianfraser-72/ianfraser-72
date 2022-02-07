@@ -74,6 +74,14 @@
   - name: Configure FIL_ACL_LUX_PowerLib_F to only apply at the top level share folder
     win_command: icacls.exe g:\PowerLib /grant "global\FIL_ACL_LUX_PowerLib_F:(NP)(F)"
     when: (tasktype == "Build_Service") or (tasktype == "failover")    
+    
+  - name: Add NTFS ACLS's FullControl on PowerLib Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: G:\PowerLib
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
   
 ######## Info Folder ########
  
@@ -83,6 +91,14 @@
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
+    
+  - name: Add NTFS ACLS's FullControl on Info Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: G:\Info
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
   
   - name: Configure FIL_ACL_LUX_Info_F to only apply at the top level share folder
     win_command: icacls.exe g:\Info /grant "global\FIL_ACL_LUX_Info_F:(NP)(F)"
@@ -96,6 +112,14 @@
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
+    
+  - name: Add NTFS ACLS's FullControl on Ghost Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: G:\Ghost
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
   
   - name: Configure FIL_ACL_LUX_Ghost_F to only apply at the top level share folder
     win_command: icacls.exe g:\Ghost /grant "global\FIL_ACL_LUX_Ghost_F:(NP)(F)"
@@ -108,7 +132,15 @@
       path: g:\Transx
       state: absent
       reorganize: no
-    when: (tasktype == "Build_Service") or (tasktype == "failover")    
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's FullControl on Transx Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: G:\Transx
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
     
   - name: Configure FIL_ACL_LUX_Transx_F to only apply at the top level share folder 
     win_command: icacls.exe g:\Transx /grant "global\FIL_ACL_LUX_Transx_F:(NP)(F)"
@@ -122,6 +154,14 @@
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")    
+    
+  - name: Add NTFS ACLS's FullControl on Org Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: G:\Org
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
     
   - name: Configure FIL_ACL_LUX_Org_F to only apply at the top level share folder 
     win_command: icacls.exe g:\Org /grant "global\FIL_ACL_LUX_Org_F:(NP)(F)"
