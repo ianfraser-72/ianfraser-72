@@ -60,6 +60,7 @@
     win_acl_inheritance:
       path: h:\Org
       state: absent
+      reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
     
   - name: Configure FIL_ACL_LUX_Org_F to only apply at the top level share folder
