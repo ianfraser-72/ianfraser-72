@@ -65,6 +65,15 @@
 
 ######## PowerLib NTFS Folder ########
    
+  - name: Remove NTFS ACL's on PowerLib Volume. Everyone - ExecuteFile,Read
+    win_acl:
+      user: Everyone
+      path: g:\powerlib
+      type: allow
+      state: absent
+      rights: ReadandExecute,ExecuteFile,Read, Write,listdirectory
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+  
   - name: Disable Inheritance on PowerLib Folder
     win_acl_inheritance:
       path: g:\PowerLib
@@ -90,6 +99,8 @@
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
+    
   
 ######## Info Folder ########
  
