@@ -66,22 +66,6 @@
     win_command: icacls.exe g:\Org /grant "global\FIL_ACL_LUX_Org_F:(NP)(F)"
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
 
-  - name: Add NTFS ACLS's FullControl on Org Folder for Administrators.
-    win_acl:
-      user: Administrators
-      path: h:\Org
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover") 
-   
-  - name: Add NTFS ACLS's FullControl on Org Folder for SYSTEM.
-    win_acl:
-      user: SYSTEM
-      path: h:\Org
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover") 
-   
 
 ######## Info NTFS Folder ########
 
@@ -95,33 +79,11 @@
   - name: Configure FIL_ACL_LUX_Info_F to only apply at the top level share folder
     win_command: icacls.exe g:\Info /grant "global\FIL_ACL_LUX_Info_F:(NP)(F)"
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
-  
-  - name: Add NTFS ACLS's FullControl on Info Folder for SYSTEM.
-    win_acl:
-      user: SYSTEM
-      path: h:\Info
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
-  
-  - name: Add NTFS ACLS's FullControl on Info Folder for Administrators.
-    win_acl:
-      user: Administrators
-      path: h:\Info
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
 
 ######## Transx NTFS Folder ########
 
-  - name: Add NTFS ACLS's FullControl on Transx Folder for Administrators.
-    win_acl:
-      user: Administrators
-      path: h:\Transx
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover")  
-    
+
   - name: Disable Inheritance on Transx Folder
     win_acl_inheritance:
       path: h:\Transx
@@ -132,24 +94,9 @@
   - name: Configure FIL_ACL_LUX_Transx_F to only apply at the top level share folder
     win_command: icacls.exe g:\Transx /grant "global\FIL_ACL_LUX_Transx_F:(NP)(F)"
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
-    
-  - name: Add NTFS ACLS's FullControl on Transx Folder for SYSTEM.
-    win_acl:
-      user: SYSTEM
-      path: h:\Transx
-      type: allow
-      rights: FullControl
       
 ######## PowerLib NTFS Folder ########
 
-  - name: Add NTFS ACLS's FullControl on PowerLib Folder for Administrators.
-    win_acl:
-      user: Administrators
-      path: h:\PowerLib
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover")  
-    
   - name: Disable Inheritance on PowerLib Folder
     win_acl_inheritance:
       path: h:\PowerLib
@@ -161,13 +108,6 @@
     win_command: icacls.exe g:\PowerLib /grant "global\FIL_ACL_LUX_PowerLib_F:(NP)(F)"
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
-  - name: Add NTFS ACLS's FullControl on PowerLib Folder for SYSTEM.
-    win_acl:
-      user: SYSTEM
-      path: h:\PowerLib
-      type: allow
-      rights: FullControl
-    when: (tasktype == "Build_Service") or (tasktype == "failover")
     
  
     
