@@ -65,7 +65,6 @@
 
 ######## PowerLib NTFS Folder ########
    
-
   - name: Disable Inheritance on PowerLib Folder
     win_acl_inheritance:
       path: G:\PowerLib
@@ -184,7 +183,7 @@
   
   - name: Disable Inheritance on Org Folder
     win_acl_inheritance:
-      path: g:\Org
+      path: G:\Org
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")    
@@ -197,7 +196,60 @@
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
+  - name: Add NTFS ACLS's FullControl on Org Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: G:\Org
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
   - name: Configure FIL_ACL_LUX_Org_F to only apply at the top level share folder 
     win_command: icacls.exe g:\Org /grant "global\FIL_ACL_LUX_Org_F:(NP)(F)"
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
+    ######## Home Folder ########
+  
+  - name: Disable Inheritance on Home Folder
+    win_acl_inheritance:
+      path: G:\Home
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")     
+        
+  - name: Add NTFS ACLS's Full Control on Home Folder for Global\FIL_ACL_LUX_Home_F
+    win_acl:
+      user: Global\FIL_ACL_LUX_Home_F
+      path: G:\Home
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's FullControl on Home Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: G:\Home
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's list folder/read data & create folders/append data this folder only, on Home folder for Authenticated Users
+    win_acl:
+      user: Authenticated Users
+      path: G:\Home
+      type: allow
+      rights: listdirectory,ReadData,createdirectories
+      propagation: NoPropagateInherit
+      Inherit: None    
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
+  - name: Add NTFS ACLS's Full Control sub folder and files only for Creator Owner
+    win_acl:
+      user: Creator Owner
+      path: G:\Home
+      type: allow
+      rights: FullControl
+      propagation: InheritOnly
+      Inherit: ContainerInherit, ObjectInherit  
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
     
