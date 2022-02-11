@@ -1,0 +1,65 @@
+---
+- hosts: "{{ sourceserver }}"
+  ignore_errors: yes
+  gather_facts: no
+  tasks:
+
+######## Start Processing Shares ########
+    # Using icacls instead of the Ansible Module as the module for the LUX_x_F admin group as it doesnt force disable inheritance to child objects (this folder only equivilent)
+
+  - name: Luxembourg Home Share
+    win_share:
+      name: Lux_Home$
+      description: Luxembourg Home File Share
+      path: g:\Home
+      list: no
+      full: Authenticated Users,Administrators,Global\FIL_ACL_LUX_Home_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
+######## Start Processing NTFS Permissions ########
+
+    ######## Home Folder ########
+  
+  - name: Disable Inheritance on Home Folder
+    win_acl_inheritance:
+      path: G:\Home
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")     
+        
+  - name: Add NTFS ACLS's Full Control on Home Folder for Global\FIL_ACL_LUX_Home_F
+    win_acl:
+      user: Global\FIL_ACL_LUX_Home_F
+      path: G:\Home
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's FullControl on Home Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: G:\Home
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's list folder/read data & create folders/append data this folder only, on Home folder for Authenticated Users
+    win_acl:
+      user: Authenticated Users
+      path: G:\Home
+      type: allow
+      rights: listdirectory,ReadData,createdirectories
+      propagation: NoPropagateInherit
+      Inherit: None    
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
+  - name: Add NTFS ACLS's Full Control sub folder and files only for Creator Owner
+    win_acl:
+      user: Creator Owner
+      path: G:\Home
+      type: allow
+      rights: FullControl
+      propagation: InheritOnly
+      Inherit: ContainerInherit, ObjectInherit  
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
