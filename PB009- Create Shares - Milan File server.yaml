@@ -79,8 +79,8 @@
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
     
-  - name: Configure FIL_ACL_LUX_Org_F to only apply at the top level share folder
-    win_command: icacls.exe g:\Org /grant "global\FIL_ACL_LUX_Org_F:(NP)(F)"
+  - name: Configure FIL_ACL_MIL_Org_F to only apply at the top level share folder
+    win_command: icacls.exe h:\Org /grant "global\FIL_ACL_MIL_Org_F:(NP)(F)"
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
 
 
@@ -109,8 +109,8 @@
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
   
-  - name: Configure FIL_ACL_LUX_Info_F to only apply at the top level share folder
-    win_command: icacls.exe g:\Info /grant "global\FIL_ACL_LUX_Info_F:(NP)(F)"
+  - name: Configure FIL_ACL_MIL_Info_F to only apply at the top level share folder
+    win_command: icacls.exe h:\Info /grant "global\FIL_ACL_MIL_Info_F:(NP)(F)"
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
     
 
@@ -139,8 +139,8 @@
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
         
-  - name: Configure FIL_ACL_LUX_Transx_F to only apply at the top level share folder
-    win_command: icacls.exe g:\Transx /grant "global\FIL_ACL_LUX_Transx_F:(NP)(F)"
+  - name: Configure FIL_ACL_MIL_Transx_F to only apply at the top level share folder
+    win_command: icacls.exe h:\Transx /grant "global\FIL_ACL_MIL_Transx_F:(NP)(F)"
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
       
 ######## PowerLib NTFS Folder ########
@@ -152,10 +152,24 @@
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")     
         
-  - name: Configure FIL_ACL_LUX_PowerLib_F to only apply at the top level share folder
-    win_command: icacls.exe g:\PowerLib /grant "global\FIL_ACL_LUX_PowerLib_F:(NP)(F)"
+  - name: Configure FIL_ACL_MIL_PowerLib_F to only apply at the top level share folder
+    win_command: icacls.exe h:\PowerLib /grant "global\FIL_ACL_MIL_PowerLib_F:(NP)(F)"
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
+  - name: Add NTFS ACLS's FullControl on h:\PowerLib Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: h:\PowerLib
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
     
+  - name: Add NTFS ACLS's FullControl on h:\PowerLib Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: h:\PowerLib
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")   
  
     
