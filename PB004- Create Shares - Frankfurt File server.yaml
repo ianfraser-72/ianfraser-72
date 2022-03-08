@@ -1,15 +1,134 @@
 ---
 - hosts: "{{ sourceserver }}"
+  ignore_errors: yes
   gather_facts: no
   tasks:
 
-  - name: Add hidden share
+######## Start Processing Shares ########
+    # Using icacls instead of the Ansible Module as the module for the LUX_x_F admin group as it doesnt force disable inheritance to child objects (this folder only equivilent)
+
+  - name: Frankfurt Info Share
     win_share:
-      name: internal
-      description: Share1 File Share Demo
-      path: E:\Share1
+      name: Fra_Info$
+      description: Frankfurt Info File Share
+      path: F:\Info
       list: no
-      full: Administrators
-      read: u49162
-      deny: gph
+      full: Authenticated Users,Administrators,Global\FIL_ACL_FRA_Info_F
     when: (tasktype == "Build_Service") or (tasktype == "failover")
+   
+  - name: Frankfurt Org Share
+    win_share:
+      name: Fra_Org$
+      description: Frankfurt Org File Share
+      path: F:\Org
+      list: no
+      full: Authenticated Users,Administrators,Global\FIL_ACL_FRA_Org_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+
+  - name: Frankfurt PowerLib Share
+    win_share:
+      name: Fra_PowerLib$
+      description: Frankfurt PowerLib File Share
+      path: F:\PowerLib
+      list: no
+      full: Authenticated Users,Administrators,Global\FIL_ACL_FRA_PowerLib_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Remove NTFS ACL's on Root Volume. Everyone - ExecuteFile,Read
+    win_acl:
+      user: Everyone
+      path: F:\
+      type: allow
+      state: absent
+      rights: ReadandExecute,ExecuteFile,Read, Write,listdirectory
+    when: (tasktype == "Build_Service") or (tasktype == "failover")    
+
+######## Start Processing NTFS Permissions ########
+
+######## PowerLib NTFS Folder ########
+   
+  - name: Disable Inheritance on PowerLib Folder
+    win_acl_inheritance:
+      path: F:\PowerLib
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+    
+  - name: Configure FIL_ACL_FRA_PowerLib_F to only apply at the top level share folder
+    win_command: icacls.exe f:\PowerLib /grant "global\FIL_ACL_FRA_PowerLib_F:(NP)(F)"
+    when: (tasktype == "Build_Service") or (tasktype == "failover")    
+    
+  - name: Add NTFS ACLS's FullControl on PowerLib Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: F:\PowerLib
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
+  - name: Add NTFS ACLS's FullControl on PowerLib Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: F:\PowerLib
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+  
+######## Info Folder ########
+ 
+  - name: Disable Inheritance on Info Folder
+    win_acl_inheritance:
+      path: F:\Info
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")   
+    
+  - name: Add NTFS ACLS's FullControl on Info Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: F:\Info
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
+  - name: Add NTFS ACLS's FullControl on Info Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: F:\Info
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+  
+  - name: Configure FIL_ACL_FRA_Info_F to only apply at the top level share folder
+    win_command: icacls.exe f:\Info /grant "global\FIL_ACL_FRA_Info_F:(NP)(F)"
+    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+  
+    ######## Org Folder ########
+  
+  - name: Disable Inheritance on Org Folder
+    win_acl_inheritance:
+      path: F:\Org
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")    
+    
+  - name: Add NTFS ACLS's FullControl on Org Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: F:\Org
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's FullControl on Org Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: F:\Org
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Configure FIL_ACL_FRA_Org_F to only apply at the top level share folder 
+    win_command: icacls.exe f:\Org /grant "global\FIL_ACL_FRA_Org_F:(NP)(F)"
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
