@@ -1,0 +1,210 @@
+---
+- hosts: "{{ sourceserver }}"
+  ignore_errors: yes
+  gather_facts: no
+  tasks:
+
+######## Start Processing Shares ########
+    # Using icacls instead of the Ansible Module as the module for the NYC_x_F admin group as it doesnt force disable inheritance to child objects (this folder only equivilent)
+
+  - name: New York Departments Share
+    win_share:
+      name: NYC_Departments$
+      description: New York Departments File Share
+      path: E:\Departments
+      list: no
+      full: Authenticated Users,Administrators,Global\FIL_ACL_NYC_Departments_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: New York Applications Share
+    win_share:
+      name: NYC_Applications$
+      description: New York Applications File Share
+      path: E:\Applications
+      list: no
+      full: Authenticated Users,Administrators,Global\FIL_ACL_NYC_Applications_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: New York Data Share
+    win_share:
+      name: NYC_Data$
+      description: New York Data File Share
+      path: E:\Data
+      list: no
+      full: Authenticated Users,Administrators,Global\FIL_ACL_NYC_Data_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
+  - name: New York UserTest Share
+    win_share:
+      name: NYC_UserTest$
+      description: New York UserTest File Share
+      path: E:\UserTest
+      list: no
+      full: Authenticated Users,Administrators,Global\FIL_ACL_NYC_UserTest_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: New York Update Share
+    win_share:
+      name: NYC_Update$
+      description: New York Update File Share
+      path: E:\Update
+      list: no
+      full: Authenticated Users,Administrators,Global\FIL_ACL_NYC_Update_F
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Remove NTFS ACL's on Root Volume. Everyone - ExecuteFile,Read
+    win_acl:
+      user: Everyone
+      path: E:\
+      type: allow
+      state: absent
+      rights: ReadandExecute,ExecuteFile,Read, Write,listdirectory
+    when: (tasktype == "Build_Service") or (tasktype == "failover")    
+ 
+######## Start Processing NTFS Permissions ########
+
+######## Departments NTFS Folder ########
+   
+  - name: Disable Inheritance on Departments Folder
+    win_acl_inheritance:
+      path: E:\Departments
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+    
+  - name: Configure FIL_ACL_NYC_Departments_F to only apply at the top level share folder
+    win_command: icacls.exe E:\Departments /grant "global\FIL_ACL_NYC_Departments_F:(NP)(F)"
+    when: (tasktype == "Build_Service") or (tasktype == "failover")    
+    
+  - name: Add NTFS ACLS's FullControl on Departments Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: E:\Departments
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
+  - name: Add NTFS ACLS's FullControl on Departments Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: E:\Departments
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+  
+######## Applications Folder ########
+ 
+  - name: Disable Inheritance on Applications Folder
+    win_acl_inheritance:
+      path: E:\Applications
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")   
+    
+  - name: Add NTFS ACLS's FullControl on Applications Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: E:\Applications
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+    
+  - name: Add NTFS ACLS's FullControl on Applications Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: E:\Applications
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
+  
+  - name: Configure FIL_ACL_NYC_Applications_F to only apply at the top level share folder
+    win_command: icacls.exe E:\Applications /grant "global\FIL_ACL_NYC_Applications_F:(NP)(F)"
+    when: (tasktype == "Build_Service") or (tasktype == "failover")  
+  
+######## Data Folder ########
+  
+  - name: Disable Inheritance on Data Folder
+    win_acl_inheritance:
+      path: E:\Data
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")    
+    
+  - name: Add NTFS ACLS's FullControl on Data Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: E:\Data
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's FullControl on Data Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: E:\Data
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Configure FIL_ACL_NYC_Data_F to only apply at the top level share folder 
+    win_command: icacls.exe E:\Data /grant "global\FIL_ACL_NYC_Data_F:(NP)(F)"
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+######## UserTest Folder ########
+  
+  - name: Disable Inheritance on UserTest Folder
+    win_acl_inheritance:
+      path: E:\UserTest
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")    
+    
+  - name: Add NTFS ACLS's FullControl on UserTest Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: E:\UserTest
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's FullControl on UserTest Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: E:\UserTest
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Configure FIL_ACL_NYC_UserTest_F to only apply at the top level share folder 
+    win_command: icacls.exe E:\UserTest /grant "global\FIL_ACL_NYC_UserTest_F:(NP)(F)"
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+######## Update Folder ########
+  
+  - name: Disable Inheritance on Update Folder
+    win_acl_inheritance:
+      path: E:\Update
+      state: absent
+      reorganize: no
+    when: (tasktype == "Build_Service") or (tasktype == "failover")    
+    
+  - name: Add NTFS ACLS's FullControl on Update Folder for Administrators.
+    win_acl:
+      user: Administrators
+      path: E:\Update
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Add NTFS ACLS's FullControl on Update Folder for SYSTEM.
+    win_acl:
+      user: SYSTEM
+      path: E:\Update
+      type: allow
+      rights: FullControl
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
+  - name: Configure FIL_ACL_NYC_Update_F to only apply at the top level share folder 
+    win_command: icacls.exe E:\Update /grant "global\FIL_ACL_NYC_Update_F:(NP)(F)"
+    when: (tasktype == "Build_Service") or (tasktype == "failover")
+    
