@@ -73,7 +73,7 @@
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
     
   - name: Configure FIL_ACL_NYC_Departments_F to only apply at the top level share folder
-    win_command: icacls.exe E:\Departments /grant "global\FIL_ACL_NYC_Departments_F:(NP)(F)"
+    win_command: icacls.exe M:\Departments /grant "global\FIL_ACL_NYC_Departments_F:(NP)(F)"
     when: (tasktype == "Build_Service") or (tasktype == "failover")    
     
   - name: Add NTFS ACLS's FullControl on Departments Folder for Administrators.
@@ -118,7 +118,7 @@
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
   
   - name: Configure FIL_ACL_NYC_Applications_F to only apply at the top level share folder
-    win_command: icacls.exe E:\Applications /grant "global\FIL_ACL_NYC_Applications_F:(NP)(F)"
+    win_command: icacls.exe M:\Applications /grant "global\FIL_ACL_NYC_Applications_F:(NP)(F)"
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
   
 ######## Data Folder ########
@@ -147,7 +147,7 @@
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
   - name: Configure FIL_ACL_NYC_Data_F to only apply at the top level share folder 
-    win_command: icacls.exe E:\Data /grant "global\FIL_ACL_NYC_Data_F:(NP)(F)"
+    win_command: icacls.exe M:\Data /grant "global\FIL_ACL_NYC_Data_F:(NP)(F)"
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
 ######## UserTest Folder ########
@@ -176,7 +176,7 @@
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
   - name: Configure FIL_ACL_NYC_UserTest_F to only apply at the top level share folder 
-    win_command: icacls.exe E:\UserTest /grant "global\FIL_ACL_NYC_UserTest_F:(NP)(F)"
+    win_command: icacls.exe M:\UserTest /grant "global\FIL_ACL_NYC_UserTest_F:(NP)(F)"
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
 ######## Update Folder ########
@@ -205,6 +205,6 @@
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
   - name: Configure FIL_ACL_NYC_Update_F to only apply at the top level share folder 
-    win_command: icacls.exe E:\Update /grant "global\FIL_ACL_NYC_Update_F:(NP)(F)"
+    win_command: icacls.exe M:\Update /grant "global\FIL_ACL_NYC_Update_F:(NP)(F)"
     when: (tasktype == "Build_Service") or (tasktype == "failover")
     
