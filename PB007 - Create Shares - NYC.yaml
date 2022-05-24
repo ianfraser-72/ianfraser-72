@@ -11,7 +11,7 @@
     win_share:
       name: NYC_Departments$
       description: New York Departments File Share
-      path: E:\Departments
+      path: M:\Departments
       list: no
       full: Authenticated Users,Administrators,Global\FIL_ACL_NYC_Departments_F
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -20,7 +20,7 @@
     win_share:
       name: NYC_Applications$
       description: New York Applications File Share
-      path: E:\Applications
+      path: M:\Applications
       list: no
       full: Authenticated Users,Administrators,Global\FIL_ACL_NYC_Applications_F
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -29,7 +29,7 @@
     win_share:
       name: NYC_Data$
       description: New York Data File Share
-      path: E:\Data
+      path: M:\Data
       list: no
       full: Authenticated Users,Administrators,Global\FIL_ACL_NYC_Data_F
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
@@ -38,7 +38,7 @@
     win_share:
       name: NYC_UserTest$
       description: New York UserTest File Share
-      path: E:\UserTest
+      path: M:\UserTest
       list: no
       full: Authenticated Users,Administrators,Global\FIL_ACL_NYC_UserTest_F
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -47,7 +47,7 @@
     win_share:
       name: NYC_Update$
       description: New York Update File Share
-      path: E:\Update
+      path: M:\Update
       list: no
       full: Authenticated Users,Administrators,Global\FIL_ACL_NYC_Update_F
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -55,7 +55,7 @@
   - name: Remove NTFS ACL's on Root Volume. Everyone - ExecuteFile,Read
     win_acl:
       user: Everyone
-      path: E:\
+      path: M:\
       type: allow
       state: absent
       rights: ReadandExecute,ExecuteFile,Read, Write,listdirectory
@@ -67,7 +67,7 @@
    
   - name: Disable Inheritance on Departments Folder
     win_acl_inheritance:
-      path: E:\Departments
+      path: M:\Departments
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")  
@@ -79,7 +79,7 @@
   - name: Add NTFS ACLS's FullControl on Departments Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\Departments
+      path: M:\Departments
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
@@ -87,7 +87,7 @@
   - name: Add NTFS ACLS's FullControl on Departments Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\Departments
+      path: M:\Departments
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
@@ -96,7 +96,7 @@
  
   - name: Disable Inheritance on Applications Folder
     win_acl_inheritance:
-      path: E:\Applications
+      path: M:\Applications
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")   
@@ -104,7 +104,7 @@
   - name: Add NTFS ACLS's FullControl on Applications Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\Applications
+      path: M:\Applications
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
@@ -112,7 +112,7 @@
   - name: Add NTFS ACLS's FullControl on Applications Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\Applications
+      path: M:\Applications
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover") 
@@ -125,7 +125,7 @@
   
   - name: Disable Inheritance on Data Folder
     win_acl_inheritance:
-      path: E:\Data
+      path: M:\Data
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")    
@@ -133,7 +133,7 @@
   - name: Add NTFS ACLS's FullControl on Data Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\Data
+      path: M:\Data
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -141,7 +141,7 @@
   - name: Add NTFS ACLS's FullControl on Data Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\Data
+      path: M:\Data
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -154,7 +154,7 @@
   
   - name: Disable Inheritance on UserTest Folder
     win_acl_inheritance:
-      path: E:\UserTest
+      path: M:\UserTest
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")    
@@ -162,7 +162,7 @@
   - name: Add NTFS ACLS's FullControl on UserTest Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\UserTest
+      path: M:\UserTest
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -170,7 +170,7 @@
   - name: Add NTFS ACLS's FullControl on UserTest Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\UserTest
+      path: M:\UserTest
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -183,7 +183,7 @@
   
   - name: Disable Inheritance on Update Folder
     win_acl_inheritance:
-      path: E:\Update
+      path: M:\Update
       state: absent
       reorganize: no
     when: (tasktype == "Build_Service") or (tasktype == "failover")    
@@ -191,7 +191,7 @@
   - name: Add NTFS ACLS's FullControl on Update Folder for Administrators.
     win_acl:
       user: Administrators
-      path: E:\Update
+      path: M:\Update
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
@@ -199,7 +199,7 @@
   - name: Add NTFS ACLS's FullControl on Update Folder for SYSTEM.
     win_acl:
       user: SYSTEM
-      path: E:\Update
+      path: M:\Update
       type: allow
       rights: FullControl
     when: (tasktype == "Build_Service") or (tasktype == "failover")
