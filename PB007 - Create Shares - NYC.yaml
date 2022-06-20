@@ -60,6 +60,10 @@
       state: absent
       rights: ReadandExecute,ExecuteFile,Read, Write,listdirectory
     when: (tasktype == "Build_Service") or (tasktype == "failover")    
+    
+  - name: Configure Everyone to be removed from top level folder
+    win_command: icacls.exe M:\ /remove "everyone"
+    when: (tasktype == "Build_Service") or (tasktype == "failover") 
  
 ######## Start Processing NTFS Permissions ########
 
